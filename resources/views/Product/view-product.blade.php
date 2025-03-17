@@ -21,81 +21,7 @@
 <!-- F0A02C  orange-->
 <!-- 38B6FF -->
 <!-- nav part -->
-
-<header class="fixed top-0 left-0 w-full z-50 flex flex-col flex-col-reverse md:flex-row justify-between items-center lg:px-10 bg-[#F0A02C] shadow-lg  shadow-[0_8px_10px_rgba(0,0,0,0.2)] ">
-    <div class="flex h-[90px] w-[220px] lg:h-[120px] lg-w-[240px] hidden md:block">
-        <a href="{{route('dashboard')}}" class="border-none focus:outline-none focus:ring-0 focus:border-transparent">
-            <img src="{{ asset('logo/furrhub.png') }}" alt="furrhub-logo" class="h-[100px]  lg:h-[120px] lg:w-[290px] object-cover" /></a>
-    </div>
-
-    <div class="flex flex-row lg:w-[60rem] w-auto p-2 justify-around lg:gap-10">
-        <form class="flex items-center w-full 2xl:w-[58rem]  p-2 rounded-lg">
-            <input type="search" placeholder="Search" aria-label="Search"
-                class="w-full h-[40px] lg:h-[50px]   px-4 text-[13px] lg:text-[18px] rounded-l-lg outline-none border-none focus:outline-none focus:ring-0 focus:border-transparent" />
-            <button type="submit"
-                class="bg-[#35B5D3] h-[40px] lg:h-[50px] lg:w-[80px] w-[50px] flex items-center justify-center rounded-r-lg">
-                <img src="{{ asset('logo/search-white.svg') }}" alt="search" class="h-[22px] w-[22px] lg:h-[30px] lg:w-[30px]" />
-            </button>
-        </form>
-
-        <div class="flex flex-row text-white  font-semibold mt-4">
-            <a href="{{route('shoppingCart')}}" class="flex flex-row gap-0 align-center">
-                <img src="{{ asset ('logo/cart.svg')}}" alt="user" class="h-[27px] w-[30px] lg:h-[35px] lg:w-[43px]" />
-                <div class="bg-[#F23D3D] h-[20px] w-[35px]  lg:h-[27px] lg:w-[45px] rounded-full flex justify-center items-center">
-                    <p class="xl:text-[16px] text-[10px] ">0</p>
-                </div>
-            </a>
-            <!-- <p class="pt-1 text-">Cart</p> -->
-        </div>
-    </div>
-
-    <div class="flex flex-row gap-3 ml-auto xl:ml-0">
-        <div class="flex flex-row text-black text-[12px] lg:text-[20px] font-semibold px-3 lg:px-0">
-            <nav class="flex flex-row gap-1 md:gap-1 align-center">
-                @if (Route::has('login'))
-                @auth
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-md leading-4 font-medium rounded-md  hover:text-gray-800 focus:outline-none transition ease-in-out duration-150">
-                            <div class="flex flex-row items-center justify-center">
-                                <p class="">{{ Auth::user()->first_name}} {{ Auth::user()->last_name}}</p>
-                                <img src="{{ asset ('logo/user.svg')}}" alt="user" class="h-[25px] w-[30px] lg:h-[40px] lg:w-[43px]" />
-                            </div>
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <x-dropdown-link :href="route('logout')"
-                                onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-                @else
-                <img src="{{ asset ('logo/user.svg')}}" alt="user" class="h-[25px] w-[30px] lg:h-[40px] lg:w-[43px]" />
-                <a class="pt-1   hover:text-white" href="{{ route('login') }}">Log in </a>
-                <p class="pt-1">|</p>
-                @if (Route::has('register'))
-                <a class="pt-1 hover:text-white" href="{{ route('register') }}">Sign up</a>
-                @endif
-                @endauth
-                @endif
-            </nav>
-        </div>
-    </div>
-</header>
+<x-nav-bar />
 
 
 <div class="lg:pt-[150px] pt-[100px]"></div>
@@ -193,15 +119,15 @@
                         <h1 class="hover:text-sky-600 hover:cursor-pointer">Add to Wishlists?</h1>
                     </div>
                     <div class="flex flex-row items-center lg:gap-5 gap-2 mt-3 lg:text-lg text-gray-700 grid grid-cols-1 lg:grid-cols-6  px-2">
-                        <div class="col-span-3 w-full border-2 border-orange-500 hover:bg-orange-500 hover:text-white text-orange-500 font-bold py-2 px-4 rounded-lg flex justify-center items-center gap-2">
+                        <a href="{{route('shoppingCart')}}" class="col-span-3 w-full border-2 border-orange-500 hover:bg-orange-500 hover:text-white text-orange-500 font-bold py-2 px-4 rounded-lg flex justify-center items-center gap-2">
                             <i data-lucide="shopping-basket"></i>
-                            <button class=""> Add to Cart </button>
-                        </div>
-                        <div class="col-span-3">
-                            <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg ">
-                                <a href=" #">Buy Now</a>
-                            </button>
-                        </div>
+                            <p class=""> Add to Cart </p>
+                        </a>
+                        <a href="{{route('shoppingCart')}}" class="col-span-3 w-full bg-orange-500 hover:bg-orange-600 text-white text-center font-bold py-2 px-4 rounded-lg ">
+                            <p href="{{route('shoppingCart')}}">
+                                Buy Now
+                            </p>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -239,7 +165,7 @@
                         <h1 class="lg:text-sm text-sm font-bold text-gray-700 text-wrap">John Doe</h1>
                     </div>
                     <p class="px-7">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit animi quo optio saepe deleniti laudantium distinctio, quidem labore veniam iure magni! Laudantium impedit modi fugiat. Harum sunt aliquam pariatur sapiente!</p>
-                
+
                 </div>
             </div>
         </div>
@@ -255,85 +181,44 @@
         </div>
         <div class="md:px-[3rem] mt-3 px-[1rem]">
             <div class="grid grid-cols-2 lg:grid-cols-6 gap-4  ">
-                <div class="group relative  xl:min-w-[230px] min-w-[150px]    p-4 bg-white rounded-lg shadow-lg border-2 border-gray-100  hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90">
-                    <a href="{{route('product.view')}}" class="foucs:outline-none">
-                        <img src="{{ asset('images/products/dog.jpg') }}" alt="Best-Product" class="aspect-square w-full rounded-lg bg-gray-500 object-cover  lg:aspect-auto lg:h-74">
+                @php
+                $products = [
+                [
+                'name' => 'Pedigree 18 Pouch Variety Pack',
+                'shop' => 'FurrHUB',
+                'price' => 350.00,
+                'image' => 'images/products/dog.jpg',
+                'sold' => 120
+                ],
+                [
+                'name' => 'Royal Canin Adult Cat Food',
+                'shop' => 'FurrHUB',
+                'price' => 350.00,
+                'image' => 'images/products/cat-foods.webp',
+                'sold' => 90
+                ]
+                ];
+                @endphp
+
+                @for ($i = 0; $i < 6; $i++)
+                    @php
+                    $product=$products[$i % count($products)];
+                    @endphp
+                    <div class="group relative xl:min-w-[230px] min-w-[150px] p-4 bg-white rounded-lg shadow-lg border-2 border-gray-100 hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90">
+                    <a href="{{ route('product.view') }}" class="focus:outline-none">
+                        <img src="{{ asset($product['image']) }}" alt="Best-Product" class="aspect-square w-full rounded-lg bg-gray-500 object-cover lg:aspect-auto lg:h-74">
                         <div class="mt-2 flex justify-between flex flex-col gap-1">
-                            <p class="text-sm font-normal text-gray-500 text-end">120 sold</p>
-                            <h5 class="font-normal text-wrap text-orange-500 text-sm">FurrHUB</h5>
-                            <h4 class="font-semibold text-wrap text-black text-md">Pedigree 18 Pouch Variety Pack</h4>
+                            <p class="text-sm font-normal text-gray-500 text-end">{{ $product['sold'] }} sold</p>
+                            <h5 class="font-normal text-wrap text-orange-500 text-sm">{{ $product['shop'] }}</h5>
+                            <h4 class="font-semibold text-wrap text-black text-md">{{ $product['name'] }}</h4>
                             <div class="flex justify-between">
-                                <h4 class="font-bold text-wrap text-orange-500 text-lg"><span class="text-xl">₱</span> 350.00</h4>
+                                <h4 class="font-bold text-wrap text-orange-500 text-lg"><span class="text-xl">₱</span> {{ number_format($product['price'], 2) }}</h4>
                             </div>
                         </div>
                     </a>
-                </div>
-                <div class="group relative  xl:min-w-[230px] min-w-[150px]    p-4 bg-white rounded-lg shadow-lg border-2 border-gray-100  hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90">
-                    <a href="{{route('product.view')}}" class="foucs:outline-none">
-                        <img src="{{ asset('images/products/cat-foods.webp') }}" alt="Best-Product" class="aspect-square w-full rounded-lg bg-gray-500 object-cover  lg:aspect-auto lg:h-74">
-                        <div class="mt-2 flex justify-between flex flex-col gap-1">
-                            <p class="text-sm font-normal text-gray-500 text-end">120 sold</p>
-                            <h5 class="font-normal text-wrap text-orange-500 text-sm">FurrHUB</h5>
-                            <h4 class="font-semibold text-wrap text-black text-md">Royal Canin Cat Food</h4>
-                            <div class="flex justify-between">
-                                <h4 class="font-bold text-wrap text-orange-500 text-lg"><span class="text-xl">₱</span> 350.00</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="group relative  xl:min-w-[230px] min-w-[150px]    p-4 bg-white rounded-lg shadow-lg border-2 border-gray-100  hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90">
-                    <a href="{{route('product.view')}}" class="foucs:outline-none">
-                        <img src="{{ asset('images/products/dog.jpg') }}" alt="Best-Product" class="aspect-square w-full rounded-lg bg-gray-500 object-cover  lg:aspect-auto lg:h-74">
-                        <div class="mt-2 flex justify-between flex flex-col gap-1">
-                            <p class="text-sm font-normal text-gray-500 text-end">120 sold</p>
-                            <h5 class="font-normal text-wrap text-orange-500 text-sm">FurrHUB</h5>
-                            <h4 class="font-semibold text-wrap text-black text-md">Pedigree 18 Pouch Variety Pack</h4>
-                            <div class="flex justify-between">
-                                <h4 class="font-bold text-wrap text-orange-500 text-lg"><span class="text-xl">₱</span> 350.00</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="group relative  xl:min-w-[230px] min-w-[150px]    p-4 bg-white rounded-lg shadow-lg border-2 border-gray-100  hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90">
-                    <a href="{{route('product.view')}}" class="foucs:outline-none">
-                        <img src="{{ asset('images/products/cat-foods.webp') }}" alt="Best-Product" class="aspect-square w-full rounded-lg bg-gray-500 object-cover  lg:aspect-auto lg:h-74">
-                        <div class="mt-2 flex justify-between flex flex-col gap-1">
-                            <p class="text-sm font-normal text-gray-500 text-end">120 sold</p>
-                            <h5 class="font-normal text-wrap text-orange-500 text-sm">FurrHUB</h5>
-                            <h4 class="font-semibold text-wrap text-black text-md">Royal Canin Cat Food</h4>
-                            <div class="flex justify-between">
-                                <h4 class="font-bold text-wrap text-orange-500 text-lg"><span class="text-xl">₱</span> 350.00</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="group relative  xl:min-w-[230px] min-w-[150px]    p-4 bg-white rounded-lg shadow-lg border-2 border-gray-100  hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90">
-                    <a href="{{route('product.view')}}" class="foucs:outline-none">
-                        <img src="{{ asset('images/products/dog.jpg') }}" alt="Best-Product" class="aspect-square w-full rounded-lg bg-gray-500 object-cover  lg:aspect-auto lg:h-74">
-                        <div class="mt-2 flex justify-between flex flex-col gap-1">
-                            <p class="text-sm font-normal text-gray-500 text-end">120 sold</p>
-                            <h5 class="font-normal text-wrap text-orange-500 text-sm">FurrHUB</h5>
-                            <h4 class="font-semibold text-wrap text-black text-md">Pedigree 18 Pouch Variety Pack</h4>
-                            <div class="flex justify-between">
-                                <h4 class="font-bold text-wrap text-orange-500 text-lg"><span class="text-xl">₱</span> 350.00</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="group relative  xl:min-w-[230px] min-w-[150px]    p-4 bg-white rounded-lg shadow-lg border-2 border-gray-100  hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90">
-                    <a href="{{route('product.view')}}" class="foucs:outline-none">
-                        <img src="{{ asset('images/products/cat-foods.webp') }}" alt="Best-Product" class="aspect-square w-full rounded-lg bg-gray-500 object-cover  lg:aspect-auto lg:h-74">
-                        <div class="mt-2 flex justify-between flex flex-col gap-1">
-                            <p class="text-sm font-normal text-gray-500 text-end">120 sold</p>
-                            <h5 class="font-normal text-wrap text-orange-500 text-sm">FurrHUB</h5>
-                            <h4 class="font-semibold text-wrap text-black text-md">Royal Canin Cat Food</h4>
-                            <div class="flex justify-between">
-                                <h4 class="font-bold text-wrap text-orange-500 text-lg"><span class="text-xl">₱</span> 350.00</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
             </div>
+            @endfor
+
         </div>
 
         <!-- banner -->
@@ -342,6 +227,8 @@
     </div>
     </div>
 
+    <!-- Return to Top Button -->
+    <x-return-top />
 </body>
 <!-- Footer -->
 <x-footer bgColor=" bg-gradient-to-r from-orange-600" />

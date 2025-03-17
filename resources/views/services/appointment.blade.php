@@ -32,10 +32,10 @@
             <div></div>
 
             <div class="flex flex-row lg:gap-20 lg:text-lg text-sm gap-10">
-                <a href="{{route ('dashboard')}}" class="hover:underline hover:text-gray-700 text-gray-800 flex"><i data-lucide="house"></i><span class="md:block hidden"> Home</span></a>
-                <a href="#" class="hover:underline hover:text-gray-700 text-gray-800 flex"><i data-lucide="paw-print"></i><span class="md:block hidden"> My Pets</span></a>
-                <a href="#" class="hover:underline hover:text-gray-700 text-gray-800 flex"><i data-lucide="notebook-pen"></i><span class="md:block hidden">Appointments</span></a>
-                <a href="#" class="hover:underline hover:text-gray-700 text-gray-800 flex"><i data-lucide="philippine-peso"></i><span class="md:block hidden">Price Lists</span></a>
+                <a href="{{route ('dashboard')}}" class="hover:text-white text-gray-800 flex"><i data-lucide="house"></i><span class="md:block hidden"> Home</span></a>
+                <a href="#pets" class="hover:text-white text-gray-900 flex"><i data-lucide="paw-print"></i><span class="md:block hidden"> My Pets</span></a>
+                <a href="#appointments" class="hover:text-white text-gray-900 flex"><i data-lucide="notebook-pen"></i><span class="md:block hidden">Appointments</span></a>
+                <a href="#pricelists" class="hover:text-white text-gray-900 flex"><i data-lucide="philippine-peso"></i><span class="md:block hidden">Price Lists</span></a>
             </div>
 
 
@@ -63,18 +63,40 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('profile.edit')">
-                                    {{ __('Profile') }}
+
+                                <x-dropdown-link :href="route('profile.edit')" class="hover:bg-orange-300">
+                                    <div class="flex flex-row items-center gap-1">
+                                        <i data-lucide="circle-user" class=" text-black"></i>
+                                        {{ __('Profile') }}
+                                    </div>
+                                </x-dropdown-link>
+
+                                <x-dropdown-link class="hover:bg-orange-300">
+                                    <div class="flex flex-row items-center gap-1">
+                                        <i data-lucide="bell" class=" text-black"></i>
+
+                                        {{ __('Notifications') }}
+                                    </div>
+                                </x-dropdown-link>
+
+                                <x-dropdown-link class="hover:bg-orange-300">
+                                    <div class="flex flex-row items-center gap-1">
+                                        <i data-lucide="message-square-text" class=" text-black"></i>
+                                        {{ __('Messages') }}
+                                    </div>
                                 </x-dropdown-link>
 
                                 <!-- Authentication -->
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
 
-                                    <x-dropdown-link :href="route('logout')"
+                                    <x-dropdown-link :href="route('logout') " class="hover:bg-orange-300"
                                         onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                        {{ __('Log Out') }}
+                                        <div class="flex flex-row items-center gap-1">
+                                            <i data-lucide="log-out" class=" text-black"></i>
+                                            {{ __('Log Out') }}
+                                        </div>
                                     </x-dropdown-link>
                                 </form>
                             </x-slot>
@@ -101,9 +123,8 @@
         <div class="rounded-2xl  md:h-full ">
             <img src="{{asset('images/welcome-booking.jpg')}}" alt="" class="w-full lg:h-full h-[160px]  object-cover" />
         </div>
-
         <!-- welcome to furrhub services -->
-        <div class="relative xl:p-6 p-2 items-start mt-2">
+        <div class="relative xl:p-6 p-2 items-start mt-2" id="pets">
             <div class="flex flex-row xl:text-5xl text-lg font-bold xl:px-[10rem] gap-2">
                 <i data-lucide="paw-print" class="xl:w-[5rem] xl:h-[5rem] w-[4rem] h-[4rem] mt-3 xl:mt-0 text-orange-500"> </i>
                 <div class="items-center justify-center xl:p-1 p-3">
@@ -118,7 +139,7 @@
             </div>
         </div>
 
-        <div class="relative xl:p-12 p-2 flex flex-col items-center">
+        <div class=" xl:p-12 p-2 flex flex-col items-center">
             <div class="flex justify-center mt-1">
                 <div class="w-full max-w-5xl">
                     <div class="grid grid-cols-1 gap-4 text-center">
@@ -126,8 +147,8 @@
                             <i data-lucide="bone" class="w-[50px] h-[50px] text-sky-600"></i>
                             <h1 class="xl:text-4xl  text-3xl font-bold text-sky-600 ">My Pets</h1>
                         </div>
-                        <div class="flex items-center text-center">
-                            <h1 class="xl:text-lg">Your pets have no appointment today.</h1>
+                        <div class="flex items-center text-center justify-center">
+                            <h1 class="xl:text-lg text-center">Your pets have no appointment today.</h1>
                         </div>
                     </div>
                     <!---pet images-->
@@ -150,9 +171,11 @@
                     </div>
                 </div>
             </div>
+        </div>
 
+        <div class=" xl:p-12 p-2 flex flex-col items-center" id="appointments">
             <!-- My Appointments Section -->
-            <div class="bg-white  rounded-lg mt-5 text-center w-full md:max-w-6xl md:mx-auto">
+            <div class="bg-white  rounded-lg mt-2 text-center w-full md:max-w-6xl md:mx-auto">
                 <!-- Title -->
                 <div class="flex items-center gap-2 justify-center">
                     <i data-lucide="notebook-pen" class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] text-sky-600"></i>
@@ -167,14 +190,13 @@
                     <button class="text-sm sm:text-lg font-semibold text-gray-700 px-4 py-2 rounded-lg hover:bg-yellow-400">
                         Wellness & Laboratory
                     </button>
-                    <button class="text-sm sm:text-lg font-semibold text-gray-700 px-4 py-2 rounded-lg hover:bg-green-400">
+                    <button class="text-sm sm:text-lg font-semibold text-gray-700 px-4 py-2 rounded-lg hover:bg-orange-400">
                         Veterinary
                     </button>
                     <button class="text-sm sm:text-lg font-semibold text-gray-700 px-4 py-2 rounded-lg hover:bg-sky-400">
                         Pet Insurance
                     </button>
                 </div>
-
                 <!-- No Appointments Text -->
                 <p class="text-gray-700 text-sm sm:text-lg mt-8 mb-12">No Appointments Found.</p>
             </div>
@@ -258,8 +280,144 @@
         </div>
     </div>
 
+    <!-- Price Lists Section -->
 
 
+
+    <section class="bg-orange-100" id="pricelists">
+        <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 ">
+            <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
+                <div class="flex justify-center items-center">
+                    <h2 class="mb-4 lg:text-4xl text-xl tracking-tight font-extrabold text-orange-500 mr-2">Affordable </h2>
+                    <i data-lucide="philippine-peso " class="mb-4 lg:w-10 lg:h-10 tracking-tight font-extrabold text-orange-500"></i>
+                    <h2 class=" mb-4 lg:text-4xl text-xl tracking-tight font-extrabold text-orange-500">ricelists</h2>
+                </div>
+
+                <p class=" mb-5 font-light text-gray-500 sm:text-xl">Find the best deals at budget-friendly prices without compromising quality!</p>
+            </div>
+            <div class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
+                <!-- Pricing Card -->
+                <div class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border-2 border-orange-300 shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105">
+                    <h3 class="mb-4 text-2xl font-semibold bg-orange-500 text-white p-2 rounded">GROOMING</h3>
+                    <p class="font-light text-gray-500 sm:text-lg">Reliable healthcare and diagnostic services at affordable prices!</p>
+                    <!-- List -->
+                    <div class="mx-auto max-w-lg mt-2 p-4">
+                        <ul id="list-item" class="list-disc space-y-3 text-gray-900 text-left text-sm">
+                            <li>Dog Full Grooming (≤10kg) - <span class="text-orange-500">₱600</span></li>
+                            <li class="hidden">Dog Full Grooming (11-20kg) - <span class="text-orange-500">₱800</span></li>
+                            <li class="hidden">Dog Full Grooming (21-30kg) - <span class="text-orange-500">₱1,000</span></li>
+                            <li>Dog Full Grooming (31-40kg) - <span class="text-orange-500">₱1,300</span></li>
+                            <li class="hidden">Dog Full Grooming (41-50kg) - <span class="text-orange-500">₱1,600</span></li>
+                            <li>Bath & Blowdry (≤10kg) - <span class="text-orange-500">₱300</span></li>
+                            <li class="hidden">Bath & Blowdry (11-20kg) - <span class="text-orange-500">₱500</span></li>
+                            <li>Bath & Blowdry (21-30kg) - <span class="text-orange-500">₱700</span></li>
+                            <li>Medicated Bath (≤10kg) - <span class="text-orange-500">₱300</span></li>
+                            <li class="hidden">Medicated Bath (11-20kg) - <span class="text-orange-500">₱500</span></li>
+                            <li class="hidden">Medicated Bath (21-30kg) - <span class="text-orange-500">₱700</span></li>
+                            <li class="hidden">Dematting - <span class="text-orange-500">₱500</span></li>
+                            <li>Pet Massage - <span class="text-orange-500">₱200</span></li>
+                            <li class="hidden">Dog Full Grooming (51-60kg) - <span class="text-orange-500">₱1,900</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border-2  border-orange-300 b shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105">
+                    <h3 class="mb-4 text-2xl font-semibold bg-orange-500 text-white p-2 rounded">Wellness & Laboratory</h3>
+                    <p class="font-light text-gray-500 sm:text-lg">Reliable healthcare and diagnostic services at affordable prices!</p>
+
+                    <!-- List -->
+                    <div class="mx-auto max-w-lg mt-2 p-4">
+                        <ul id="list-item" class="list-disc  space-y-3 text-gray-900 text-left text-sm">
+                            <li>Issuance of Health Certificate - <span class="text-orange-500">₱400.00</span></li>
+                            <li>Additional Puppy Book Charge - <span class="text-orange-500">₱100.00</span></li>
+                            <li>General Health Profile - <span class="text-orange-500">₱2,500.00</span></li>
+                            <li>Tooth Extraction Simple - <span class="text-orange-500">₱700.00</span></li>
+                            <li>Wound Cleaning - <span class="text-orange-500">₱400.00</span></li>
+                            <li>Consultation - <span class="text-orange-500">₱500.00</span></li>
+                            <li class="hidden">Dental Extraction (Per Tooth) Complicated - <span class="text-orange-500">₱700.00</span></li>
+                            <li class="hidden">Anal Sac Draining (Preventive) - <span class="text-orange-500">₱300.00</span></li>
+                            <li class="hidden">Anal Gland Expression (Routine) - <span class="text-orange-500">₱500.00</span></li>
+                            <li class="hidden">Digital X-ray - <span class="text-orange-500">₱1,000.00</span></li>
+                            <li class="hidden">Ultrasound - <span class="text-orange-500">₱700.00</span></li>
+                            <li class="hidden">Complete Blood Count - <span class="text-orange-500">₱800.00</span></li>
+                            <li class="hidden">Urinalysis Microscopic Exam - <span class="text-orange-500">₱600.00</span></li>
+                            <li class="hidden">Bacterial Culture and Antibiotic Sensitivity - <span class="text-orange-500">₱500.00</span></li>
+                            <li class="hidden">Intestinal Parasite Check - <span class="text-orange-500">₱2,500.00</span></li>
+                            <li class="hidden">Heartworm Antigen Test Kit - <span class="text-orange-500">₱1,000.00</span></li>
+                            <li class="hidden">Distemper Antigen Test Kit - <span class="text-orange-500">₱1,000.00</span></li>
+                            <li class="hidden">Skin Cytology - <span class="text-orange-500">₱350.00</span></li>
+                            <li class="hidden">Ear Cytology - <span class="text-orange-500">₱350.00</span></li>
+                            <li class="hidden">Professional Dental Cleaning 10kg below - <span class="text-orange-500">₱3,000.00</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border-2 border-orange-300 shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105">
+                    <h3 class="mb-4 text-lg font-semibold bg-orange-500 text-white p-2 rounded">VACCINATION & PHARMACY</h3>
+                    <p class="font-light text-gray-500 sm:text-lg">Reliable healthcare and diagnostic services at affordable prices!</p>
+
+                    <!-- List -->
+                    <div class="mx-auto max-w-lg mt-2 p-4">
+                        <ul id="list-item" class="list-disc space-y-3 text-gray-900 text-left text-sm">
+                            <li>Deworming 21kg to 30kg Tablet - <span class="text-orange-500">₱500.00</span></li>
+                            <li>Tricat Vaccine - <span class="text-orange-500">₱1,200.00</span></li>
+                            <li>Vaccine 6-in-1 - <span class="text-orange-500">₱950.00</span></li>
+                            <li>Vaccine Kennel Cough - <span class="text-orange-500">₱1,000.00</span></li>
+                            <li>Vaccine Anti Rabies - <span class="text-orange-500">₱400.00</span></li>
+                            <li>RCCP Vaccine - <span class="text-orange-500">₱1,000.00</span></li>
+                            <li class="hidden">Proheart Injection 5kg below - <span class="text-orange-500">₱1,500.00</span></li>
+                            <li class="hidden">Proheart Injection 6kg to 10kg - <span class="text-orange-500">₱2,000.00</span></li>
+                            <li class="hidden">Proheart Injection 11kg to 15kg - <span class="text-orange-500">₱2,500.00</span></li>
+                            <li class="hidden">Deworming 6kg to 10kg Tablet - <span class="text-orange-500">₱300.00</span></li>
+                            <li class="hidden">Deworming 11kg to 20kg Tablet - <span class="text-orange-500">₱400.00</span></li>
+                            <li class="hidden">Proheart Injection 16kg to 20kg - <span class="text-orange-500">₱4,500.00</span></li>
+                            <li class="hidden">Antibiotic Injection 5kg below - <span class="text-orange-500">₱300.00</span></li>
+                            <li class="hidden">Antibiotic Injection 6kg to 10kg - <span class="text-orange-500">₱400.00</span></li>
+                            <li class="hidden">Antibiotic Injection 11kg to 20kg - <span class="text-orange-500">₱500.00</span></li>
+                            <li class="hidden">Multivitamin Injection 5kg below - <span class="text-orange-500">₱300.00</span></li>
+                            <li class="hidden">Multivitamin Injection 6kg to 10kg - <span class="text-orange-500">₱400.00</span></li>
+                            <li class="hidden">Multivitamin Injection 11kg to 20kg - <span class="text-orange-500">₱500.00</span></li>
+                            <li class="hidden">Multivitamin Injection 21kg to 40kg - <span class="text-orange-500">₱700.00</span></li>
+                            <li class="hidden">Tolfidine Injection - <span class="text-orange-500">₱300.00</span></li>
+                            <li class="hidden">Corforta Roborant - <span class="text-orange-500">₱350.00</span></li>
+                            <li class="hidden">Biocan - <span class="text-orange-500">₱800.00</span></li>
+                            <li class="hidden">Deworming 5kg below Tablet - <span class="text-orange-500">₱190.00</span></li>
+                            <li class="hidden">Vaccine 8-in-1 - <span class="text-orange-500">₱750.00</span></li>
+                    </div>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex justify-center ">
+                <button id="see-more-btn" class="mt-4 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 w-32">
+                    See More
+                </button>
+            </div>
+        </div>
+    </section>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const button = document.getElementById("see-more-btn");
+                        const hiddenItems = document.querySelectorAll("ul li.hidden");
+                        let expanded = false;
+
+                        button.addEventListener("click", function() {
+                            if (!expanded) {
+                                hiddenItems.forEach(item => item.classList.remove("hidden"));
+                                button.textContent = "Show Less";
+                            } else {
+                                hiddenItems.forEach(item => item.classList.add("hidden"));
+                                button.textContent = "See More";
+                            }
+                            expanded = !expanded;
+                        });
+                    });
+                </script>
+
+
+
+    <!-- Return to Top Button -->
+    <x-return-top />
 </body>
 
 <x-footer bgColor=" bg-gradient-to-r from-orange-600" />

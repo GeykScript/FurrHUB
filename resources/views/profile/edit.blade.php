@@ -10,11 +10,9 @@
                     <div class="bg-black md:w-[2px] md:h-[3rem] w-[1px] h-[2rem]"></div>
                     <div class="md:ml-6 ml-3 text-sm md:text-3xl font-medium">Update Profile</div>
                 </div>
-                <div>
-                    <a href="{{ route('dashboard') }}">
-                        <img src="{{asset ('logo/x.svg')}}" alt="cancel" class="h-5 w-5 md:h-10 md:w-10 hover:cursor-pointer" />
-                    </a>
-                </div>
+                <button onclick="window.history.back()">
+                    <img src="{{ asset('logo/x.svg') }}" alt="cancel" class="h-5 w-5 md:h-10 md:w-10 hover:cursor-pointer" />
+                </button>
             </div>
         </div>
     </header>
