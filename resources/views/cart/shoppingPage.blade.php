@@ -47,11 +47,8 @@
                 <div class="w-full text-xl text-gray-500 dark:text-gray-400">
                     <div class="grid grid-cols-1 xl:grid-cols-5 gap-4 text-xl font-bold text-gray-800 uppercase border border-sky-300 bg-sky-200 p-4 hidden xl:grid rounded-xl">
                         <div class="flex justify-between pr-[20rem] col-span-2">
-                            <div class="flex justify-center xl:justify-start">
-                                <input id="checkbox-all-search" type="checkbox" class="rounded mt-4 border-2 border-sky-400 text-sky-600 shadow-sm focus:ring-sky-500 w-[1.3rem] h-[1.3rem] hover:cursor-pointer">
-                                <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                            </div>
-                            <div class="px-6 py-3 text-center xl:text-left">Product</div>
+
+                            <div class="px-20 py-3 text-center xl:text-left">Product</div>
                         </div>
 
                         <div class="px-6 py-3 text-center col-span-1">Total Price</div>
@@ -245,7 +242,7 @@
 
                     <!-- fixed bottom part -->
                     <div class="sticky bottom-0 p-4 border-t-0 border-gray-300 shadow-[0_-2px_10px_rgba(0,0,0,0.2)] mt-5 bg-orange-200 rounded-lg xl:h-24">
-                        <form action="" method="POST">
+                        <form action="{{ route('checkoutPage') }}" method="POST">
                             @csrf
                             <div class="grid grid-cols-1 xl:grid-cols-5 gap-4 xl:mt-3">
                                 <div class="col-span-2 flex flex-row justify-between lg:pr-[10rem] ">
@@ -262,18 +259,19 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-row items-center gap-2 col-span-1 xl:col-span-1">
-                                    <p class="xl:text-xl  text-sm text-gray-800">Total</p>
-                                    <p class="xl:text-xl  text-sm text-orange-500">(<span>3</span> items)</p>
+                                    <p class="xl:text-xl text-sm text-gray-800">Total</p>
+                                    <p class="xl:text-xl text-sm text-orange-500">(<span>3</span> items)</p>
                                 </div>
                                 <div class="flex flex-row items-center gap-2 col-span-1 xl:col-span-1 lg:justify-center">
-                                    <p class="xl:text-3xl text-lg  font-bold text-orange-500">₱</p>
+                                    <p class="xl:text-3xl text-lg font-bold text-orange-500">₱</p>
                                     <p class="xl:text-2xl text-lg font-bold text-orange-500">1050.00</p>
                                 </div>
-                                <div class="flex flex-row justify-center items-center  col-span-2 xl:col-span-1">
+                                <div class="flex flex-row justify-center items-center col-span-2 xl:col-span-1">
                                     <button type="submit" class="bg-orange-500 hover:bg-orange-400 text-white font-bold py-2 px-4 rounded-xl w-full xl:w-[15rem] xl:h-12">Checkout</button>
                                 </div>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>

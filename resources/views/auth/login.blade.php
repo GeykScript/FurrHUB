@@ -19,7 +19,10 @@
 <header class="flex bg-white  flex-row justify-start items-center w-full md:px-10 px-5 py-1">
     <div class="flex flex-row items-center justify-start w-full">
         <div class="">
-            <img src="{{ asset('logo/logo1.png') }}" alt="furrhub-logo" class="h-[60px] w-[150px] lg:h-[120px] lg:w-[300px] " />
+            <a href="{{ route('welcome') }}" class="border-none focus:outline-none focus:ring-0 focus:border-transparent">
+
+                <img src="{{ asset('logo/logo1.png') }}" alt="furrhub-logo" class="h-[60px] w-[150px] lg:h-[120px] lg:w-[300px] " />
+            </a>
         </div>
         <div class="flex flex-row items-center justify-between w-full">
             <div class="flex flex-row  items-center justify-evenly ml-1 md:ml-5">

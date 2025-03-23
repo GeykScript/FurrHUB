@@ -163,7 +163,7 @@
                         </div>
                         <!--add new pet-->
                         <div class="flex flex-col justify-center items-center text-center p-4  hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 ">
-                            <div class="w-[110px] h-[110px] flex justify-center items-center border-2 border-gray-500 bg-sky-400 hover:bg-sky-300 rounded-xl transition duration-200">
+                            <div class="w-[110px] h-[110px] flex justify-center items-center border-4 border-gray-700 bg-sky-400 hover:bg-sky-300 rounded-xl transition duration-200">
                                 <i data-lucide="plus" class="w-[30px] h-[30px]"></i>
                             </div>
                             <h1 class="mt-2 font-semibold">Add Pet</h1>

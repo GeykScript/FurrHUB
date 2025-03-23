@@ -19,7 +19,10 @@
 <header class="flex bg-white  flex-row justify-start items-center w-full md:px-10 px-5 py-1">
     <div class="flex flex-row items-center justify-start w-full">
         <div class="">
-            <img src="{{ asset('logo/logo1.png') }}" alt="furrhub-logo" class="h-[60px] w-[150px] lg:h-[120px] lg:w-[300px] " />
+            <a href="{{ route('welcome') }}" class="border-none focus:outline-none focus:ring-0 focus:border-transparent">
+
+                <img src="{{ asset('logo/logo1.png') }}" alt="furrhub-logo" class="h-[60px] w-[150px] lg:h-[120px] lg:w-[300px] " />
+            </a>
         </div>
         <div class="flex flex-row items-center justify-between w-full">
             <div class="flex flex-row  items-center justify-evenly ml-1 md:ml-5">
@@ -41,9 +44,9 @@
             <img src="{{asset('images/furrhub-login-signin/1.jpg')}}" alt="" class="w-[100%] h-[100%] md:rounded-l-[15px] md:rounded-r-[0px]  rounded-t-[15px] " />
         </div>
         <div class="md:h-[43rem] bg-white md:w-[40rem]  w-[20rem] h-[28rem] md:rounded-r-[15px] rounded-b-[10px] md:rounded-b-[0px]  flex items-center justify-center">
-            
+
             <div class="w-[80%] md:w-[75%] h[10rem]">
-                   <div class="flex justify-center"> 
+                <div class="flex justify-center">
                     <h1 class="md:text-[2rem] text-[1rem]  uppercase tracking-widest font-semibold text-gray-600">FORGOT PASSWORD</h1>
                 </div>
                 <div class="mb-4 text-md text-gray-600 mt-10">
@@ -54,7 +57,7 @@
                 <x-auth-session-status class="mb-4" :status="session('status')" />
 
                 <form method="POST" action="{{ route('password.email') }}">
-                    
+
                     @csrf
 
                     <!-- Email Address -->

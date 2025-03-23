@@ -25,9 +25,11 @@ Route::middleware('auth')->group(function () {
 });
 
 
+use App\Http\Controllers\PaymentController;
+Route::post('/checkout/process', [PaymentController::class, 'process'])->name('checkout.process');
 
-
-
+use App\Http\Controllers\checkoutPageController;
+Route::post('/checkoutPage', [checkoutPageController::class, 'index'])->name('checkoutPage');
 Route::get('/shoppingCart', [ShoppingCartController::class, 'index'])->name('shoppingCart');
 Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment');
 Route::get('/product/view', [ProductController::class, 'viewProduct'])->name('product.view');

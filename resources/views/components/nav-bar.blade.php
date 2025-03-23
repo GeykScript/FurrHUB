@@ -60,6 +60,20 @@
 
                         <x-dropdown-link class="hover:bg-orange-300">
                             <div class="flex flex-row items-center gap-1">
+                                <i data-lucide="shopping-bag" class=" text-black"></i>
+                                {{ __('My Purchases') }}
+                            </div>
+                        </x-dropdown-link>
+
+                        <x-dropdown-link class="hover:bg-orange-300">
+                            <div class="flex flex-row items-center gap-1">
+                                <i data-lucide="heart" class=" text-black "></i>
+                                {{ __('My Wishlists') }}
+                            </div>
+                        </x-dropdown-link>
+
+                        <x-dropdown-link class="hover:bg-orange-300">
+                            <div class="flex flex-row items-center gap-1">
                                 <i data-lucide="bell" class=" text-black"></i>
 
                                 {{ __('Notifications') }}
