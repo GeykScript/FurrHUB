@@ -39,10 +39,18 @@ Route::get('/product/view', [ProductController::class, 'viewProduct'])->name('pr
 
 require __DIR__.'/auth.php';
 
-//  categories routes
+//  notification routes
 Route::get('/notifications', function () {
     return view('profile.notifications');
 })->name('notifications');
+
+//  notification routes
+Route::get('/wishlists', function () {
+    return view('profile.wishlists');
+})->name('wishlists');
+
+
+
 
 //  categories routes
 Route::get('/foods', function () {
