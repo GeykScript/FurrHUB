@@ -72,7 +72,7 @@
                             </div>
                         </x-dropdown-link>
 
-                        <x-dropdown-link class="hover:bg-orange-300">
+                        <x-dropdown-link :href="route('notifications')"  class="hover:bg-orange-300">
                             <div class="flex flex-row items-center gap-1">
                                 <i data-lucide="bell" class=" text-black"></i>
 

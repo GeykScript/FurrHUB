@@ -22,7 +22,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
 });
+
 
 
 use App\Http\Controllers\PaymentController;
@@ -37,7 +39,10 @@ Route::get('/product/view', [ProductController::class, 'viewProduct'])->name('pr
 
 require __DIR__.'/auth.php';
 
-
+//  categories routes
+Route::get('/notifications', function () {
+    return view('profile.notifications');
+})->name('notifications');
 
 //  categories routes
 Route::get('/foods', function () {
@@ -67,8 +72,6 @@ Route::get('/health-needs', function () {
 Route::get('/essentials', function () {
     return view('Categories.essentials');
 })->name('essentials');
-
-
 
 
 
