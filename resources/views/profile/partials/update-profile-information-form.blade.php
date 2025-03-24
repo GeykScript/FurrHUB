@@ -16,7 +16,7 @@
             <!-- Profile Picture -->
             <div class="col-span-2 flex flex-col items-center">
                 <div class="lg:w-[260px] lg:h-[260px] w-[200px] h-[200px] bg-orange-300 rounded-full flex items-center justify-center">
-                    <img id="preview" src="{{ asset('storage/profile_picture/' . $user->profile_img) }}" alt="Profile Picture" class="lg:w-[260px] lg:h-[260px] w-[200px] h-[200px] rounded-full object-cover">
+                    <img id="preview" src="{{ asset('storage/profile_picture/' . $user->profile_img) }}"  class="lg:w-[260px] lg:h-[260px] w-[200px] h-[200px] rounded-full object-cover">
                 </div>
                 <label for="profile_picture" class="mt-3 inline-flex items-center p-2  gap-2 border border-orange-500 text-orange-500 text-sm rounded-lg hover:bg-orange-100 cursor-pointer">
                     <input type="file" id="profile_picture" name="profile_picture" class="hidden" accept="image/*">

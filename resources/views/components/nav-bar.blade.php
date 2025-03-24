@@ -35,9 +35,10 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-md leading-4 font-medium rounded-md  hover:text-gray-800 focus:outline-none transition ease-in-out duration-150">
-                            <div class="flex flex-row items-center justify-center">
+                            <div class="flex flex-row items-center gap-2 justify-center">
+
                                 <p class="">{{ Auth::user()->first_name}} {{ Auth::user()->last_name}}</p>
-                                <img src="{{ asset ('logo/user.svg')}}" alt="user" class="h-[25px] w-[30px] lg:h-[40px] lg:w-[43px]" />
+                                <img id="profile" src="{{ asset('storage/profile_picture/' . Auth::user()->profile_img) }}" alt="Profile Picture" class="h-[25px] w-[30px] lg:h-[40px] lg:w-[43px] border-2 border-gray-800 rounded-full object-cover">
 
                             </div>
 
@@ -53,19 +54,21 @@
 
                         <x-dropdown-link :href="route('profile.edit')" class="hover:bg-orange-300">
                             <div class="flex flex-row items-center gap-1">
+
                                 <i data-lucide="circle-user" class=" text-black"></i>
+
                                 {{ __('Profile') }}
                             </div>
                         </x-dropdown-link>
 
-                        <x-dropdown-link class="hover:bg-orange-300">
+                        <x-dropdown-link :href="route('orders')" class="hover:bg-orange-300">
                             <div class="flex flex-row items-center gap-1">
                                 <i data-lucide="shopping-bag" class=" text-black"></i>
-                                {{ __('My Purchases') }}
+                                {{ __('My Orders') }}
                             </div>
                         </x-dropdown-link>
 
-                        <x-dropdown-link :href="route('wishlists')"  class="hover:bg-orange-300">
+                        <x-dropdown-link :href="route('wishlists')" class="hover:bg-orange-300">
                             <div class="flex flex-row items-center gap-1">
                                 <i data-lucide="heart" class=" text-black "></i>
                                 {{ __('My Wishlists') }}
@@ -73,18 +76,34 @@
                         </x-dropdown-link>
 
                         <x-dropdown-link :href="route('notifications')" class="hover:bg-orange-300">
-                            <div class="flex flex-row items-center gap-1">
-                                <i data-lucide="bell" class=" text-black"></i>
+                            <div class="flex flex-row items-center space-x-2 relative gap-1">
+                                <div class="relative">
+                                    <!-- Bell Icon -->
+                                    <i data-lucide="bell" class="text-black text-lg"></i>
+
+                                    <!-- Notification Badge -->
+                                    <span class="absolute -top-1 -left-1 bg-red-500 text-white rounded-full h-[16px] w-[16px] text-[9px] font-semibold flex items-center justify-center">
+                                        10
+                                    </span>
+                                </div>
 
                                 {{ __('Notifications') }}
                             </div>
+
                         </x-dropdown-link>
 
                         <x-dropdown-link class="hover:bg-orange-300">
-                            <div class="flex flex-row items-center gap-1">
-                                <i data-lucide="message-square-text" class=" text-black"></i>
+                            <div class="flex flex-row items-center space-x-2 relative gap-1">
+                                <div class="relative">
+                                    <i data-lucide="message-square-text" class=" text-black"></i>
+                                    <!-- Notification Badge -->
+                                    <span class="absolute -top-1 -left-1 bg-red-500 text-white rounded-full h-[16px] w-[16px] text-[9px] font-semibold flex items-center justify-center">
+                                        22
+                                    </span>
+                                </div>
                                 {{ __('Messages') }}
                             </div>
+
                         </x-dropdown-link>
 
                         <!-- Authentication -->

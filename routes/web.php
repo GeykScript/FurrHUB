@@ -44,10 +44,18 @@ Route::get('/notifications', function () {
     return view('profile.notifications');
 })->name('notifications');
 
-//  notification routes
+//  wishlist routes
 Route::get('/wishlists', function () {
     return view('profile.wishlists');
 })->name('wishlists');
+
+//   my purchases routes
+Route::get('/orders', function () {
+    return view('profile.orders');
+})->name('orders');
+
+
+
 
 
 
