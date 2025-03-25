@@ -60,6 +60,13 @@ Route::get('/messages', function () {
 })->name('messages');
 
 
+Route::get('/add-pet', function () {
+    return view('services.add-pet');
+})->name('add-pet');
+
+
+
+
 
 
 
