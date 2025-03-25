@@ -92,7 +92,7 @@
 
                         </x-dropdown-link>
 
-                        <x-dropdown-link class="hover:bg-orange-300">
+                        <x-dropdown-link :href="route('messages')" class="hover:bg-orange-300">
                             <div class="flex flex-row items-center space-x-2 relative gap-1">
                                 <div class="relative">
                                     <i data-lucide="message-square-text" class=" text-black"></i>

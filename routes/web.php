@@ -54,6 +54,11 @@ Route::get('/orders', function () {
     return view('profile.orders');
 })->name('orders');
 
+//   my purchases routes
+Route::get('/messages', function () {
+    return view('profile.messages');
+})->name('messages');
+
 
 
 
