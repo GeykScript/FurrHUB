@@ -64,6 +64,10 @@ Route::get('/add-pet', function () {
     return view('services.add-pet');
 })->name('add-pet');
 
+Route::get('/add-appointment', function () {
+    return view('services.add-appointment');
+})->name('add-appointment');
+
 
 
 
