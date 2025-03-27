@@ -60,6 +60,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
+
         Schema::create('addresses', function (Blueprint $table) {
             $table->id('address_id');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
@@ -67,10 +68,8 @@ return new class extends Migration
             $table->string('city', 100);
             $table->string('barangay', 100);
             $table->string('street', 50);
-            $table->string('building_name', 50);
-            $table->integer('house_number');
             $table->integer('postal_code');
-            $table->integer('status');
+            $table->boolean('default')->default(true);
             $table->timestamps();
         });
 
@@ -78,13 +77,13 @@ return new class extends Migration
             $table->id('status_id'); // Creates 'status_id' as primary key with AUTO_INCREMENT
             $table->string('status_name', 255);
             $table->string('status_details', 255);
-            $table->timestamp('created_at')->useCurrent(); // Equivalent to DEFAULT current_timestamp()
-            $table->timestamp('modified_at')->nullable()->useCurrentOnUpdate(); // ON UPDATE current_timestamp()
-            $table->timestamp('deleted_at')->nullable(); // For soft deletion
+            $table->timestamps(); // Adds 'created_at' and 'updated_at' columns
 
             // Optionally, you can add soft deletes if you plan to use Laravel's SoftDeletes trait
             // $table->softDeletes(); // This creates 'deleted_at' column automatically
         });
+
+
 
         Schema::create('discounts', function (Blueprint $table) {
             $table->id('discount_id'); // Laravel automatically creates 'id' as the primary key
@@ -92,7 +91,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->enum('discount_type', ['percentage', 'fixed']);
             $table->decimal('discount_value', 10, 2);
-            $table->timestamp('start_date')->useCurrent(); // Equivalent to DEFAULT CURRENT_TIMESTAMP
+            $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
             $table->unsignedBigInteger('status_id');
             $table->timestamps();
@@ -148,7 +147,7 @@ return new class extends Migration
             $table->id('wishlist_id'); // Auto-incrementing primary key
             $table->unsignedBigInteger('user_id'); // Foreign key reference
             $table->unsignedBigInteger('product_id'); // Foreign key reference
-            $table->timestamp('added_on');
+            $table->timestamps(); // Adds created_at & updated_at
 
             // Foreign key constraints
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -174,22 +173,25 @@ return new class extends Migration
             $table->foreign('discount_id')->references('discount_id')->on('discounts')->onDelete('set null');
         });
 
- Schema::create('payment_methods', function (Blueprint $table) {
+         Schema::create('payment_methods', function (Blueprint $table) {
             $table->id('payment_method_id'); // Auto-incrementing primary key
             $table->string('payment_name', 30); // Name of the payment method
-            $table->string('image_path', 255)->nullable(); // Nullable image path
             $table->timestamps(); // Adds created_at & updated_at
         });
 
 
+     
         Schema::create('appointments', function (Blueprint $table) {
             $table->id('appointment_id'); // Auto-incrementing primary key
             $table->unsignedBigInteger('user_id'); // Foreign key reference
             $table->unsignedBigInteger('service_id'); // Foreign key reference
-            $table->date('appointment_date');
+            $table->date('appointment_date'); // Stores only the date
+            $table->time('appointment_time'); // Stores only the time
             $table->unsignedBigInteger('pet_id'); // Foreign key reference
             $table->unsignedBigInteger('payment_status'); // Foreign key reference
             $table->unsignedBigInteger('payment_method'); // Foreign key reference
+            $table->text('receipts', 255)->nullable(); // Nullable image path
+
             $table->timestamps();
 
             // Foreign key constraints
@@ -200,7 +202,8 @@ return new class extends Migration
             $table->foreign('payment_method')->references('payment_method_id')->on('payment_methods')->onDelete('cascade');
         });
 
-       
+
+
 
         Schema::create('orders', function (Blueprint $table) {
             $table->id('order_id'); // Auto-incrementing primary key
@@ -210,7 +213,9 @@ return new class extends Migration
             $table->unsignedBigInteger('status'); // Order status
             $table->unsignedBigInteger('payment_status'); // Payment status
             $table->unsignedBigInteger('payment_method'); // Payment method (FK)
-          
+            $table->text('receipts', 255)->nullable(); // Nullable image path
+
+
             $table->timestamps();
 
             // Foreign key constraints
@@ -262,7 +267,7 @@ return new class extends Migration
 
             // Foreign key constraints
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('admin_id')->references('id')->on('users')->onDelete('set null'); // If admin is deleted, keep the message
+            $table->foreign('admin_id')->references('id')->on('admin')->onDelete('set null'); // If admin is deleted, keep the message
             $table->foreign('msg_status')->references('status_id')->on('statuses')->onDelete('cascade'); // Links msg_status to statuses
             $table->foreign('reply_status')->references('status_id')->on('statuses')->onDelete('cascade'); // Links reply_status to statuses
         });

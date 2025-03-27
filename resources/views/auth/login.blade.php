@@ -82,8 +82,8 @@
 
                 <!-- Remember Me -->
                 <div class="flex items-center justify-between mt-5">
-                    <label for="remember_me" class="inline-flex items-center hover:cursor-pointer">
-                        <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-sky-600 shadow-sm focus:ring-sky-500 w-[1.3rem] h-[1.3rem] hover:cursor-pointer" name="remember">
+                    <label for="remember" class="inline-flex items-center hover:cursor-pointer">
+                        <input id="remember" type="checkbox" class="rounded border-gray-300 text-sky-600 shadow-sm focus:ring-sky-500 w-[1.3rem] h-[1.3rem] hover:cursor-pointer" name="remember">
                         <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
                     </label>
 

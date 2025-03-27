@@ -15,7 +15,7 @@
 
 
             <div class="flex flex-row gap-3 ml-auto xl:ml-0">
-                <div class="flex flex-row text-black text-[12px] lg:text-[20px] font-semibold px-3 lg:px-0">
+                <div class="flex flex-row text-black text-[12px] xl:text-[20px] font-semibold px-3 lg:px-0">
                     <nav class="flex flex-row gap-1 md:gap-1 align-center">
                         @if (Route::has('login'))
 
