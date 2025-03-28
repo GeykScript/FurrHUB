@@ -16,105 +16,126 @@
 
 </head>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        filterAppointments("Grooming"); // Show default category
+    });
 
-<!-- bg-[#60E1FF] blue -->
-<!-- F0A02C  orange-->
-<!-- 38B6FF -->
-<!-- nav part -->
+    function filterAppointments(status) {
+        let appointments = document.querySelectorAll(".appointments");
 
+        appointments.forEach(appointment => {
+            let appointmentStatus = appointment.getAttribute("services");
 
-<header class="fixed top-0 z-50 flex bg-[#F0A02C] flex-row justify-start items-center w-full xl:px-10 px-5 py-1  shadow-lg  shadow-[0_8px_10px_rgba(0,0,0,0.2)]">
-    <div class="flex flex-row items-center justify-start w-full ">
-        <a href="{{route ('dashboard')}}" class="hover:cursor-pointer focus:outline-none">
-            <img src="{{ asset('logo/furrhub.png') }}" alt="furrhub-logo" class="h-[60px] w-full md:h-[130px] md:w-[250px] hidden xl:block " />
-        </a>
-        <div class="flex flex-col  lg:flex-row flex-col-reverse items-center justify-between w-full">
-            <div></div>
+            if (appointmentStatus === status) {
+                appointment.style.display = "flex";
+            } else {
+                appointment.style.display = "none";
+            }
+        });
 
-            <div class="flex flex-row lg:gap-20 lg:text-lg text-sm gap-10">
-                <a href="{{route ('dashboard')}}" class="hover:text-white text-gray-800 flex"><i data-lucide="house"></i><span class="md:block hidden"> Home</span></a>
-                <a href="#pets" class="hover:text-white text-gray-900 flex"><i data-lucide="paw-print"></i><span class="md:block hidden"> My Pets</span></a>
-                <a href="#appointments" class="hover:text-white text-gray-900 flex"><i data-lucide="notebook-pen"></i><span class="md:block hidden">Appointments</span></a>
-                <a href="#pricelists" class="hover:text-white text-gray-900 flex"><i data-lucide="philippine-peso"></i><span class="md:block hidden">Price Lists</span></a>
+        updateActiveTab(status);
+    }
+
+    function updateActiveTab(activeTab) {
+        let tabs = document.querySelectorAll(".filter-tab");
+        tabs.forEach(tab => {
+            if (tab.getAttribute("data-filter") === activeTab) {
+                tab.classList.add("border-orange-500", "text-orange-500", "font-bold");
+            } else {
+                tab.classList.remove("border-orange-500", "text-orange-500", "font-bold");
+            }
+        });
+    }
+</script>
+
+<!-- Modal Edit -->
+<dialog id="petEdit" class="p-6 rounded-lg shadow-lg w-full max-w-lg backdrop:bg-black/30">
+    <form method="POST" class="relative bg-white p-6 rounded-lg">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div class="col-span-2 flex flex-col items-center">
+                <div class="lg:w-[260px] lg:h-[260px] w-[200px] h-[200px] bg-orange-300 rounded-full flex items-center justify-center">
+                    <img id="preview" src="{{ asset('storage/profile_picture/profile_img') }}" class="lg:w-[260px] lg:h-[260px] w-[200px] h-[200px] rounded-full object-cover">
+                </div>
+                <label for="profile_picture" class="mt-3 inline-flex items-center p-2  gap-2 border border-orange-500 text-orange-500 text-sm rounded-lg hover:bg-orange-100 cursor-pointer">
+                    <input type="file" id="profile_picture" name="profile_picture" class="hidden" accept="image/*">
+                    <span class="ml-2">Edit Profile </span><i data-lucide="upload" class="h-4 w-4"></i>
+                </label>
             </div>
 
+            <!-- Pet's Name -->
+            <div class="col-span-1 sm:col-span-2">
+                <label class="block text-gray-700">Pet’s Name</label>
+                <input type="text" value="Jazz" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 mt-2" required>
+            </div>
 
-            <div class="flex flex-row gap-3 ml-auto xl:ml-0">
-                <div class="flex flex-row text-black text-[12px] lg:text-[20px] font-semibold px-3 lg:px-0">
-                    <nav class="flex flex-row gap-1 md:gap-1 align-center">
-                        @if (Route::has('login'))
+            <!-- Breed (Radio Buttons) -->
+            <div class="col-span-1 sm:col-span-2">
+                <label class="block text-gray-700 font-medium mb-2">Breed</label>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <!-- Radio Option for Dog -->
+                    <label class="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 bg-white cursor-pointer peer-checked:border-orange-400">
+                        <input type="radio" name="breed" readonly value="dog" class="peer h-5 w-5 text-orange-400 focus:ring-orange-400">
+                        <span class="peer-checked:text-orange-400">Dog</span>
+                    </label>
+                    <!-- Radio Option for Cat -->
+                    <label class="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 bg-white cursor-pointer peer-checked:border-orange-400">
+                        <input type="radio" name="breed" value="cat" class="peer h-5 w-5 text-orange-400 focus:ring-orange-400">
+                        <span class="peer-checked:text-orange-400">Cat</span>
+                    </label>
+                </div>
+            </div>
 
-                        @auth
-                        <x-dropdown align="right" width="48">
-                            <x-slot name="trigger">
-                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-md leading-4 font-medium rounded-md  hover:text-gray-800 focus:outline-none transition ease-in-out duration-150">
-                                    <div class="flex flex-row items-center justify-center">
-                                        <p class="">{{ Auth::user()->first_name}} {{ Auth::user()->last_name}}</p>
-                                        <img src="{{ asset ('logo/user.svg')}}" alt="user" class="h-[25px] w-[30px] lg:h-[40px] lg:w-[43px]" />
+            <!-- Breed (Dropdown) -->
+            <div>
+                <label class="block text-gray-700">Breed</label>
+                <select readonly class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 mt-2" required>
+                    <option value="">--Select--</option>
+                    <option value="">PitBull</option>
+                </select>
+            </div>
 
-                                    </div>
+            <!-- Age and Gender -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 col-span-1 sm:col-span-2">
+                <div>
+                    <label class="block text-gray-700">Age</label>
+                    <input type="number" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 mt-2 appearance-none" required min="1">
+                </div>
+                <div>
+                    <label class="block text-gray-700">Gender</label>
+                    <input value="male" readonly type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 mt-2" required>
+                </div>
+            </div>
 
-                                    <div class="ms-1">
-                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                </button>
-                            </x-slot>
-
-                            <x-slot name="content">
-
-                                <x-dropdown-link :href="route('profile.edit')" class="hover:bg-orange-300">
-                                    <div class="flex flex-row items-center gap-1">
-                                        <i data-lucide="circle-user" class=" text-black"></i>
-                                        {{ __('Profile') }}
-                                    </div>
-                                </x-dropdown-link>
-
-                                <x-dropdown-link class="hover:bg-orange-300">
-                                    <div class="flex flex-row items-center gap-1">
-                                        <i data-lucide="bell" class=" text-black"></i>
-
-                                        {{ __('Notifications') }}
-                                    </div>
-                                </x-dropdown-link>
-
-                                <x-dropdown-link class="hover:bg-orange-300">
-                                    <div class="flex flex-row items-center gap-1">
-                                        <i data-lucide="message-square-text" class=" text-black"></i>
-                                        {{ __('Messages') }}
-                                    </div>
-                                </x-dropdown-link>
-
-                                <!-- Authentication -->
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-
-                                    <x-dropdown-link :href="route('logout') " class="hover:bg-orange-300"
-                                        onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                        <div class="flex flex-row items-center gap-1">
-                                            <i data-lucide="log-out" class=" text-black"></i>
-                                            {{ __('Log Out') }}
-                                        </div>
-                                    </x-dropdown-link>
-                                </form>
-                            </x-slot>
-                        </x-dropdown>
-                        @else <a class="pt-1   hover:text-white" href="{{ route('login') }}">Log in </a>
-                        <p class="pt-1">|</p>
-                        @if (Route::has('register'))
-                        <a class="pt-1 hover:text-white" href="{{ route('register') }}">Sign up</a>
-                        @endif
-                        @endauth
-
-                        @endif
-                    </nav>
+            <!-- Weight and Size -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 col-span-1 sm:col-span-2">
+                <div>
+                    <label class="block text-gray-700">Weight (kg)</label>
+                    <input type="number" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 mt-2" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700">Size</label>
+                    <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 mt-2" required>
+                        <option value="">--Select--</option>
+                        <option value="">Small</option>
+                        <option value="">Medium</option>
+                        <option value="">Large</option>
+                        <option value="">Extra Large</option>
+                    </select>
                 </div>
             </div>
         </div>
-    </div>
-</header>
+
+        <!-- Buttons -->
+        <div class="flex flex-col sm:flex-row-reverse justify-end items-center gap-4 mt-6 w-full">
+            <a href="{{route('appointment')}}" class="text-gray-500 hover:text-gray-700">Cancel</a>
+            <button type="submit" class="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 w-full sm:w-auto">Submit</button>
+        </div>
+    </form>
+</dialog>
+<!-- nav part -->
+<x-nav-bar-2></x-nav-bar-2>
+
 
 <div class="lg:pt-[80px] pt-[70px] lg:mb-10"></div>
 
@@ -147,60 +168,115 @@
                             <i data-lucide="bone" class="w-[50px] h-[50px] text-sky-600"></i>
                             <h1 class="xl:text-4xl  text-3xl font-bold text-sky-600 ">My Pets</h1>
                         </div>
-                        <div class="flex items-center text-center justify-center">
-                            <h1 class="xl:text-lg text-center">Your pets have no appointment today.</h1>
-                        </div>
+
                     </div>
                     <!---pet images-->
                     <div class="grid grid-cols-2 gap-2  md:grid-cols-3 lg:grid-cols-3 lg:gap-6 mt-6 justify-center">
-                        <div class="flex flex-col justify-center items-center text-center p-4 hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90">
+                        <button onclick="document.getElementById('petEdit').showModal()" class="flex flex-col justify-center items-center text-center p-4 hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90">
                             <img src="{{ asset('images/services/max.jpg') }}" alt="Max" class="w-32 h-32 object-cover rounded-lg">
                             <h1 class="mt-2 font-semibold">Max</h1>
-                        </div>
-                        <div class="flex flex-col justify-center items-center text-center p-4 hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90">
+                        </button>
+                        <button onclick="document.getElementById('petEdit').showModal()" onclick="document.getElementById('petEdit').showModal()" class="flex flex-col justify-center items-center text-center p-4 hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90">
                             <img src="{{ asset('images/services/jazz.jpg') }}" alt="Max" class="w-32 h-32 object-cover rounded-lg">
                             <h1 class="mt-2 font-semibold ">Jazz</h1>
-                        </div>
+                        </button>
                         <!--add new pet-->
-                        <div class="flex flex-col justify-center items-center text-center p-4  hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 ">
+                        <a href="{{route('add-pet')}}" class="flex flex-col justify-center items-center text-center p-4  hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 ">
                             <div class="w-[110px] h-[110px] flex justify-center items-center border-4 border-gray-700 bg-sky-400 hover:bg-sky-300 rounded-xl transition duration-200">
                                 <i data-lucide="plus" class="w-[30px] h-[30px]"></i>
                             </div>
-                            <h1 class="mt-2 font-semibold">Add Pet</h1>
-                        </div>
+                            <p class="mt-2 font-semibold">Add Pet</p>
+                        </a>
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class=" xl:p-12 p-2 flex flex-col items-center" id="appointments">
+        <!-- My Appointments Section -->
+        <div class="bg-white  rounded-lg mt-2 text-center w-full md:max-w-6xl md:mx-auto">
+            <!-- Title -->
+            <div class="flex items-center gap-2 justify-center">
+                <i data-lucide="notebook-pen" class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] text-sky-600"></i>
+                <h2 class="text-2xl sm:text-4xl font-semibold text-sky-600">My Appointments</h2>
+            </div>
+
+            <a href="{{route('add-appointment')}}" class="flex items-center justify-end hover:underline hover:text-orange-400">
+                <i data-lucide="plus" class="w-[20px] h-[20px] sm:w-[30px] sm:h-[30px] text-orange-500"></i>
+                <h2 class="text-sm sm:text-lg font-semibold text-orange-500">Make an Appointment</h2>
+            </a>
+
+            <!-- Appointment Categories -->
+            <div class="flex flex-col items-center justify-center w-full px-4">
+                <!-- Filters -->
+                <div class="flex flex-row  mt-6 text-[12px] md:text-lg">
+                    <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="Grooming" onclick="filterAppointments('Grooming')">Grooming</button>
+                    <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="Wellness & Laboratory" onclick="filterAppointments('Wellness & Laboratory')">Wellness & Laboratory</button>
+                    <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="Veterinary" onclick="filterAppointments('Veterinary')">Veterinary</button>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center justify-center w-full px-4">
+                @php
+                $appointments = [
+                [
+                'service' => 'Grooming',
+                'date' => '3/26/2025',
+                'description' => 'Keep your pet fresh and clean with our professional grooming services.',
+                'details' => 'Includes a full bath, haircut, nail trimming, and ear cleaning.'
+                ],
+                [
+                'service' => 'Wellness & Laboratory',
+                'date' => '4/05/2025',
+                'description' => 'Ensure your pet’s health with up-to-date vaccinations.',
+                'details' => 'Rabies, DHPP, and other essential vaccines for your pet’s well-being.'
+                ],
+                [
+                'service' => 'Veterinary',
+                'date' => '',
+                'description' => 'No Appointments',
+                'details' => 'No Appointments for Veterinary'
+                ],
+                ];
+                @endphp
+                @foreach ($appointments as $appointment)
+                <div class="appointments flex flex-col lg:flex-row items-center lg:items-start gap-6 p-6 md:px-12 mt-6 border pb-6 w-full max-w-5xl mx-auto rounded-lg shadow-md bg-white" services="{{ $appointment['service'] }}">
+                    <!-- Image Section -->
+                    <div class="flex-shrink-0">
+                        <img src="{{ asset('logo/furrhub.png') }}"
+                            alt="Notification Image"
+                            class="w-32 h-32 rounded-lg object-contain">
+                    </div>
+                    <!-- Notification Details -->
+                    <div class="flex-1 text-center lg:text-left gap-2">
+                        <h2 class="text-xl font-bold">{{ $appointment['service'] }} Appointment</h2>
+                        <p class="text-gray-500">{{ $appointment['date'] }}</p>
+                        <p class="text-gray-500">{{ $appointment['description'] }}</p>
+
+                        <!-- Hidden Details -->
+                        <details class="mt-3">
+                            <summary class="cursor-pointer bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg text-sm inline-block">
+                                View Details
+                            </summary>
+                            <div class="mt-2 p-4 border rounded-lg bg-gray-100">
+                                <p class="text-gray-700">{{ $appointment['details'] }}</p>
+                            </div>
+                        </details>
                     </div>
                 </div>
+                @endforeach
+
+
             </div>
         </div>
 
-        <div class=" xl:p-12 p-2 flex flex-col items-center" id="appointments">
-            <!-- My Appointments Section -->
-            <div class="bg-white  rounded-lg mt-2 text-center w-full md:max-w-6xl md:mx-auto">
-                <!-- Title -->
-                <div class="flex items-center gap-2 justify-center">
-                    <i data-lucide="notebook-pen" class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] text-sky-600"></i>
-                    <h2 class="text-2xl sm:text-4xl font-semibold text-sky-600">My Appointments</h2>
-                </div>
-
-                <!-- Appointment Categories -->
-                <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 sm:gap-4 bg-orange-200 p-4 rounded-xl lg:mt-10 mt-3">
-                    <button class="text-sm sm:text-lg font-semibold text-gray-700 px-4 py-2 rounded-lg hover:bg-orange-400">
-                        Grooming
-                    </button>
-                    <button class="text-sm sm:text-lg font-semibold text-gray-700 px-4 py-2 rounded-lg hover:bg-yellow-400">
-                        Wellness & Laboratory
-                    </button>
-                    <button class="text-sm sm:text-lg font-semibold text-gray-700 px-4 py-2 rounded-lg hover:bg-orange-400">
-                        Veterinary
-                    </button>
-                    <button class="text-sm sm:text-lg font-semibold text-gray-700 px-4 py-2 rounded-lg hover:bg-sky-400">
-                        Pet Insurance
-                    </button>
-                </div>
-                <!-- No Appointments Text -->
-                <p class="text-gray-700 text-sm sm:text-lg mt-8 mb-12">No Appointments Found.</p>
-            </div>
-        </div>
+    </div>
     </div>
     <!-- Why Choose Us Section -->
     <section class="bg-orange-500 py-16 px-6 text-white w-full pb-20">
@@ -395,24 +471,24 @@
         </div>
     </section>
 
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        const button = document.getElementById("see-more-btn");
-                        const hiddenItems = document.querySelectorAll("ul li.hidden");
-                        let expanded = false;
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const button = document.getElementById("see-more-btn");
+            const hiddenItems = document.querySelectorAll("ul li.hidden");
+            let expanded = false;
 
-                        button.addEventListener("click", function() {
-                            if (!expanded) {
-                                hiddenItems.forEach(item => item.classList.remove("hidden"));
-                                button.textContent = "Show Less";
-                            } else {
-                                hiddenItems.forEach(item => item.classList.add("hidden"));
-                                button.textContent = "See More";
-                            }
-                            expanded = !expanded;
-                        });
-                    });
-                </script>
+            button.addEventListener("click", function() {
+                if (!expanded) {
+                    hiddenItems.forEach(item => item.classList.remove("hidden"));
+                    button.textContent = "Show Less";
+                } else {
+                    hiddenItems.forEach(item => item.classList.add("hidden"));
+                    button.textContent = "See More";
+                }
+                expanded = !expanded;
+            });
+        });
+    </script>
 
 
 

@@ -30,39 +30,46 @@
 
 <body class="font-sans antialiased bg-white-400 dark:text-black/50">
     <div class="bg-white">
-        <div class="flex flex-row justify-start items-center lg:px-10 px-2 gap-5 text-gray-600 text-semibold lg:text-lg mt-3 mb-3">
+        <div class="flex flex-row justify-start items-center lg:px-10 px-2 gap-5 text-gray-600 text-semibold text-xs lg:text-lg mt-10 lg:mt-3 mb-3">
             @if (Route::has('login'))
             @auth
             <a href="{{route('dashboard')}}" class="hover:text-orange-500">Home</a>
             <h1>
                 < </h1>
-                    <h1 class="text-orange-500 font-semibold">Product name</h1>
+                    <h1 class="text-orange-500 font-semibold">{{ $product->name }}</h1>
                     @else
                     <a href=" {{route('welcome')}}" class="hover:text-orange-500">Home</a>
                     <h1>
                         < </h1>
-                            <h1 class="text-orange-500 font-semibold">Product name</h1>
+                            <h1 class="text-orange-500 font-semibold">{{ $product->name }}</h1>
                             @endauth
                             @endif
         </div>
-
         <!-- product details -->
         <div class="grid grid-cols-1 lg:grid-cols-5    gap-5 lg:px-10 p-4  2xl:px-20 ">
             <div class="lg:col-span-2 col-span-5 p-4 rounded-lg shadow-xl border-2 border-gray-100">
                 <div class="swiper progress-slide-carousel swiper-container relative w-full h-full">
                     <div class="swiper-wrapper">
+
+                        <!-- First Product Image -->
                         <div class="swiper-slide w-full h-full">
-                            <img src="{{ asset('images/products/dog.jpg') }}" alt="carousel-pet-services"
+                            <img src="{{ asset('storage/Products/' . $product->image_url) }}" alt="carousel-products"
                                 class="w-full h-64 md:h-96 lg:h-full rounded-md object-cover md:object-contain" />
                         </div>
+                        <!-- 2nd  Product Image if it exists -->
+                        @if (!empty($product->image_url_2))
                         <div class="swiper-slide w-full h-full">
-                            <img src="{{ asset('images/products/cat-foods.webp') }}" alt="carousel-pet-services"
+                            <img src="{{ asset('storage/Products/' . $product->image_url_2) }}" alt="carousel-products"
                                 class="w-full h-64 md:h-96 lg:h-full rounded-md object-cover md:object-contain" />
                         </div>
+                        @endif
+                        <!-- 3rd  Product Image if it exists -->
+                        @if (!empty($product->image_url_3))
                         <div class="swiper-slide w-full h-full">
-                            <img src="{{ asset('images/products/dog.jpg') }}" alt="carousel-pet-services"
+                            <img src="{{ asset('storage/Products/' . $product->image_url_3) }}" alt="carousel-products"
                                 class="w-full h-64 md:h-96 lg:h-full rounded-md object-cover md:object-contain" />
                         </div>
+                        @endif
                     </div>
                     <div class="swiper-pagination"></div>
                 </div>
@@ -71,29 +78,58 @@
             <!-- product details -->
             <div class="lg:col-span-3  col-span-5  rounded-lg shadow-xl border-2 border-gray-100 lg:p-20 p-4">
                 <div class="">
-                    <h1 class="lg:text-4xl text-xl font-bold text-gray-700 text-wrap">Pedigree 18 Pouch Variety Pack</h1>
+                    <h1 class="lg:text-4xl text-xl font-bold text-gray-700 text-wrap">{{ $product->name }}</h1>
                     <div class="flex flex-row gap-5 lg:mt-5  mt-2 lg:text-lg  text-sm text-gray-700">
                         <h1>FurrHUB</h1>
                         <h1>|</h1>
-                        <h1>PSN: <span>xxxxxxxxxxxx</span></h1>
+                        <h1>PSN: <span>{{ $product->serial_number }}</span></h1>
                     </div>
                     <hr class="lg:border-2 border-1 border-gray-400 mt-2">
                     <div class="flex justify-end gap-1 mt-3 font-semibold lg:text-xl text-orange-400">
-                        <h1>1020</h1>
+                        <h1>{{ $product->quantity_sold }}</h1>
                         <h1>Sold</h1>
                     </div>
+                    @if (!empty($product->expiry_date))
                     <div class="lg:text-lg  text-gray-700 flex lg:gap-2 gap-1  mt-2">
                         <h1>Expiration Date:</h1>
-                        <h1>MM/DD/YY</h1>
+                        <h1>{{$product->expiry_date}}</h1>
                     </div>
-                    <div class="flex flex-row lg:gap-2 gap-1 mt-5 lg:text-4xl text-xl text-orange-500 font-semibold bg-orange-200 p-4  rounded-lg">
-                        <h1 class="lg:text-5xl text-xl">₱</h1>
-                        <h1 class="lg:mt-1">350</h1>
+                    @endif
+                    <div class="flex flex-col lg:gap-2 gap-1 mt-5  text-orange-500 font-semibold bg-orange-200 p-4  rounded-lg">
+                        @if (!empty($product->discount))
+                        <div class="flex flex-row items-center gap-2 ">
+                            <h1>₱</h1>
+                            <h1 class="line-through ">{{ number_format($product->price, 2) }}</h1>
+
+                            <h1 class="text-sm">{{ $product->discount_value }} <span class="text-sm">Discount</span></h1>
+
+                        </div>
+                        <div class="flex flex-row items-center gap-2">
+                            <h1 class="lg:text-4xl text-xl">₱</h1>
+                            <h1 class="lg:text-4xl text-xl">{{ number_format($product->discounted_price, 2) }}</h1>
+                        </div>
+                        @else
+                        <div class="flex flex-row items-center gap-2">
+                            <h1 class="lg:text-4xl text-xl">₱</h1>
+                            <h1 class="lg:text-4xl text-xl">{{ number_format($product->price, 2) }}</h1>
+                        </div>
+                        @endif
                     </div>
+
+                    @if (!empty($product->stock_quantity))
                     <div class="flex flex-row gap-5 mt-5 lg:text-lg text-gray-700">
                         <h1 class="font-semibold">Stock: </h1>
-                        <li class="text-green-500 font-semibold">In stock</li>
+                        <li class="text-green-500 font-semibold">In Stock <span class="text-xs">({{$product->stock_quantity}} items )</span>
+                        </li>
+
                     </div>
+                    @else
+                    <div class="flex flex-row gap-5 mt-5 lg:text-lg text-gray-700">
+                        <h1 class="font-semibold">Stock: </h1>
+                        <li class="text-red-500 font-semibold">Out of Stock</li>
+                    </div>
+                    @endif
+
                     <div class="flex flex-row gap-5 mt-5 lg:text-lg text-gray-700 items-center">
                         <h1 class="font-semibold">Quantity:</h1>
                         <div class="flex justify-start col-span-1">
@@ -135,8 +171,7 @@
             <!-- product details -->
             <div class="col-span-5 mt-2 ">
                 <h1 class="lg:text-3xl text-xl font-bold text-gray-700 text-wrap">Product Details</h1>
-                <h1 class="text-wrap mt-1 px-2">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa eligendi odit tempora suscipit deleniti quod quaerat, labore quidem sed libero! Porro autem libero quidem nam. Architecto ipsa est voluptate aut.</h1>
-                <h1 class="text-wrap mt-1 px-2">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa eligendi odit tempora suscipit deleniti quod quaerat, labore quidem sed libero! Porro autem libero quidem nam. Architecto ipsa est voluptate aut.</h1>
+                <h1 class="text-wrap mt-1 px-2">{{$product->description}}</h1>
             </div>
 
             <!-- product reviews -->
@@ -181,50 +216,42 @@
         </div>
         <div class="md:px-[3rem] mt-3 px-[1rem]">
             <div class="grid grid-cols-2 lg:grid-cols-6 gap-4  ">
-                @php
-                $products = [
-                [
-                'name' => 'Pedigree 18 Pouch Variety Pack',
-                'shop' => 'FurrHUB',
-                'price' => 350.00,
-                'image' => 'images/products/dog.jpg',
-                'sold' => 120
-                ],
-                [
-                'name' => 'Royal Canin Adult Cat Food',
-                'shop' => 'FurrHUB',
-                'price' => 350.00,
-                'image' => 'images/products/cat-foods.webp',
-                'sold' => 90
-                ]
-                ];
-                @endphp
-
-                @for ($i = 0; $i < 6; $i++)
-                    @php
-                    $product=$products[$i % count($products)];
-                    @endphp
-                    <div class="group relative xl:min-w-[230px] min-w-[150px] p-4 bg-white rounded-lg shadow-lg border-2 border-gray-100 hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90">
-                    <a href="{{ route('product.view') }}" class="focus:outline-none">
-                        <img src="{{ asset($product['image']) }}" alt="Best-Product" class="aspect-square w-full rounded-lg bg-gray-500 object-cover lg:aspect-auto lg:h-74">
-                        <div class="mt-2 flex justify-between flex flex-col gap-1">
-                            <p class="text-sm font-normal text-gray-500 text-end">{{ $product['sold'] }} sold</p>
-                            <h5 class="font-normal text-wrap text-orange-500 text-sm">{{ $product['shop'] }}</h5>
-                            <h4 class="font-semibold text-wrap text-black text-md">{{ $product['name'] }}</h4>
-                            <div class="flex justify-between">
-                                <h4 class="font-bold text-wrap text-orange-500 text-lg"><span class="text-xl">₱</span> {{ number_format($product['price'], 2) }}</h4>
+                @foreach($relatedProducts as $relatedProduct)
+                <div class="group relative xl:min-w-[230px] min-w-[150px] p-4 bg-white rounded-lg shadow-lg border-2 border-gray-100 hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90">
+                    <form action="{{ route('product.view') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $relatedProduct->product_id }}">
+                        <button type="submit" class="focus:outline-none">
+                            <img src="{{ asset('storage/Products/' . $relatedProduct->image_url) }}" alt="Best-Product" class="aspect-square w-full rounded-lg bg-gray-500 object-cover lg:aspect-auto lg:h-74">
+                            <div class="mt-2 flex justify-between flex flex-col gap-1">
+                                <p class="text-sm font-normal text-gray-500 text-end">{{ $relatedProduct->quantity_sold }} sold</p>
+                                <h5 class="font-normal text-wrap text-orange-500 text-start text-sm">{{ $relatedProduct->category->name ?? 'Unknown' }}</h5>
+                                <h4 class="font-semibold text-wrap text-black text-md text-start">{{ $relatedProduct->name }}</h4>
+                                @if (!empty($relatedProduct->discount))
+                                <h6 class="font-bold text-wrap text-orange-400 text-xs text-start line-through">
+                                    <span class="text-xs">₱</span> {{ number_format($relatedProduct->price, 2) }}
+                                </h6>
+                                <h4 class="font-bold text-wrap text-orange-500 text-lg text-start">
+                                    <span class="text-xl">₱</span> {{ number_format($relatedProduct->discounted_price, 2) }}
+                                </h4>
+                                @else
+                                <h4 class="font-bold text-wrap text-orange-500 text-lg text-start">
+                                    <span class="text-xl">₱</span> {{ number_format($relatedProduct->price, 2) }}
+                                </h4>
+                                @endif
                             </div>
-                        </div>
-                    </a>
+                        </button>
+                    </form>
+                </div>
+                @endforeach
+
+
             </div>
-            @endfor
+
+            <!-- banner -->
+            <x-authenticity-banner />
 
         </div>
-
-        <!-- banner -->
-        <x-authenticity-banner />
-
-    </div>
     </div>
 
     <!-- Return to Top Button -->

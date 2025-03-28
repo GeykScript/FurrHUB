@@ -8,14 +8,17 @@ use App\Http\Controllers\ProductController;
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+use App\Http\Controllers\WelcomeController;
+Route::get('/', [WelcomeController::class, 'products'])
+    ->name('welcome');
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+use App\Http\Controllers\DashboardController;
+
+
+Route::get('/dashboard', [DashboardController::class, 'products'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {
@@ -34,7 +37,11 @@ use App\Http\Controllers\checkoutPageController;
 Route::post('/checkoutPage', [checkoutPageController::class, 'index'])->name('checkoutPage');
 Route::get('/shoppingCart', [ShoppingCartController::class, 'index'])->name('shoppingCart');
 Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment');
-Route::get('/product/view', [ProductController::class, 'viewProduct'])->name('product.view');
+
+
+Route::post('/product/view', [ProductController::class, 'viewProduct'])->name('product.view');
+
+
 
 
 require __DIR__.'/auth.php';
@@ -58,6 +65,17 @@ Route::get('/orders', function () {
 Route::get('/messages', function () {
     return view('profile.messages');
 })->name('messages');
+
+
+Route::get('/add-pet', function () {
+    return view('services.add-pet');
+})->name('add-pet');
+
+Route::get('/add-appointment', function () {
+    return view('services.add-appointment');
+})->name('add-appointment');
+
+
 
 
 

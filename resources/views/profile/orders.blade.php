@@ -57,12 +57,10 @@
 <x-nav-bar />
 <div class="pt-[100px]"></div>
 
-
-
 <!-- catergory part -->
 
-<body class="font-sans antialiased bg-white-400 dark:text-black/50">
-    <div class="bg-white">
+<body class="font-sans antialiased bg-white-400 dark:text-black/50 min-h-screen flex flex-col">
+    <div class="bg-white flex-1">
 
         <div class="md:px-[12rem]  px-2 mt-10">
             <div class="flex flex-row items-center justify-start md:px-10 px-2 mt-5 h-20  ">
@@ -86,11 +84,11 @@
                 <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="All" onclick="filterOrders('All')">All</button>
                 <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="To Pay" onclick="filterOrders('To Pay')">To Pay</button>
                 <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="To Ship" onclick="filterOrders('To Ship')">To Ship</button>
-                <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="Completed" onclick="filterOrders('Completed')">Completed</button>
+                <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="Delivered" onclick="filterOrders('Delivered')">Delivered</button>
                 <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="Cancelled" onclick="filterOrders('Cancelled')">Cancelled</button>
             </div>
         </div>
-        <div class="order-item flex flex-col lg:flex-row items-center lg:items-start gap-6 p-6 md:px-12 mt-6 border pb-6 w-full max-w-5xl mx-auto rounded-lg shadow-md bg-white" data-status="Completed">
+        <div class="order-item flex flex-col lg:flex-row items-center lg:items-start gap-6 p-6 md:px-12 mt-6 border pb-6 w-full max-w-5xl mx-auto rounded-lg shadow-md bg-white" data-status="Delivered">
             <!-- Image Section -->
             <div class="flex-shrink-0">
                 <img src="{{ asset('images/products/dog.jpg') }}"
@@ -169,6 +167,6 @@
 
 </body>
 <!-- Footer -->
-<x-footer bgColor=" bg-gradient-to-r from-orange-600" />
+<x-footer bgColor=" bg-gradient-to-r from-orange-600" class="" />
 
 </html>

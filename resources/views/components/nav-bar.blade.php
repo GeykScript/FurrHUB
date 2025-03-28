@@ -38,7 +38,7 @@
                             <div class="flex flex-row items-center gap-2 justify-center">
 
                                 <p class="">{{ Auth::user()->first_name}} {{ Auth::user()->last_name}}</p>
-                                <img id="profile" src="{{ asset('storage/profile_picture/' . Auth::user()->profile_img) }}" alt="Profile Picture" class="h-[25px] w-[30px] lg:h-[40px] lg:w-[43px] border-2 border-gray-800 rounded-full object-cover">
+                                <img id="profile" src="{{ asset('storage/profile_picture/' . Auth::user()->profile_img) }}" alt="Profile Picture" class="h-[25px] w-[25px] lg:h-[40px] lg:w-[43px] border-2 border-gray-800 rounded-full object-cover">
 
                             </div>
 
