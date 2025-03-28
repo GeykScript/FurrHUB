@@ -57,8 +57,6 @@
 <x-nav-bar />
 <div class="pt-[100px]"></div>
 
-
-
 <!-- catergory part -->
 
 <body class="font-sans antialiased bg-white-400 dark:text-black/50 min-h-screen flex flex-col">
