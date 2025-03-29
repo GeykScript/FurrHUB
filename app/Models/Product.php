@@ -67,4 +67,7 @@ class Product extends Model
         }
         return 'No Category';
     }
+
+    
+    
 }

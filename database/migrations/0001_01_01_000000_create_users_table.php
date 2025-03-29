@@ -207,6 +207,7 @@ return new class extends Migration
 
         Schema::create('orders', function (Blueprint $table) {
             $table->id('order_id'); // Auto-incrementing primary key
+
             $table->unsignedBigInteger('user_id'); // Foreign key reference to users
             $table->decimal('total_amount', 10, 2);
             $table->string('reference_number', 50)->unique();
@@ -214,11 +215,14 @@ return new class extends Migration
             $table->unsignedBigInteger('payment_status'); // Payment status
             $table->unsignedBigInteger('payment_method'); // Payment method (FK)
             $table->text('receipts', 255)->nullable(); // Nullable image path
+            $table->unsignedBigInteger('shipping_address'); // Foreign key reference to addresses
+
 
 
             $table->timestamps();
 
             // Foreign key constraints
+            $table->foreign('shipping_address')->references('address_id')->on('addresses')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('status')->references('status_id')->on('statuses')->onDelete('cascade');
             $table->foreign('payment_status')->references('status_id')->on('statuses')->onDelete('cascade');
