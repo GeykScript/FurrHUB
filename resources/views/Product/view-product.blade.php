@@ -176,33 +176,68 @@
 
             <!-- product reviews -->
             <h1 class="lg:text-2xl text-md font-bold text-gray-700 text-wrap">Customer Reviews</h1>
-            <div class="col-span-5  rounded-lg shadow-xl border-2 border-gray-100">
-                <div class="flex flex-col gap-1 p-4">
-                    <div class="flex flex-row gap-2">
-                        <i data-lucide="circle-user"></i>
-                        <h1 class="lg:text-sm text-sm font-bold text-gray-700 text-wrap">John Doe</h1>
-                    </div>
-                    <p class="px-7">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit animi quo optio saepe deleniti laudantium distinctio, quidem labore veniam iure magni! Laudantium impedit modi fugiat. Harum sunt aliquam pariatur sapiente!</p>
-                    <div class="flex flex-row gap-2 mt-2">
-                        <div class="grid grid-cols-3 lg:grid-cols-12 gap-2">
-                            <img src="{{ asset('images/products/dog.jpg') }}" alt="reviews-photos" class="lg:h-[10rem] lg:w-[10rem]  w-[5rem] h-[5rem] object-contain" />
-                            <img src="{{ asset('images/products/dog.jpg') }}" alt="reviews-photos" class="lg:h-[10rem] lg:w-[10rem]  w-[5rem] h-[5rem] object-contain" />
-                            <img src="{{ asset('images/products/dog.jpg') }}" alt="reviews-photos" class="lg:h-[10rem] lg:w-[10rem]  w-[5rem] h-[5rem] object-contain" />
-                            <img src="{{ asset('images/products/dog.jpg') }}" alt="reviews-photos" class="lg:h-[10rem] lg:w-[10rem]  w-[5rem] h-[5rem] object-contain" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-span-5  rounded-lg shadow-xl border-2 border-gray-100">
-                <div class="flex flex-col gap-1 p-4">
-                    <div class="flex flex-row gap-2">
-                        <i data-lucide="circle-user"></i>
-                        <h1 class="lg:text-sm text-sm font-bold text-gray-700 text-wrap">John Doe</h1>
-                    </div>
-                    <p class="px-7">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit animi quo optio saepe deleniti laudantium distinctio, quidem labore veniam iure magni! Laudantium impedit modi fugiat. Harum sunt aliquam pariatur sapiente!</p>
 
+            @if($reviews->count() > 0)
+            @foreach($reviews as $review)
+            <div class="col-span-5  rounded-lg shadow-xl border-2 border-gray-100">
+                <div class="flex flex-col gap-1 p-4">
+                    <div class="flex flex-row gap-2">
+                        <i data-lucide="circle-user"></i>
+                        <h1 class="lg:text-sm text-sm font-bold text-gray-700 text-wrap "> {{ Str::title(strtolower($review->user->first_name)) }} {{ Str::title(strtolower($review->user->last_name)) }}
+                        </h1>
+                    </div>
+                    <!-- Review Ratings -->
+                    @if ($review->ratings)
+                    <div class="px-7 flex flex-row gap-2 text-yellow-400">
+                        @for ($i = 0; $i < 5; $i++)
+                            @if ($i < $review->ratings)
+                            <!-- Filled star -->
+                            <i data-lucide="star" class="fill-yellow-300"></i>
+                            @else
+                            <!-- Outlined star -->
+                            <i data-lucide="star"></i>
+                            @endif
+                            @endfor
+                    </div>
+                    @endif
+
+
+                    <small class="px-7">Reviewed on: {{ $review->review_date }}</small>
+                    <p class=" px-7">{{$review->review_text}}</p>
+                    <div class="flex flex-row gap-2 mt-2 px-7">
+                        <!-- Review Images  -->
+                        <div class="grid grid-cols-3 lg:grid-cols-12 gap-2">
+                            @foreach (['review_img', 'review_img2', 'review_img3'] as $index => $img)
+                            @if (!empty($review->$img))
+                            <button onclick="document.getElementById('view-pic{{ $index + 1 }}').showModal()">
+                                <img src="{{ asset('storage/Products/' . $review->$img) }}" alt="review-photo" class="lg:h-[10rem] lg:w-[10rem] w-[5rem] h-[5rem] object-contain" />
+                            </button>
+                            @endif
+                            @endforeach
+                        </div>
+                        <!-- Review Modal  -->
+                        @foreach (['review_img', 'review_img2', 'review_img3'] as $index => $img)
+                        @if (!empty($review->$img))
+                        <dialog id="view-pic{{ $index + 1 }}" class="backdrop:bg-black/50 p-4 rounded-lg shadow-lg">
+                            <div class="relative bg-white p-4 rounded-lg">
+                                <button onclick="document.getElementById('view-pic{{ $index + 1 }}').close()" class="absolute top-2 right-2 text-gray-600 hover:text-red-500 text-xl">&times;</button>
+                                <img src="{{ asset('storage/Products/' . $review->$img) }}" alt="review-photo" class="h-[20rem] w-[20rem] object-contain mx-auto" />
+                            </div>
+                        </dialog>
+                        @endif
+                        @endforeach
+                    </div>
                 </div>
             </div>
+            @endforeach
+            @else
+            <div class="col-span-5  rounded-lg shadow-xl border-2 border-gray-100">
+                <div class="flex flex-col gap-1 p-4 items-center justify-center">
+                    <i data-lucide="star" class=" w-20 h-20"></i>
+                    <h1 class="lg:text-xl text-md font-bold  text-wrap">No Reviews Yet.</h1>
+                </div>
+            </div>
+            @endif
         </div>
 
         <!-- related products -->

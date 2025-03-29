@@ -89,67 +89,71 @@
             <div class="w-full flex xl:gap-8 gap-2 sm:justify-center whitespace-nowrap scrollbar">
 
                 <div class="flex flex-col items-center space-y-2 min-w-[80px] sm:min-w-[100px] lg:p-2">
-                    <a href="{{route('foods')}}" class="hover:text-[#F0A02C] flex flex-col items-center space-y-2">
-                        <div class="w-16 h-16 sm:w-20 sm:h-20 xl:w-24 xl:h-24  rounded-lg ">
-                            <img src="{{asset('images/Furrhub-Product-Categories/Food.png')}}" alt="Food-category" class="transition-transform duration-300 hover:scale-110 " />
+                    <a href="{{ route('Categories.cat-products', ['category_id' => 1]) }}" class="hover:text-[#F0A02C] flex flex-col items-center space-y-2">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 xl:w-24 xl:h-24 rounded-lg">
+                            <img src="{{ asset('images/Furrhub-Product-Categories/Food.png') }}" alt="Food-category" class="transition-transform duration-300 hover:scale-110" />
                         </div>
                         <p class="text-sm sm:text-sm font-medium text-center">Foods</p>
                     </a>
                 </div>
 
                 <div class="flex flex-col items-center space-y-2 min-w-[80px] sm:min-w-[100px] lg:p-2">
-                    <a href="{{route('treats')}}" class="hover:text-[#F0A02C] flex flex-col items-center space-y-2">
-                        <div class="w-16 h-16 sm:w-20 sm:h-20 xl:w-24 xl:h-24  rounded-lg">
-                            <img src="{{asset('images/Furrhub-Product-Categories/Treats.png')}}" alt="Treats-category" class="transition-transform duration-300 hover:scale-110 " />
+                    <a href="{{ route('Categories.cat-products', ['category_id' => 2]) }}" class="hover:text-[#F0A02C] flex flex-col items-center space-y-2">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 xl:w-24 xl:h-24 rounded-lg">
+                            <img src="{{ asset('images/Furrhub-Product-Categories/Treats.png') }}" alt="Treats-category" class="transition-transform duration-300 hover:scale-110" />
                         </div>
                         <p class="text-sm sm:text-sm font-medium text-center">Treats</p>
                     </a>
                 </div>
 
                 <div class="flex flex-col items-center space-y-2 min-w-[80px] sm:min-w-[100px] lg:p-2">
-                    <a href="{{route('toys')}}" class="hover:text-[#F0A02C] flex flex-col items-center space-y-2">
-                        <div class="w-16 h-16 sm:w-20 sm:h-20 xl:w-24 xl:h-24  rounded-lg">
-                            <img src="{{asset('images/Furrhub-Product-Categories/Toys.png')}}" alt="Toys-category" class="transition-transform duration-300 hover:scale-110 " />
+                    <a href="{{ route('Categories.cat-products', ['category_id' => 3]) }}" class="hover:text-[#F0A02C] flex flex-col items-center space-y-2">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 xl:w-24 xl:h-24 rounded-lg">
+                            <img src="{{ asset('images/Furrhub-Product-Categories/Toys.png') }}" alt="Toys-category" class="transition-transform duration-300 hover:scale-110" />
                         </div>
                         <p class="text-sm sm:text-sm font-medium text-center">Toys</p>
                     </a>
                 </div>
 
                 <div class="flex flex-col items-center space-y-2 min-w-[80px] sm:min-w-[100px] lg:p-2 text-wrap">
-                    <a href="{{route('grooming-supplies')}}" class="hover:text-[#F0A02C] flex flex-col items-center space-y-2">
-                        <div class="w-16 h-16 sm:w-20 sm:h-20 xl:w-24 xl:h-24  rounded-lg">
-                            <img src="{{asset('images/Furrhub-Product-Categories/Grooming Supplies.png')}}" alt="Grooming Supplies-category" class="transition-transform duration-300 hover:scale-110 " />
+                    <a href="{{ route('Categories.cat-products', ['category_id' => 4]) }}" class="hover:text-[#F0A02C] flex flex-col items-center space-y-2">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 xl:w-24 xl:h-24 rounded-lg">
+                            <img src="{{ asset('images/Furrhub-Product-Categories/Grooming Supplies.png') }}" alt="Grooming Supplies-category" class="transition-transform duration-300 hover:scale-110" />
                         </div>
                         <p class="text-sm sm:text-sm font-medium text-center text-wrap">Grooming Supplies</p>
                     </a>
                 </div>
 
                 <div class="flex flex-col items-center space-y-2 min-w-[80px] sm:min-w-[100px] lg:p-2 text-wrap">
-                    <a href="{{route('accessories')}}" class="hover:text-[#F0A02C] flex flex-col items-center space-y-2">
-                        <div class="w-16 h-16 sm:w-20 sm:h-20 xl:w-24 xl:h-24  rounded-lg">
-                            <img src="{{asset('images/Furrhub-Product-Categories/Accessories.png')}}" alt="Accessories-category" class="transition-transform duration-300 hover:scale-110 " />
+                    <a href="{{ route('Categories.cat-products', ['category_id' => 5]) }}" class="hover:text-[#F0A02C] flex flex-col items-center space-y-2">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 xl:w-24 xl:h-24 rounded-lg">
+                            <img src="{{ asset('images/Furrhub-Product-Categories/Accessories.png') }}" alt="Accessories-category" class="transition-transform duration-300 hover:scale-110" />
                         </div>
-                        <p class="text-sm sm:text-sm font-medium text-center text-wrap"> Accessories</p>
+                        <p class="text-sm sm:text-sm font-medium text-center text-wrap">Accessories</p>
                     </a>
                 </div>
 
                 <div class="flex flex-col items-center space-y-2 min-w-[80px] sm:min-w-[100px] lg:p-2">
-                    <a href="{{route('health-needs')}}" class="hover:text-[#F0A02C] flex flex-col items-center space-y-2">
-                        <div class="w-16 h-16 sm:w-20 sm:h-20 xl:w-24 xl:h-24  rounded-lg">
-                            <img src="{{asset('images/Furrhub-Product-Categories/Health Needs.png')}}" alt="Health Needs-category" class="transition-transform duration-300 hover:scale-110 " />
+                    <a href="{{ route('Categories.cat-products', ['category_id' => 6]) }}" class="hover:text-[#F0A02C] flex flex-col items-center space-y-2">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 xl:w-24 xl:h-24 rounded-lg">
+                            <img src="{{ asset('images/Furrhub-Product-Categories/Health Needs.png') }}" alt="Health Needs-category" class="transition-transform duration-300 hover:scale-110" />
                         </div>
                         <p class="text-sm sm:text-sm font-medium text-center text-wrap">Health Needs</p>
                     </a>
                 </div>
 
                 <div class="flex flex-col items-center space-y-2 min-w-[80px] sm:min-w-[100px] lg:p-2">
-                    <a href="{{route('essentials')}}" class="hover:text-[#F0A02C] flex flex-col items-center space-y-2">
-                        <div class="w-16 h-16 sm:w-20 sm:h-20 xl:w-24 xl:h-24  rounded-lg">
-                            <img src="{{asset('images/Furrhub-Product-Categories/Essentials.png')}}" alt="Essentials-category" class="transition-transform duration-300 hover:scale-110 " />
+                    <a href="{{ route('Categories.cat-products', ['category_id' => 7]) }}" class="hover:text-[#F0A02C] flex flex-col items-center space-y-2">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 xl:w-24 xl:h-24 rounded-lg">
+                            <img src="{{ asset('images/Furrhub-Product-Categories/Essentials.png') }}" alt="Essentials-category" class="transition-transform duration-300 hover:scale-110" />
                         </div>
                         <p class="text-sm sm:text-sm font-medium text-center">Essentials</p>
                     </a>
                 </div>
+
+
+
+
             </div>
         </div>
 

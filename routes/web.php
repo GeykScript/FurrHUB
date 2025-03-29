@@ -39,6 +39,7 @@ Route::get('/shoppingCart', [ShoppingCartController::class, 'index'])->name('sho
 Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment');
 
 
+
 Route::post('/product/view', [ProductController::class, 'viewProduct'])->name('product.view');
 
 
@@ -81,37 +82,6 @@ Route::get('/add-appointment', function () {
 
 
 
-
-
-//  categories routes
-Route::get('/foods', function () {
-    return view('Categories.foods');
-})->name('foods');
-
-Route::get('/treats', function () {
-    return view('Categories.treats');
-})->name('treats');
-
-Route::get('/toys', function () {
-    return view('Categories.toys');
-})->name('toys');
-
-Route::get('/grooming-supplies', function () {
-    return view('Categories.grooming-supplies');
-})->name('grooming-supplies');
-
-Route::get('/accessories', function () {
-    return view('Categories.accessories');
-})->name('accessories');
-
-Route::get('/health-needs', function () {
-    return view('Categories.health-needs');
-})->name('health-needs');
-
-Route::get('/essentials', function () {
-    return view('Categories.essentials');
-})->name('essentials');
-
-
-
+use App\Http\Controllers\CategoriesController;
+Route::get('/category/{category_id}', [CategoriesController::class, 'show'])->name('Categories.cat-products');
 
