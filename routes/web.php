@@ -85,3 +85,6 @@ Route::get('/add-appointment', function () {
 use App\Http\Controllers\CategoriesController;
 Route::get('/category/{category_id}', [CategoriesController::class, 'show'])->name('Categories.cat-products');
 
+use App\Http\Controllers\SearchController;
+
+Route::get('/search', [SearchController::class, 'products'])->name('search.products');
