@@ -16,6 +16,31 @@
 
 </head>
 
+<!-- ADDED TO CART DIALOG -->
+@if(session('success'))
+<dialog id="successDialog" class="p-6 rounded-lg shadow-lg w-full max-w-md backdrop:bg-black/30 border-none outline-none">
+    <div class="bg-white p-6 rounded-lg text-center justify-center">
+        <div class="flex justify-center items-center text-center">
+            <i data-lucide="circle-check-Big" class="text-center w-20 h-20 text-green-500"></i>
+
+        </div>
+        <p class="mt-2 text-lg text-gray-800">{{ session('success') }}</p>
+        <button onclick="document.getElementById('successDialog').close();" class="mt-4 w-full  outline-none focus:outline-none border-white  bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-orange-600">
+            Okay
+        </button>
+    </div>
+</dialog>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const successDialog = document.getElementById("successDialog");
+        if (successDialog) {
+            successDialog.showModal();
+        }
+    });
+</script>
+@endif
+
 
 <!-- bg-[#60E1FF] blue -->
 <!-- F0A02C  orange-->
@@ -45,6 +70,7 @@
                             @endauth
                             @endif
         </div>
+
         <!-- product details -->
         <div class="grid grid-cols-1 lg:grid-cols-5    gap-5 lg:px-10 p-4  2xl:px-20 ">
             <div class="lg:col-span-2 col-span-5 p-4 rounded-lg shadow-xl border-2 border-gray-100">
@@ -74,6 +100,7 @@
                     <div class="swiper-pagination"></div>
                 </div>
             </div>
+
 
             <!-- product details -->
             <div class="lg:col-span-3  col-span-5  rounded-lg shadow-xl border-2 border-gray-100 lg:p-20 p-4">
@@ -133,14 +160,18 @@
                     <div class="flex flex-row gap-5 mt-5 lg:text-lg text-gray-700 items-center">
                         <h1 class="font-semibold">Quantity:</h1>
                         <div class="flex justify-start col-span-1">
-                            <form>
+
+
+                            <form action="{{ route('cart.add') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ encrypt($product->product_id) }}">
                                 <div id="Quantity-inputs" class="relative flex items-center max-w-[10rem] bg-white border border-gray-200 rounded-xl">
                                     <button type="button" id="decrement-button" data-input-counter-decrement="quantity-input"
                                         class="bg-white hover:bg-gray-100 border-gray-100 border rounded-s-xl p-3 h-11 focus:outline-none">
                                         <i data-lucide="minus" class="text-gray-500"></i>
 
                                     </button>
-                                    <input type="number" id="quantity-input" data-input-counter aria-describedby="helper-text-explanation"
+                                    <input type="number" id="quantity-input" name="quantity" data-input-counter
                                         class="bg-white border-x-0 border-gray-100 h-11 text-center text-gray-900 text-xl focus:outline-none  focus:ring-0 focus:border-transparent block w-10 xl:w-full py-2.5 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                                         value="1" min="1" required />
                                     <button type="button" id="increment-button" data-input-counter-increment="quantity-input"
@@ -148,23 +179,27 @@
                                         <i data-lucide="plus" class="text-gray-500"></i>
                                     </button>
                                 </div>
-                            </form>
                         </div>
                     </div>
                     <div class="flex justify-end px-4 font-semibold lg:text-lg text-sm text-sky-500 mt-3">
                         <h1 class="hover:text-sky-600 hover:cursor-pointer">Add to Wishlists?</h1>
                     </div>
+
                     <div class="flex flex-row items-center lg:gap-5 gap-2 mt-3 lg:text-lg text-gray-700 grid grid-cols-1 lg:grid-cols-6  px-2">
-                        <a href="{{route('shoppingCart')}}" class="col-span-3 w-full border-2 border-orange-500 hover:bg-orange-500 hover:text-white text-orange-500 font-bold py-2 px-4 rounded-lg flex justify-center items-center gap-2">
+
+                        <button type="submit" name="action" value="add_to_cart" class="col-span-3 w-full border-2 border-orange-500 hover:bg-orange-500 hover:text-white text-orange-500 font-bold py-2 px-4 rounded-lg flex justify-center items-center gap-2">
                             <i data-lucide="shopping-basket"></i>
                             <p class=""> Add to Cart </p>
-                        </a>
-                        <a href="{{route('shoppingCart')}}" class="col-span-3 w-full bg-orange-500 hover:bg-orange-600 text-white text-center font-bold py-2 px-4 rounded-lg ">
-                            <p href="{{route('shoppingCart')}}">
+                        </button>
+                        <button type="submit" name="action" value="buy_now" class="col-span-3 w-full bg-orange-500 hover:bg-orange-600 text-white text-center font-bold py-2 px-4 rounded-lg ">
+                            <p>
                                 Buy Now
                             </p>
-                        </a>
+                        </button>
+
                     </div>
+                    </form>
+
                 </div>
             </div>
 
@@ -253,9 +288,8 @@
             <div class="grid grid-cols-2 lg:grid-cols-6 gap-4  ">
                 @foreach($relatedProducts as $relatedProduct)
                 <div class="group relative xl:min-w-[230px] min-w-[150px] p-4 bg-white rounded-lg shadow-lg border-2 border-gray-100 hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90">
-                    <form action="{{ route('product.view') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="product_id" value="{{ $relatedProduct->product_id }}">
+                    <form action="{{ route('product.view') }}" method="GET">
+                        <input type="hidden" name="product_id" value="{{ encrypt($product->product_id) }}">
                         <button type="submit" class="focus:outline-none">
                             <img src="{{ asset('storage/Products/' . $relatedProduct->image_url) }}" alt="Best-Product" class="aspect-square w-full rounded-lg bg-gray-500 object-cover lg:aspect-auto lg:h-74">
                             <div class="mt-2 flex justify-between flex flex-col gap-1">

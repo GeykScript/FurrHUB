@@ -35,12 +35,16 @@ Route::post('/checkout/process', [PaymentController::class, 'process'])->name('c
 
 use App\Http\Controllers\checkoutPageController;
 Route::post('/checkoutPage', [checkoutPageController::class, 'index'])->name('checkoutPage');
+
 Route::get('/shoppingCart', [ShoppingCartController::class, 'index'])->name('shoppingCart');
+Route::post('/cart/add', [ShoppingCartController::class, 'addToCart'])->name('cart.add');
+
+
 Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment');
 
 
 
-Route::post('/product/view', [ProductController::class, 'viewProduct'])->name('product.view');
+Route::get('/product/view', [ProductController::class, 'viewProduct'])->name('product.view');
 
 
 
@@ -75,8 +79,6 @@ Route::get('/add-pet', function () {
 Route::get('/add-appointment', function () {
     return view('services.add-appointment');
 })->name('add-appointment');
-
-
 
 
 

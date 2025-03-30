@@ -55,7 +55,7 @@
             <div class="flex items-center justify-start lg:gap-2 text-xs gap-1 lg:text-lg px-4">
                 <span class="text-orange-600 md:text-lg text-xs">Sort by:</span>
 
-               
+
                 <a href="{{ route('Categories.cat-products', ['category_id' => $category->category_id, 'sort' => 'popular']) }}"
                     class="px-3 py-1 rounded-md transition-all duration-200 ease-in-out 
                     {{ !request('sort') || request('sort') == 'popular' ? 'bg-orange-500 text-white' : 'bg-white text-gray-800' }} 
@@ -130,9 +130,8 @@
                 @foreach ($products as $product)
                 <div class="group relative xl:min-w-[230px] min-w-[150px] p-4 bg-white rounded-lg shadow-lg border-2 border-gray-100 hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90 
             {{ $loop->index >= 12 ? 'hidden more-products' : '' }}">
-                    <form action="{{ route('product.view') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="product_id" value="{{ $product->product_id }}">
+                    <form action="{{ route('product.view') }}" method="GET">
+                        <input type="hidden" name="product_id" value="{{ encrypt($product->product_id) }}">
                         <button type="submit" class="focus:outline-none">
                             <img src="{{ asset('storage/Products/' . $product->image_url) }}" alt="Best-Product" class="aspect-square w-full rounded-lg bg-gray-500 object-cover lg:aspect-auto lg:h-74">
                             <div class="mt-2 flex justify-between flex flex-col gap-1">

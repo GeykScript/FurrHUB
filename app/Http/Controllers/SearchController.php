@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class SearchController extends Controller
 {
@@ -24,6 +25,16 @@ class SearchController extends Controller
         // Check if request is AJAX
         if ($request->ajax()) {
             $products = $searchQuery->limit(5)->get(); // Limit results for AJAX
+
+            // Map the products to include the encrypted product_id
+            $products = $products->map(function ($product) {
+                return [
+                    'name' => $product->name,
+                    'product_id' => $product->product_id,
+                    'encrypted_product_id' => encrypt($product->product_id), // Encrypt the product_id
+                ];
+            });
+
             return response()->json($products);
         }
 

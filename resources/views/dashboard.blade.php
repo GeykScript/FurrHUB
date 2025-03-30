@@ -174,9 +174,8 @@
                 <!-- Products-->
                 @foreach ($BestSellerProducts as $product)
                 <div class="group relative xl:min-w-[230px] min-w-[150px] p-4 bg-white rounded-lg shadow-lg border-2 border-gray-100 hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90">
-                    <form action="{{ route('product.view') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="product_id" value="{{ $product->product_id }}">
+                    <form action="{{ route('product.view') }}" method="GET">
+                        <input type="hidden" name="product_id" value="{{ encrypt($product->product_id) }}">
                         <button type="submit" class="focus:outline-none">
                             <img src="{{ asset('storage/Products/' . $product->image_url) }}" alt="Best-Product" class="aspect-square w-full rounded-lg bg-gray-500 object-cover lg:aspect-auto lg:h-74">
                             <div class="mt-2 flex justify-between flex flex-col gap-1">
@@ -198,6 +197,7 @@
                             </div>
                         </button>
                     </form>
+
                 </div>
                 @endforeach
             </div>
@@ -253,9 +253,8 @@
                 @foreach ($products as $product)
                 <div class="group relative xl:min-w-[230px] min-w-[150px] p-4 bg-white rounded-lg shadow-lg border-2 border-gray-100 hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90 
             {{ $loop->index >= 12 ? 'hidden more-products' : '' }}">
-                    <form action="{{ route('product.view') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="product_id" value="{{ $product->product_id }}">
+                    <form action="{{ route('product.view') }}" method="GET">
+                        <input type="hidden" name="product_id" value="{{ encrypt($product->product_id) }}">
                         <button type="submit" class="focus:outline-none">
                             <img src="{{ asset('storage/Products/' . $product->image_url) }}" alt="Best-Product" class="aspect-square w-full rounded-lg bg-gray-500 object-cover lg:aspect-auto lg:h-74">
                             <div class="mt-2 flex justify-between flex flex-col gap-1">

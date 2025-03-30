@@ -36,12 +36,11 @@
                                     if (response.length > 0) {
                                         response.forEach(product => {
                                             let form = `
-                                        <form action="{{ route('product.view') }}" method="POST" class="block px-4 py-2 hover:bg-orange-200 search-item">
-                                            @csrf
-                                            <input type="hidden" name="product_id" value="${product.product_id}">
-                                            <button type="submit" class="w-full lg:text-lg text-xs text-left">${product.name} </button>
-                                        </form>
-                                    `;
+                                    <form action="{{ route('product.view') }}" method="GET" class="block px-4 py-2 hover:bg-orange-200 search-item">
+                                        <input type="hidden" name="product_id" value="${product.encrypted_product_id}">
+                                        <button type="submit" class="w-full lg:text-lg text-xs text-left">${product.name}</button>
+                                    </form>
+                                `;
                                             resultsDiv.append(form);
                                         });
                                         resultsDiv.removeClass('hidden');
@@ -63,11 +62,19 @@
                     });
                 });
             </script>
+
         </div>
 
 
         <div class="flex flex-row text-white  font-semibold mt-4">
+            @if (Route::has('login'))
+
+            @auth
             <a href="{{route('shoppingCart')}}" class="flex flex-row gap-0 align-center">
+            @else
+            <a href="{{route('login')}}" class="flex flex-row gap-0 align-center">
+            @endauth
+            @endif
                 <img src="{{ asset ('logo/cart.svg')}}" alt="user" class="h-[27px] w-[30px] lg:h-[35px] lg:w-[43px]" />
                 <div class="bg-[#F23D3D] h-[20px] w-[35px]  lg:h-[27px] lg:w-[45px] rounded-full flex justify-center items-center">
                     <p class="xl:text-[16px] text-[10px] ">0</p>
