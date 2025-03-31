@@ -14,8 +14,46 @@ class ShoppingCartController extends Controller
 {
     public function index()
     {
-        return view('cart.shoppingCart');
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'You must be logged in to view the cart.');
+        }
+
+        $cart = Cart::where('user_id', $user->id)->first();
+
+        if (!$cart) {
+            return view('cart.shoppingCart')->with('cartItems', collect());
+        }
+
+        // Eager load the product relationship
+        $cartItems = Cart_item::where('cart_id', $cart->cart_id)
+            ->with('product')
+            ->orderBy('created_at', 'desc')
+            ->get();        
+
+        $buyNowProductId = session('buy_now_product_id', null);
+
+        // Store the cart items count in session
+        session(['cart_items_count' => $cartItems->count()]);
+
+
+        return view('cart.shoppingCart', compact('cartItems', 'buyNowProductId'));
     }
+
+    public function cart_counts()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['count' => 0]);
+        }
+        $cart = Cart::where('user_id', $user->id)->first();
+        if (!$cart) {
+            return response()->json(['count' => 0]);
+        }
+        $cartItemsCount = Cart_item::where('cart_id', $cart->cart_id)->count();
+        return response()->json(['count' => $cartItemsCount]);
+    }
+
 
     public function addToCart(Request $request)
     {
@@ -77,8 +115,10 @@ class ShoppingCartController extends Controller
 
         // Redirect based on action (either continue shopping or proceed to checkout)
         if ($request->action === 'buy_now') {
+            session(['buy_now_product_id' => $product_id]); // Store product_id in session
             return redirect()->route('shoppingCart')->with('success', 'Proceed to checkout.');
         }
+
 
         return redirect()->route('product.view', ['product_id' => $encryptedProductId])
             ->with('success', 'Item successfully added to cart!');

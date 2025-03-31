@@ -25,6 +25,10 @@
 <x-nav-bar />
 <div class="lg:pt-[90px] pt-[110px] lg:mb-10"></div>
 
+
+
+
+
 <body class="font-sans antialiased bg-white-600 dark:text-black/50 min-h-screen flex flex-col">
     <div class="bg-white flex-grow">
         <div class="relative  p-2">
@@ -32,7 +36,7 @@
             <div class="flex flex-row xl:text-5xl text-xl font-bold xl:px-[10rem]">
                 <i data-lucide="shopping-bag" class="xl:w-[5rem] xl:h-[5rem] w-[2rem] h-[2rem] mt-3 xl:mt-0 text-orange-500"> </i>
                 <div class="items-center justify-center p-4">
-                    <h1 class="items-center text-orange-500">Shopping Cart</h1>
+                    <h1 class="items-center text-orange-500">Shopping Cart </h1>
                 </div>
             </div>
             <div class="lg:mt-10   ">
@@ -57,59 +61,41 @@
                     </div>
                 </div>
 
+
+
                 <!-- product part -->
                 <div class="relative h-full mt-2 gap-4">
-                    <div class="grid grid-rows-1 xl:grid-cols-5 xl:gap-5 gap-4 bg-white p-4 border-b border-gray-300 text-gray-900 text-xl items-center  bg-[#FAFAFA] mt-2">
-                        <div class="flex flex-col xl:flex-row items-center xl:gap-20 gap-2  col-span-2">
-                            <div class="flex flex-row items-center gap-10">
-                                <div class="flex justify-center xl:justify-start">
-                                    <input id="checkbox-search-1" type="checkbox" class="rounded border-2 border-sky-400 text-sky-600 shadow-sm focus:ring-sky-500 w-[1.3rem] h-[1.3rem] hover:cursor-pointer">
-                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                </div>
-                                <img src="{{asset('images/products/dog.jpg')}}" alt="product" class="w-40 h-40 rounded-2">
-                            </div>
-                            <p class="lg:w-80 text-wrap text-center text-xl font-bold xl:text-left">Pedigree 18 Pouch Variety Pack</p>
-                        </div>
-                        <div class="flex justify-center font-bold col-span-1 items-center">
-                            <p class="text-orange-500 text-xl">₱350.00</p>
-                        </div>
-                        <div class="flex justify-center col-span-1">
-                            <form>
-                                <div id="Quantity-inputs" class="relative flex items-center max-w-[10rem] bg-white border border-gray-200 rounded-xl">
-                                    <button type="button" id="decrement-button" data-input-counter-decrement="quantity-input"
-                                        class="bg-white hover:bg-gray-100 border-gray-100 border rounded-s-xl p-3 h-11 focus:outline-none">
-                                        <i data-lucide="minus" class="text-gray-500"></i>
 
-                                    </button>
-                                    <input type="number" id="quantity-input" data-input-counter aria-describedby="helper-text-explanation"
-                                        class="bg-white border-x-0 border-gray-100 h-11 text-center text-gray-900 text-xl focus:outline-none  focus:ring-0 focus:border-transparent block w-10 xl:w-full py-2.5 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                                        value="1" min="1" required />
-                                    <button type="button" id="increment-button" data-input-counter-increment="quantity-input"
-                                        class="bg-white hover:bg-gray-100 border-gray-100 border rounded-e-xl p-3 h-11 focus:outline-none">
-                                        <i data-lucide="plus" class="text-gray-500"></i>
-
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="flex justify-start md:justify-center col-span-1 ">
-                            <a href="#" class="font-medium text-red-500 hover:text-red-400 flex gap-1"> <i data-lucide="trash-2"></i><span class="text-xs lg:text-lg p-1 md:p-0">Remove</span></a>
-                        </div>
+                    @if($cartItems->isEmpty())
+                    <div class="flex bg-white p-40 border-gray-300 text-gray-900 text-xl items-center justify-center bg-[#FAFAFA]">
+                        <p>No items in your cart.</p>
                     </div>
-                    <!-- products -->
+                    @else
+                    @foreach ($cartItems as $item)
                     <div class="grid grid-rows-1 xl:grid-cols-5 xl:gap-5 gap-4 bg-white p-4 border-b border-gray-300 text-gray-900 text-xl items-center bg-[#FAFAFA] mt-2">
                         <div class="flex flex-col xl:flex-row items-center xl:gap-20 gap-2 col-span-2">
                             <div class="flex flex-row items-center gap-10">
                                 <div class="flex justify-center xl:justify-start">
-                                    <input id="checkbox-search-1" type="checkbox" class="rounded border-2 border-sky-400 text-sky-600 shadow-sm focus:ring-sky-500 w-[1.3rem] h-[1.3rem] hover:cursor-pointer">
-                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                    @php
+                                    $isChecked = session()->has('buy_now_product_id') && session('buy_now_product_id') == $item->product_id;
+                                    @endphp
+                                    <input
+                                        id="checkbox-item-{{ $item->product_id }}"
+                                        type="checkbox"
+                                        value="{{ $item->product_id }}"
+                                        class="rounded border-2 border-sky-400 text-sky-600 shadow-sm focus:ring-sky-500 w-[1.3rem] h-[1.3rem] hover:cursor-pointer"
+                                        {{ $isChecked ? 'checked' : '' }}>
+                                    <label for="checkbox-item-{{ $item->product_id }}" class="sr-only">checkbox</label>
+                                    @if($isChecked)
+                                    {{ session()->forget('buy_now_product_id') }}
+                                    @endif
                                 </div>
-                                <img src="{{asset('images/products/cat-foods.webp')}}" alt="product" class="w-40 h-40 rounded-2">
+                                <img src="{{ asset('storage/Products/' . $item->product->image_url) }}" alt="product" class="w-40 h-40 rounded-2">
                             </div>
-                            <p class="lg:w-80  text-wrap text-center text-xl font-bold xl:text-left">Royal Canin Cat Food </p>
+                            <p class="lg:w-80 text-wrap text-center text-xl font-bold xl:text-left">{{ $item->product->name }}</p>
                         </div>
                         <div class="flex justify-center font-bold col-span-1 items-center">
-                            <p class="text-orange-500 text-xl">₱350.00</p>
+                            <p class="text-orange-500 text-xl">{{ number_format($item->product->discounted_price, 2) }}</p>
                         </div>
                         <div class="flex justify-center col-span-1">
                             <form>
@@ -117,131 +103,33 @@
                                     <button type="button" id="decrement-button" data-input-counter-decrement="quantity-input"
                                         class="bg-white hover:bg-gray-100 border-gray-100 border rounded-s-xl p-3 h-11 focus:outline-none">
                                         <i data-lucide="minus" class="text-gray-500"></i>
+                                    </button>
+                                    <input type="number" id="quantity-input" data-input-counter aria-describedby="helper-text-explanation"
+                                        class="bg-white border-x-0 border-gray-100 h-11 text-center text-gray-900 text-xl focus:outline-none focus:ring-0 focus:border-transparent block w-10 xl:w-full py-2.5 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                                        value="{{ $item->quantity }}" min="1" required />
+                                    <button type="button" id="increment-button" data-input-counter-increment="quantity-input"
+                                        class="bg-white hover:bg-gray-100 border-gray-100 border rounded-e-xl p-3 h-11 focus:outline-none">
+                                        <i data-lucide="plus" class="text-gray-500"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="flex justify-start md:justify-center col-span-1">
+                            <a href="#" class="font-medium text-red-500 hover:text-red-400 flex gap-1">
+                                <i data-lucide="trash-2"></i>
+                                <span class="text-xs lg:text-lg p-1 md:p-0">Remove</span>
+                            </a>
+                        </div>
+                    </div>
+                    @endforeach
+                    @endif
 
-                                    </button>
-                                    <input type="number" id="quantity-input" data-input-counter aria-describedby="helper-text-explanation"
-                                        class="bg-white border-x-0 border-gray-100 h-11 text-center text-gray-900 text-xl focus:outline-none  focus:ring-0 focus:border-transparent block w-10 xl:w-full py-2.5 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                                        value="1" min="1" required />
-                                    <button type="button" id="increment-button" data-input-counter-increment="quantity-input"
-                                        class="bg-white hover:bg-gray-100 border-gray-100 border rounded-e-xl p-3 h-11 focus:outline-none">
-                                        <i data-lucide="plus" class="text-gray-500"></i>
-
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="flex justify-start md:justify-center col-span-1 ">
-                            <a href="#" class="font-medium text-red-500 hover:text-red-400 flex gap-1"> <i data-lucide="trash-2"></i><span class="text-xs lg:text-lg p-1 md:p-0">Remove</span></a>
-                        </div>
-                    </div>
-                    <div class="grid grid-rows-1 xl:grid-cols-5 xl:gap-5 gap-4 bg-white p-4 border-b border-gray-300 text-gray-900 text-xl items-center bg-[#FAFAFA] mt-2">
-                        <div class="flex flex-col xl:flex-row items-center xl:gap-20 gap-2 col-span-2">
-                            <div class="flex flex-row items-center gap-10">
-                                <div class="flex justify-center xl:justify-start">
-                                    <input id="checkbox-search-1" type="checkbox" class="rounded border-2 border-sky-400 text-sky-600 shadow-sm focus:ring-sky-500 w-[1.3rem] h-[1.3rem] hover:cursor-pointer">
-                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                </div>
-                                <img src="{{asset('images/products/dog.jpg')}}" alt="product" class="w-40 h-40 rounded-2">
-                            </div>
-                            <p class="lg:w-80  text-wrap text-center text-xl font-bold xl:text-left">Pedigree 18 Pouch Variety Pack</p>
-                        </div>
-                        <div class="flex justify-center font-bold col-span-1 items-center">
-                            <p class="text-orange-500 text-xl">₱350.00</p>
-                        </div>
-                        <div class="flex justify-center col-span-1">
-                            <form>
-                                <div id="Quantity-inputs" class="relative flex items-center max-w-[10rem] bg-white border border-gray-200 rounded-xl">
-                                    <button type="button" id="decrement-button" data-input-counter-decrement="quantity-input"
-                                        class="bg-white hover:bg-gray-100 border-gray-100 border rounded-s-xl p-3 h-11 focus:outline-none">
-                                        <i data-lucide="minus" class="text-gray-500"></i>
-                                    </button>
-                                    <input type="number" id="quantity-input" data-input-counter aria-describedby="helper-text-explanation"
-                                        class="bg-white border-x-0 border-gray-100 h-11 text-center text-gray-900 text-xl focus:outline-none  focus:ring-0 focus:border-transparent block w-10 xl:w-full py-2.5 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                                        value="1" min="1" required />
-                                    <button type="button" id="increment-button" data-input-counter-increment="quantity-input"
-                                        class="bg-white hover:bg-gray-100 border-gray-100 border rounded-e-xl p-3 h-11 focus:outline-none">
-                                        <i data-lucide="plus" class="text-gray-500"></i>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="flex justify-start md:justify-center col-span-1 ">
-                            <a href="#" class="font-medium text-red-500 hover:text-red-400 flex gap-1"> <i data-lucide="trash-2"></i><span class="text-xs lg:text-lg p-1 md:p-0">Remove</span></a>
-                        </div>
-                    </div>
-                    <div class="grid grid-rows-1 xl:grid-cols-5 xl:gap-5 gap-4 bg-white p-4 border-b border-gray-300 text-gray-900 text-xl items-center bg-[#FAFAFA] mt-2">
-                        <div class="flex flex-col xl:flex-row items-center xl:gap-20 gap-2 col-span-2">
-                            <div class="flex flex-row items-center gap-10">
-                                <div class="flex justify-center xl:justify-start">
-                                    <input id="checkbox-search-1" type="checkbox" class="rounded border-2 border-sky-400 text-sky-600 shadow-sm focus:ring-sky-500 w-[1.3rem] h-[1.3rem] hover:cursor-pointer">
-                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                </div>
-                                <img src="{{asset('images/products/dog.jpg')}}" alt="product" class="w-40 h-40 rounded-2">
-                            </div>
-                            <p class="lg:w-80  text-wrap text-center text-xl font-bold xl:text-left">Pedigree 18 Pouch Variety Pack</p>
-                        </div>
-                        <div class="flex justify-center font-bold col-span-1 items-center">
-                            <p class="text-orange-500 text-xl">₱350.00</p>
-                        </div>
-                        <div class="flex justify-center col-span-1">
-                            <form>
-                                <div id="Quantity-inputs" class="relative flex items-center max-w-[10rem] bg-white border border-gray-200 rounded-xl">
-                                    <button type="button" id="decrement-button" data-input-counter-decrement="quantity-input"
-                                        class="bg-white hover:bg-gray-100 border-gray-100 border rounded-s-xl p-3 h-11 focus:outline-none">
-                                        <i data-lucide="minus" class="text-gray-500"></i>
-                                    </button>
-                                    <input type="number" id="quantity-input" data-input-counter aria-describedby="helper-text-explanation"
-                                        class="bg-white border-x-0 border-gray-100 h-11 text-center text-gray-900 text-xl focus:outline-none  focus:ring-0 focus:border-transparent block w-10 xl:w-full py-2.5 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                                        value="1" min="1" required />
-                                    <button type="button" id="increment-button" data-input-counter-increment="quantity-input"
-                                        class="bg-white hover:bg-gray-100 border-gray-100 border rounded-e-xl p-3 h-11 focus:outline-none">
-                                        <i data-lucide="plus" class="text-gray-500"></i>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="flex justify-start md:justify-center col-span-1 ">
-                            <a href="#" class="font-medium text-red-500 hover:text-red-400 flex gap-1"> <i data-lucide="trash-2"></i><span class="text-xs lg:text-lg p-1 md:p-0">Remove</span></a>
-                        </div>
-                    </div>
-                    <div class="grid grid-rows-1 xl:grid-cols-5 xl:gap-5 gap-4 bg-white p-4 border-b border-gray-300 text-gray-900 text-xl items-center bg-[#FAFAFA] mt-2">
-                        <div class="flex flex-col xl:flex-row items-center xl:gap-20 gap-2 col-span-2">
-                            <div class="flex flex-row items-center gap-10">
-                                <div class="flex justify-center xl:justify-start">
-                                    <input id="checkbox-search-1" type="checkbox" class="rounded border-2 border-sky-400 text-sky-600 shadow-sm focus:ring-sky-500 w-[1.3rem] h-[1.3rem] hover:cursor-pointer">
-                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                </div>
-                                <img src="{{asset('images/products/dog.jpg')}}" alt="product" class="w-40 h-40 rounded-2">
-                            </div>
-                            <p class="lg:w-80  text-wrap text-center text-xl font-bold xl:text-left">Pedigree 18 Pouch Variety Pack</p>
-                        </div>
-                        <div class="flex justify-center font-bold col-span-1 items-center">
-                            <p class="text-orange-500 text-xl">₱350.00</p>
-                        </div>
-                        <div class="flex justify-center col-span-1">
-                            <form>
-                                <div id="Quantity-inputs" class="relative flex items-center max-w-[10rem] bg-white border border-gray-200 rounded-xl">
-                                    <button type="button" id="decrement-button" data-input-counter-decrement="quantity-input"
-                                        class="bg-white hover:bg-gray-100 border-gray-100 border rounded-s-xl p-3 h-11 focus:outline-none">
-                                        <i data-lucide="minus" class="text-gray-500"></i>
-                                    </button>
-                                    <input type="number" id="quantity-input" data-input-counter aria-describedby="helper-text-explanation"
-                                        class="bg-white border-x-0 border-gray-100 h-11 text-center text-gray-900 text-xl focus:outline-none  focus:ring-0 focus:border-transparent block w-10 xl:w-full py-2.5 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                                        value="1" min="1" required />
-                                    <button type="button" id="increment-button" data-input-counter-increment="quantity-input"
-                                        class="bg-white hover:bg-gray-100 border-gray-100 border rounded-e-xl p-3 h-11 focus:outline-none">
-                                        <i data-lucide="plus" class="text-gray-500"></i>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="flex justify-start md:justify-center col-span-1 ">
-                            <a href="#" class="font-medium text-red-500 hover:text-red-400 flex gap-1"> <i data-lucide="trash-2"></i><span class="text-xs lg:text-lg p-1 md:p-0">Remove</span></a>
-                        </div>
-                    </div>
 
                     <!-- fixed bottom part -->
+                    @if(!$cartItems->isEmpty())
+
                     <div class="sticky bottom-0 p-4 border-t-0 border-gray-300 shadow-[0_-2px_10px_rgba(0,0,0,0.2)] mt-5 bg-orange-200 rounded-lg xl:h-24">
+
                         <form action="{{ route('checkoutPage') }}" method="POST">
                             @csrf
                             <div class="grid grid-cols-1 xl:grid-cols-5 gap-4 xl:mt-3">
@@ -273,6 +161,7 @@
                         </form>
 
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

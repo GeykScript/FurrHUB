@@ -71,16 +71,43 @@
 
             @auth
             <a href="{{route('shoppingCart')}}" class="flex flex-row gap-0 align-center">
-            @else
-            <a href="{{route('login')}}" class="flex flex-row gap-0 align-center">
-            @endauth
-            @endif
-                <img src="{{ asset ('logo/cart.svg')}}" alt="user" class="h-[27px] w-[30px] lg:h-[35px] lg:w-[43px]" />
-                <div class="bg-[#F23D3D] h-[20px] w-[35px]  lg:h-[27px] lg:w-[45px] rounded-full flex justify-center items-center">
-                    <p class="xl:text-[16px] text-[10px] ">0</p>
-                </div>
-            </a>
-            <!-- <p class="pt-1 text-">Cart</p> -->
+                @else
+                <a href="{{route('login')}}" class="flex flex-row gap-0 align-center">
+                    @endauth
+                    @endif
+                    <img src="{{ asset ('logo/cart.svg')}}" alt="user" class="h-[27px] w-[30px] lg:h-[35px] lg:w-[43px]" />
+                    <div class="bg-[#F23D3D] h-[20px] w-[35px] lg:h-[27px] lg:w-[45px] rounded-full flex justify-center items-center">
+                        <p id="cart-item-count" class="xl:text-[16px] text-[10px] text-white font-bold">
+                            {{ session('cart_items_count', 0) }}
+                        </p>
+                    </div>
+                    <script>
+                        function updateCartCount() {
+                            fetch('/cart/counts') // Adjust the URL to match your route
+                                .then(response => response.json())
+                                .then(data => {
+                                    const count = data.count || 0;
+
+                                    // Update the badge text
+                                    const badgeElement = document.getElementById('cart-item-count');
+                                    badgeElement.textContent = count;
+
+                                    // Hide the badge if the count is 0
+                                
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching cart counts:', error);
+                                });
+                        }
+
+                        // Call the function once on page load
+                        document.addEventListener('DOMContentLoaded', () => {
+                            updateCartCount();
+                        });
+                    </script>
+
+                </a>
+                <!-- <p class="pt-1 text-">Cart</p> -->
         </div>
     </div>
 

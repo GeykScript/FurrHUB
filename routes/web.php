@@ -49,6 +49,7 @@ Route::get('/product/view', [ProductController::class, 'viewProduct'])->name('pr
 
 
 
+
 require __DIR__.'/auth.php';
 
 //  notification routes
@@ -84,9 +85,12 @@ Route::get('/add-appointment', function () {
 
 
 
+Route::get('/cart/counts', [ShoppingCartController::class, 'cart_counts'])->name('cart.counts');
 use App\Http\Controllers\CategoriesController;
 Route::get('/category/{category_id}', [CategoriesController::class, 'show'])->name('Categories.cat-products');
 
 use App\Http\Controllers\SearchController;
 
 Route::get('/search', [SearchController::class, 'products'])->name('search.products');
+
+ 
