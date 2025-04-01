@@ -82,6 +82,12 @@ Route::get('/add-appointment', function () {
 })->name('add-appointment');
 
 
+Route::post('/cart/update-quantity', [ShoppingCartController::class, 'updateQuantity'])->name('cart.updateQuantity');
+Route::post('/cart/updateSelectedItems', [ShoppingCartController::class, 'updateSelectedItems'])->name('cart.updateSelectedItems');
+Route::post('/cart/remove', [ShoppingCartController::class, 'removeFromCart'])->name('cart.remove');
+Route::post('/cart/deleteSelectedItems', [ShoppingCartController::class, 'deleteSelectedItems'])->name('cart.deleteSelectedItems');
+
+
 
 
 

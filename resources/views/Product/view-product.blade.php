@@ -165,16 +165,16 @@
                             <form action="{{ route('cart.add') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ encrypt($product->product_id) }}">
-                                <div id="Quantity-inputs" class="relative flex items-center max-w-[10rem] bg-white border border-gray-200 rounded-xl">
-                                    <button type="button" id="decrement-button" data-input-counter-decrement="quantity-input"
+                                <div id="Quantity-inputs-view" class="relative flex items-center max-w-[10rem] bg-white border border-gray-200 rounded-xl">
+                                    <button type="button" id="decrement-button" data-input-counter-decrement="quantity-input-view"
                                         class="bg-white hover:bg-gray-100 border-gray-100 border rounded-s-xl p-3 h-11 focus:outline-none">
                                         <i data-lucide="minus" class="text-gray-500"></i>
 
                                     </button>
-                                    <input type="number" id="quantity-input" name="quantity" data-input-counter
+                                    <input type="number" id="quantity-input-view" name="quantity" data-input-counter
                                         class="bg-white border-x-0 border-gray-100 h-11 text-center text-gray-900 text-xl focus:outline-none  focus:ring-0 focus:border-transparent block w-10 xl:w-full py-2.5 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                                        value="1" min="1" required />
-                                    <button type="button" id="increment-button" data-input-counter-increment="quantity-input"
+                                        value="1" min="1" required readonly />
+                                    <button type="button" id="increment-button" data-input-counter-increment="quantity-input-view"
                                         class="bg-white hover:bg-gray-100 border-gray-100 border rounded-e-xl p-3 h-11 focus:outline-none">
                                         <i data-lucide="plus" class="text-gray-500"></i>
                                     </button>
@@ -289,7 +289,7 @@
                 @foreach($relatedProducts as $relatedProduct)
                 <div class="group relative xl:min-w-[230px] min-w-[150px] p-4 bg-white rounded-lg shadow-lg border-2 border-gray-100 hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90">
                     <form action="{{ route('product.view') }}" method="GET">
-                        <input type="hidden" name="product_id" value="{{ encrypt($product->product_id) }}">
+                        <input type="hidden" name="product_id" value="{{ encrypt($relatedProduct->product_id) }}">
                         <button type="submit" class="focus:outline-none">
                             <img src="{{ asset('storage/Products/' . $relatedProduct->image_url) }}" alt="Best-Product" class="aspect-square w-full rounded-lg bg-gray-500 object-cover lg:aspect-auto lg:h-74">
                             <div class="mt-2 flex justify-between flex flex-col gap-1">

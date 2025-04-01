@@ -20,6 +20,16 @@ class ShoppingCartController extends Controller
         }
 
         $cart = Cart::where('user_id', $user->id)->first();
+        $total_amount = Cart_item::where('cart_id', $cart->cart_id)
+            ->get()
+            ->sum(function ($item) {
+                return $item->quantity * $item->product->getDiscountedPriceAttribute();
+            });
+            $total_quantity = Cart_item::where('cart_id', $cart->cart_id)
+            ->get()
+            ->sum(function ($item) {
+                return $item->quantity;
+            });
 
         if (!$cart) {
             return view('cart.shoppingCart')->with('cartItems', collect());
@@ -37,8 +47,111 @@ class ShoppingCartController extends Controller
         session(['cart_items_count' => $cartItems->count()]);
 
 
-        return view('cart.shoppingCart', compact('cartItems', 'buyNowProductId'));
+        return view('cart.shoppingCart', compact('cartItems', 'buyNowProductId' , 'total_amount', 'total_quantity'));
     }
+    public function removeFromCart(Request $request)
+    {
+        $request->validate([
+            'item_id' => 'required|exists:cart_items,id', // Ensure the ID exists in the database
+        ]);
+
+        $cartItem = Cart_item::find($request->item_id);
+
+        if (!$cartItem) {
+            return response()->json(['error' => 'Item not found'], 404);
+        }
+
+        $cart = $cartItem->cart;
+
+        // Check if cart exists to prevent null reference errors
+        if (!$cart) {
+            return response()->json(['error' => 'Cart not found'], 404);
+        }
+
+        $cartItem->delete();
+
+        // Ensure that the product still exists before recalculating total
+        $totalAmount = Cart_item::where('cart_id', $cart->cart_id)
+            ->get()
+            ->sum(function ($item) {
+                return $item->quantity * optional($item->product)->getDiscountedPriceAttribute();
+            });
+
+        // Update the cart's total amount
+        $cart->total_amount = $totalAmount;
+        $cart->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Item removed successfully',
+            'total_amount' => $totalAmount,
+        ]);
+    }
+    public function deleteSelectedItems(Request $request)
+    {
+        $request->validate([
+            'selected_items' => 'required|array|min:1',
+            'selected_items.*' => 'exists:cart_items,product_id',
+        ]);
+        $selectedItems = $request->selected_items;
+
+        // Delete selected items from the cart
+        Cart_item::whereIn('product_id', $selectedItems)->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Selected items have been deleted.',
+        ]);
+    }
+
+
+
+    public function updateSelectedItems(Request $request)
+    {
+        $request->validate([
+            'selected_items' => 'required|array|min:1',
+            'selected_items.*' => 'exists:cart_items,product_id',
+        ]);
+
+        $selectedItems = $request->selected_items;
+
+        // Get all the cart items based on the selected products
+        $cartItems = Cart_item::whereIn('product_id', $selectedItems)->get();
+
+        // Calculate total amount and quantity for selected products
+        $total_amount = $cartItems->sum(fn($item) => $item->quantity * $item->product->getDiscountedPriceAttribute());
+        $total_quantity = $cartItems->sum(fn($item) => $item->quantity);
+
+        return response()->json([
+            'success' => 'Cart updated successfully',
+            'total_amount' => $total_amount,
+            'total_quantity' => $total_quantity,
+        ]);
+    }
+
+    public function updateQuantity(Request $request)
+{
+    $request->validate([
+        'item_id' => 'required|exists:cart_items,id',
+        'quantity' => 'required|integer|min:1',
+    ]);
+
+    $cartItem = Cart_item::find($request->item_id);
+
+    if (!$cartItem) {
+        return response()->json(['error' => 'Item not found'], 404);
+    }
+    $productx = [];
+    $cartItem->quantity = $request->quantity;
+    $cartItem->save();
+
+    // Recalculate total amount and quantity
+    $cart = $cartItem->cart;
+   
+    return response()->json([
+        'success' => 'Quantity updated successfully',
+    ]);
+}
+
 
     public function cart_counts()
     {

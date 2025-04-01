@@ -9,32 +9,33 @@ Alpine.start();
 
 
 //lucide icons
-import { createIcons, CircleCheckBig ,Check,Truck,Upload, ShieldCheck,Star, CircleArrowRight,Heart,ImageUp,SendHorizontal,PawPrint,ShoppingBag,Bell,MessageSquareText,CircleChevronLeft,Plus,Minus,Trash2,House,ChevronDown,NotebookPen,PhilippinePeso,ShoppingBasket,Bone,CircleUser,LogOut} from 'lucide';
+import { createIcons, CircleCheckBig ,Check,Truck,Upload, ShieldCheck,Star, CircleArrowRight,TriangleAlert, Heart,ImageUp,SendHorizontal,PawPrint,ShoppingBag,Bell,MessageSquareText,CircleChevronLeft,Plus,Minus,Trash2,House,ChevronDown,NotebookPen,PhilippinePeso,ShoppingBasket,Bone,CircleUser,LogOut} from 'lucide';
 
 createIcons({
-    icons: { CircleCheckBig,Check,Truck ,ShieldCheck,Upload,Star, CircleArrowRight,PawPrint,Heart,ImageUp,SendHorizontal, ShoppingBag, Bell,MessageSquareText,CircleChevronLeft,Plus,Minus,Trash2, House,NotebookPen ,ChevronDown,PhilippinePeso, ShoppingBasket,Bone, CircleUser,LogOut},
+    icons: { CircleCheckBig,Check,Truck ,ShieldCheck,Upload,Star, CircleArrowRight,PawPrint,TriangleAlert ,Heart,ImageUp,SendHorizontal, ShoppingBag, Bell,MessageSquareText,CircleChevronLeft,Plus,Minus,Trash2, House,NotebookPen ,ChevronDown,PhilippinePeso, ShoppingBasket,Bone, CircleUser,LogOut},
 });
 
 
 
 // Quantity input
 document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll("#Quantity-inputs").forEach((container) => {
-        const decrementButton = container.querySelector("[data-input-counter-decrement]");
-        const incrementButton = container.querySelector("[data-input-counter-increment]");
-        const quantityInput = container.querySelector("[data-input-counter]");
+    const container = document.querySelector("#Quantity-inputs-view"); // The container element
+    const decrementButton = container.querySelector("[data-input-counter-decrement]"); // Decrement button
+    const incrementButton = container.querySelector("[data-input-counter-increment]"); // Increment button
+    const quantityInput = container.querySelector("[data-input-counter]"); // The quantity input field
 
-        decrementButton.addEventListener("click", function () {
-            let value = parseInt(quantityInput.value, 10);
-            if (value > 1) {
-                quantityInput.value = value - 1;
-            }
-        });
+    // Decrement button logic
+    decrementButton.addEventListener("click", function () {
+        let value = parseInt(quantityInput.value, 10);
+        if (value > 1) {
+            quantityInput.value = value - 1;
+        }
+    });
 
-        incrementButton.addEventListener("click", function () {
-            let value = parseInt(quantityInput.value, 10);
-            quantityInput.value = value + 1;
-        });
+    // Increment button logic
+    incrementButton.addEventListener("click", function () {
+        let value = parseInt(quantityInput.value, 10);
+        quantityInput.value = value + 1;
     });
 });
 
@@ -60,15 +61,22 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-//return to top
- document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("return-top").addEventListener("click", function () {
+document.addEventListener("DOMContentLoaded", function () {
+  const returnTopButton = document.getElementById("return-top");
+
+  // Check if the element exists before attaching the event listener
+  if (returnTopButton) {
+    returnTopButton.addEventListener("click", function () {
       window.scrollTo({
         top: 0,
         behavior: "smooth"
       });
     });
-  });
+  } else {
+    console.log("Return to top button not found!");
+  }
+});
+
 
 
 
@@ -88,4 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
+
+
 
