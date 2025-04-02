@@ -206,7 +206,10 @@
                                                         },
                                                         success: function(response) {
                                                             document.getElementById("total-quantity-display").innerHTML = `(${response.total_quantity} items)`;
-                                                            document.getElementById("total-amount-display").textContent = response.total_amount.toFixed(2);
+                                                            document.getElementById("total-amount-display").textContent = Number(response.total_amount).toLocaleString('en-US', {
+                                                                minimumFractionDigits: 2,
+                                                                maximumFractionDigits: 2
+                                                            });
                                                         },
                                                         error: function(xhr) {
                                                             console.error(xhr.responseText);
@@ -214,7 +217,10 @@
                                                     });
                                                 } else {
                                                     document.getElementById("total-quantity-display").innerHTML = `(0 items)`;
-                                                    document.getElementById("total-amount-display").textContent = '0.00';
+                                                    document.getElementById("total-amount-display").textContent = (0).toLocaleString('en-US', {
+                                                        minimumFractionDigits: 2,
+                                                        maximumFractionDigits: 2
+                                                    });
                                                 }
                                             };
 
