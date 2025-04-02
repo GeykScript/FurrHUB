@@ -16,7 +16,72 @@
 
 </head>
 
+<dialog id="deleteConfirmationDialog" class="p-6 rounded-lg shadow-lg w-full max-w-md backdrop:bg-black/30 border-none outline-none">
+    <div class="bg-white p-6 rounded-lg text-center justify-center">
+        <div class="flex justify-center items-center text-center">
+            <i data-lucide="triangle-alert " class="text-center w-20 h-20 text-red-500"></i>
+        </div>
+        <p class="mt-2 text-lg text-gray-800">Are you sure you want to delete the selected items?</p>
+        <div class="flex justify-center mt-4">
+            <button id="confirmDeleteBtn" class="mr-4 w-full outline-none focus:outline-none border-white bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600">
+                Yes
+            </button>
+            <button onclick="document.getElementById('deleteConfirmationDialog').close();" class="w-full outline-none focus:outline-none border-red-500 bg-white text-red-600 py-2 px-4 rounded-lg hover:border-red-600 hover:bg-red-100">
+                No
+            </button>
+        </div>
+    </div>
+</dialog>
 
+<!-- Confirmation Modal -->
+<dialog id="removeConfirmationModal" class="p-6 rounded-lg shadow-lg w-full max-w-md backdrop:bg-black/30 border-none outline-none">
+    <div class="bg-white p-6 rounded-lg text-center">
+        <div class="flex justify-center items-center text-center">
+            <i data-lucide="triangle-alert " class="text-center w-20 h-20 text-red-500"></i>
+        </div>
+        <h3 class="text-lg font-semibold text-gray-800">Are you sure you want to remove this item from your wishlist?</h3>
+        <div class="mt-4 flex justify-center gap-4">
+            <button id="confirmRemoveBtn" class="mr-4 w-full outline-none focus:outline-none border-white bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600">Yes</button>
+            <button onclick=" document.getElementById('removeConfirmationModal').close();" class="w-full outline-none focus:outline-none border-red-500 bg-white text-red-600 py-2 px-4 rounded-lg hover:border-red-600 hover:bg-red-100">No</button>
+        </div>
+    </div>
+</dialog>
+
+<script>
+    function openConfirmationModal(wishlistId) {
+        // Show the confirmation dialog
+        const modal = document.getElementById('removeConfirmationModal');
+        modal.showModal();
+
+        // Set up the confirmation button action
+        const confirmButton = document.getElementById('confirmRemoveBtn');
+        confirmButton.onclick = function() {
+            // Set the hidden input field in the form with the encrypted wishlist ID
+            const form = document.createElement('form');
+            form.action = "{{ route('wishlist.remove') }}";
+            form.method = "POST";
+
+            const csrfToken = document.createElement('input');
+            csrfToken.type = 'hidden';
+            csrfToken.name = '_token';
+            csrfToken.value = "{{ csrf_token() }}"; // Add CSRF token to form
+
+            const wishlistIdInput = document.createElement('input');
+            wishlistIdInput.type = 'hidden';
+            wishlistIdInput.name = 'wishlist_id';
+            wishlistIdInput.value = wishlistId;
+
+            form.appendChild(csrfToken);
+            form.appendChild(wishlistIdInput);
+
+            // Submit the form
+            document.body.appendChild(form);
+            form.submit();
+
+            modal.close(); // Close the modal
+        };
+    }
+</script>
 <!-- ADDED TO CART DIALOG -->
 @if(session('success'))
 <dialog id="successDialog" class="p-6 rounded-lg shadow-lg w-full max-w-md backdrop:bg-black/30 border-none outline-none">
@@ -111,22 +176,17 @@
                     </details>
                 </div>
                 <div class="flex flex-col items-center justify-center gap-2">
-                    <form action="{{ route('wishlist.remove') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="wishlist_id" value="{{ encrypt($wishlist->wishlist_id) }}">
-                        <button type="submit" class="font-medium text-red-500 hover:text-red-400 flex gap-1 items-center">
-                            <i data-lucide="trash-2"></i>
-                            <span class="text-xs lg:text-lg p-1 md:p-0 font-semibold hidden md:block">Remove</span>
-                        </button>
-                    </form>
-
+                    <button type="button" onclick="openConfirmationModal('{{ encrypt($wishlist->wishlist_id) }}')" class="font-medium text-red-500 hover:text-red-400 text-xs lg:text-lg flex gap-1 items-center">
+                        <i data-lucide="trash-2"></i>
+                        <span class="text-xs lg:text-lg p-1 md:p-0 font-semibold ">Remove</span>
+                    </button>
                 </div>
             </div>
             @endforeach
         </div>
-
-
     </div>
+
+
 
 
 
