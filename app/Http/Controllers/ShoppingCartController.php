@@ -19,7 +19,20 @@ class ShoppingCartController extends Controller
             return redirect()->route('login')->with('error', 'You must be logged in to view the cart.');
         }
 
+
+        // Check if a cart already exists for the user
         $cart = Cart::where('user_id', $user->id)->first();
+
+        // If no cart exists, create a new one with 'user_id' and 'total_amount' set to 0
+        if (!$cart) {
+            $cart = Cart::create([
+                'user_id' => $user->id,
+                'total_amount' => 0,  // Set initial total_amount to 0
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+        
         $total_amount = Cart_item::where('cart_id', $cart->cart_id)
             ->get()
             ->sum(function ($item) {

@@ -15,7 +15,7 @@
             </button>
         </form>
         <!-- Dropdown for Search Results -->
-        <div id="search-results" class="absolute top-[4rem] left-4 right-4  lg:w-[46rem] bg-white shadow-lg rounded-b-lg hidden z-50 overflow-hidden border border-gray-200 mt-1">
+        <div id="search-results" class="absolute top-[4rem] left-4 right-4  lg:w-[46rem] bg-white shadow-lg rounded-b-lg hidden z-50 overflow-hidden border border-gray-200 mt-1 focus:outline-none">
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script>
                 $(document).ready(function() {
@@ -93,7 +93,7 @@
                                     badgeElement.textContent = count;
 
                                     // Hide the badge if the count is 0
-                                
+
                                 })
                                 .catch(error => {
                                     console.error('Error fetching cart counts:', error);
@@ -125,8 +125,12 @@
                             <div class="flex flex-row items-center gap-2 justify-center">
 
                                 <p class="">{{ Auth::user()->first_name}} {{ Auth::user()->last_name}}</p>
-                                <img id="profile" src="{{ asset('storage/profile_picture/' . Auth::user()->profile_img) }}" alt="Profile Picture" class="h-[25px] w-[25px] lg:h-[40px] lg:w-[43px] border-2 border-gray-800 rounded-full object-cover">
 
+                                @if (Auth::user()->profile_img)
+                                <img id="profile" src="{{ asset('storage/profile_picture/' . Auth::user()->profile_img) }}" alt="Profile Picture" class="h-[25px] w-[25px] lg:h-[37px] lg:w-[39px] border border-gray-800 rounded-full object-cover">
+                                @else
+                                <img id="profile" src="{{ asset('logo/user.png') }}" alt="Profile Picture" class="h-[25px] w-[25px] lg:h-[35px] lg:w-[35px]  rounded-full object-cover">
+                                @endif
                             </div>
 
                             <div class="ms-1">

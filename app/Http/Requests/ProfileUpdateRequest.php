@@ -18,13 +18,16 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:15', 'regex:/^(\+?\d{1,4}[\s-])?\d{10}$/'], // Allows +63 or 09xxxxxxxxx format
+            'phone' => ['required', 'string', 'max:11', 'regex:/^(\+?\d{1,4}[\s-])?\d{10}$/'], // Allows +63 or 09xxxxxxxxx format
+            'profile_img' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'], // 2MB max
             'email' => [
                 'required',
                 'string',
                 'lowercase',
                 'email',
                 'max:255',
+
+
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
         ];

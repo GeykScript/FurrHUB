@@ -26,8 +26,12 @@
                                     <div class="flex flex-row items-center gap-2 justify-center">
 
                                         <p class="">{{ Auth::user()->first_name}} {{ Auth::user()->last_name}}</p>
-                                        <img id="profile" src="{{ asset('storage/profile_picture/' . Auth::user()->profile_img) }}" alt="Profile Picture" class="h-[25px] w-[25px] lg:h-[40px] lg:w-[43px] border-2 border-gray-800 rounded-full object-cover">
 
+                                        @if (Auth::user()->profile_img)
+                                        <img id="profile" src="{{ asset('storage/profile_picture/' . Auth::user()->profile_img) }}" alt="Profile Picture" class="h-[25px] w-[25px] lg:h-[37px] lg:w-[39px] border border-gray-800 rounded-full object-cover">
+                                        @else
+                                        <img id="profile" src="{{ asset('logo/user.png') }}" alt="Profile Picture" class="h-[25px] w-[25px] lg:h-[35px] lg:w-[35px]  rounded-full object-cover">
+                                        @endif
                                     </div>
 
                                     <div class="ms-1">
