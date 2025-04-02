@@ -17,12 +17,14 @@ createIcons({
 
 
 
-// Quantity input
 document.addEventListener("DOMContentLoaded", function () {
     const container = document.querySelector("#Quantity-inputs-view"); // The container element
     const decrementButton = container.querySelector("[data-input-counter-decrement]"); // Decrement button
     const incrementButton = container.querySelector("[data-input-counter-increment]"); // Increment button
     const quantityInput = container.querySelector("[data-input-counter]"); // The quantity input field
+
+    // Get the stock quantity from a data attribute
+    const stockQuantity = parseInt(container.getAttribute("data-stock-quantity"), 10);
 
     // Decrement button logic
     decrementButton.addEventListener("click", function () {
@@ -32,10 +34,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Increment button logic
+    // Increment button logic (Prevent exceeding stock quantity)
     incrementButton.addEventListener("click", function () {
         let value = parseInt(quantityInput.value, 10);
-        quantityInput.value = value + 1;
+        if (value < stockQuantity) {
+            quantityInput.value = value + 1;
+        }
     });
 });
 
@@ -100,4 +104,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
+   document.getElementById("wishlistBtn").addEventListener("click", function() {
+                        document.getElementById("note").classList.toggle("hidden");
+                    });

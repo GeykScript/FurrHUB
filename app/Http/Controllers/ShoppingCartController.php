@@ -168,6 +168,9 @@ class ShoppingCartController extends Controller
     }
 
 
+
+    
+
     public function addToCart(Request $request)
     {
         $user = Auth::user();

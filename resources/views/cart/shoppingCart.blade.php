@@ -168,7 +168,7 @@
 
                             <div class="flex justify-center col-span-1">
                                 <form>
-                                    <div id="Quantity-inputs" class="relative flex items-center max-w-[10rem] bg-white border border-gray-200 rounded-xl">
+                                    <div id="Quantity-inputs" class="relative flex items-center max-w-[10rem] bg-white border border-gray-200 rounded-xl" data-quantity-stocks="{{ $item->product->stock_quantity }}">
                                         <button type="button" id="decrement-button" data-input-counter-decrement="quantity-input"
                                             class="bg-white hover:bg-gray-100 border-gray-100 border rounded-s-xl p-3 h-11 focus:outline-none">
                                             <i data-lucide="minus" class="text-gray-500"></i>
@@ -176,7 +176,7 @@
                                         <input type="number" id="quantity-input" data-input-counter="quantity-input" data-id="{{ $item->id }}"
                                             aria-describedby="helper-text-explanation"
                                             class="bg-white border-x-0 border-gray-100 h-11 text-center text-gray-900 text-xl focus:outline-none focus:ring-0 focus:border-transparent block w-10 xl:w-full py-2.5 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                                            value="{{ $item->quantity }}" min="1" required readonly />
+                                            value="{{ $item->quantity }}" min="1" required readonly max="{{$item->product->stock_quantity}}" />
                                         <input type="hidden" name="price-amount" value="{{ $item->product->discounted_price }}">
                                         <button type="button" id="increment-button" data-input-counter-increment="quantity-input"
                                             class="bg-white hover:bg-gray-100 border-gray-100 border rounded-e-xl p-3 h-11 focus:outline-none">
@@ -302,9 +302,10 @@
                                             document.querySelectorAll("#Quantity-inputs").forEach((container) => {
                                                 const decrementButton = container.querySelector("[data-input-counter-decrement]");
                                                 const incrementButton = container.querySelector("[data-input-counter-increment]");
-                                                const quantityInput = container.querySelector("[data-input-counter]");
-
+                                                const quantityInput = container.querySelector("[data-input-counter]"); 
                                                 const itemId = quantityInput.getAttribute("data-id");
+                                                const Quantitystock = parseInt(container.getAttribute("data-quantity-stocks"), 10);
+
 
                                                 function updateQuantity(newQuantity) {
                                                     $.ajax({
@@ -334,7 +335,9 @@
 
                                                 incrementButton.addEventListener("click", function() {
                                                     let value = parseInt(quantityInput.value, 10);
-                                                    updateQuantity(value + 1);
+                                                    if (value < Quantitystock) {
+                                                        updateQuantity(value + 1);
+                                                    }
                                                 });
                                             });
                                         });
