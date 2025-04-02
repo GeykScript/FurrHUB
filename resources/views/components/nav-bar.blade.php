@@ -4,26 +4,113 @@
             <img src="{{ asset('logo/furrhub.png') }}" alt="furrhub-logo" class="h-[100px]  lg:h-[120px] lg:w-[290px] object-cover" /></a>
     </div>
 
-    <div class="flex flex-row lg:w-[60rem] w-auto p-2 justify-around lg:gap-10">
-        <form class="flex items-center w-full 2xl:w-[58rem]  p-2 rounded-lg">
-            <input type="search" placeholder="Search" aria-label="Search"
-                class="w-full h-[40px] lg:h-[50px]   px-4 text-[13px] lg:text-[18px] rounded-l-lg outline-none border-none focus:outline-none focus:ring-0 focus:border-transparent" />
-            <button type="submit"
-                class="bg-[#35B5D3] h-[40px] lg:h-[50px] lg:w-[80px] w-[50px] flex items-center justify-center rounded-r-lg">
+    <div class="relative flex flex-row lg:w-[60rem] w-auto p-2 justify-around lg:gap-10">
+        <form id="search-form" action="{{ route('search.products') }}" method="GET" class="flex items-center w-full p-2 rounded-lg">
+            <input type="search" id="search" name="search" placeholder="Search" required
+                class="w-full h-[40px] lg:h-[50px] px-4 text-[13px] lg:text-[18px] rounded-l-lg outline-none border-none"
+                autocomplete="off" />
+
+            <button type="submit" class="bg-[#35B5D3] h-[40px] lg:h-[50px] lg:w-[80px] w-[50px] flex items-center justify-center rounded-r-lg">
                 <img src="{{ asset('logo/search-white.svg') }}" alt="search" class="h-[22px] w-[22px] lg:h-[30px] lg:w-[30px]" />
             </button>
         </form>
+        <!-- Dropdown for Search Results -->
+        <div id="search-results" class="absolute top-[4rem] left-4 right-4  lg:w-[46rem] bg-white shadow-lg rounded-b-lg hidden z-50 overflow-hidden border border-gray-200 mt-1">
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $('#search').on('keyup', function() {
+                        let query = $(this).val();
+
+                        if (query.length > 1) { // Only search when more than 1 character
+                            $.ajax({
+                                url: "{{ route('search.products') }}",
+                                type: "GET",
+                                data: {
+                                    search: query
+                                },
+                                success: function(response) {
+                                    let resultsDiv = $('#search-results');
+                                    resultsDiv.empty();
+
+                                    if (response.length > 0) {
+                                        response.forEach(product => {
+                                            let form = `
+                                    <form action="{{ route('product.view') }}" method="GET" class="block px-4 py-2 hover:bg-orange-200 search-item">
+                                        <input type="hidden" name="product_id" value="${product.encrypted_product_id}">
+                                        <button type="submit" class="w-full lg:text-lg text-xs text-left">${product.name}</button>
+                                    </form>
+                                `;
+                                            resultsDiv.append(form);
+                                        });
+                                        resultsDiv.removeClass('hidden');
+                                    } else {
+                                        resultsDiv.addClass('hidden');
+                                    }
+                                }
+                            });
+                        } else {
+                            $('#search-results').addClass('hidden');
+                        }
+                    });
+
+                    // Hide results when clicking outside
+                    $(document).on('click', function(e) {
+                        if (!$('#search-form').is(e.target) && $('#search-form').has(e.target).length === 0) {
+                            $('#search-results').addClass('hidden');
+                        }
+                    });
+                });
+            </script>
+
+        </div>
+
 
         <div class="flex flex-row text-white  font-semibold mt-4">
+            @if (Route::has('login'))
+
+            @auth
             <a href="{{route('shoppingCart')}}" class="flex flex-row gap-0 align-center">
-                <img src="{{ asset ('logo/cart.svg')}}" alt="user" class="h-[27px] w-[30px] lg:h-[35px] lg:w-[43px]" />
-                <div class="bg-[#F23D3D] h-[20px] w-[35px]  lg:h-[27px] lg:w-[45px] rounded-full flex justify-center items-center">
-                    <p class="xl:text-[16px] text-[10px] ">0</p>
-                </div>
-            </a>
-            <!-- <p class="pt-1 text-">Cart</p> -->
+                @else
+                <a href="{{route('login')}}" class="flex flex-row gap-0 align-center">
+                    @endauth
+                    @endif
+                    <img src="{{ asset ('logo/cart.svg')}}" alt="user" class="h-[27px] w-[30px] lg:h-[35px] lg:w-[43px]" />
+                    <div class="bg-[#F23D3D] h-[20px] w-[35px] lg:h-[27px] lg:w-[45px] rounded-full flex justify-center items-center">
+                        <p id="cart-item-count" class="xl:text-[16px] text-[10px] text-white font-bold">
+                            {{ session('cart_items_count', 0) }}
+                        </p>
+                    </div>
+                    <script>
+                        function updateCartCount() {
+                            fetch('/cart/counts') // Adjust the URL to match your route
+                                .then(response => response.json())
+                                .then(data => {
+                                    const count = data.count || 0;
+
+                                    // Update the badge text
+                                    const badgeElement = document.getElementById('cart-item-count');
+                                    badgeElement.textContent = count;
+
+                                    // Hide the badge if the count is 0
+                                
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching cart counts:', error);
+                                });
+                        }
+
+                        // Call the function once on page load
+                        document.addEventListener('DOMContentLoaded', () => {
+                            updateCartCount();
+                        });
+                    </script>
+
+                </a>
+                <!-- <p class="pt-1 text-">Cart</p> -->
         </div>
     </div>
+
 
 
     <div class="flex flex-row gap-3 ml-auto xl:ml-0">
