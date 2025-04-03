@@ -17,10 +17,10 @@
             <div class="col-span-2 flex flex-col items-center">
                 <!-- Existing Profile Image -->
                 <div class="lg:w-[260px] lg:h-[260px] w-[200px] h-[200px] bg-orange-300 rounded-full flex items-center justify-center text-center">
-                    @if ($user->profile_img == null)
-                    <i data-lucide="user"  class="lg:w-[200px] lg:h-[150px] w-[150px] h-[150px] text-orange-100 text-center items-center"></i>
-                    @else
-                    <img id="preview" src="{{ asset('storage/profile_picture/' . $user->profile_img) }}" class="lg:w-[260px] lg:h-[260px] w-[200px] h-[200px] rounded-full object-cover">
+
+                    <img id="preview" src="{{ asset('storage/profile_picture/' . $user->profile_img) }}" class="{{ $user->profile_img ? 'block' : 'hidden' }} lg:w-[260px] lg:h-[260px] w-[200px] h-[200px] rounded-full object-cover">
+                    @if (!$user->profile_img)
+                    <i data-lucide="user" class="lg:w-[200px] lg:h-[150px] w-[150px] h-[150px] text-orange-100 text-center items-center"></i>
                     @endif
                 </div>
 
@@ -30,16 +30,19 @@
                     <span class="ml-2">Edit Profile </span><i data-lucide="upload" class="h-4 w-4"></i>
                 </label>
             </div>
-
             <script>
-                // Function to preview the image without saving
                 function previewImage(event) {
                     const file = event.target.files[0];
                     if (file) {
                         const reader = new FileReader();
                         reader.onload = function(e) {
                             const preview = document.getElementById('preview');
-                            preview.src = e.target.result; // Update the preview image
+                            preview.src = e.target.result;
+                            preview.style.display = 'block'; 
+                            const icon = document.querySelector('[data-lucide="user"]');
+                            if (icon) {
+                                icon.style.display = 'none'; 
+                            }
                         };
                         reader.readAsDataURL(file);
                     }

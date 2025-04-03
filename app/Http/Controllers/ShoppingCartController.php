@@ -38,6 +38,7 @@ class ShoppingCartController extends Controller
             ->sum(function ($item) {
                 return $item->quantity * $item->product->getDiscountedPriceAttribute();
             });
+            
             $total_quantity = Cart_item::where('cart_id', $cart->cart_id)
             ->get()
             ->sum(function ($item) {

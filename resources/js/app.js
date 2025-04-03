@@ -9,10 +9,10 @@ Alpine.start();
 
 
 //lucide icons
-import { createIcons, CircleCheckBig ,Check,Truck,Upload, ShieldCheck,Star,User,UserPen,UserRoundPen, CircleArrowRight,TriangleAlert, Heart,ImageUp,SendHorizontal,PawPrint,ShoppingBag,Bell,MessageSquareText,CircleChevronLeft,Plus,Minus,Trash2,House,ChevronDown,NotebookPen,PhilippinePeso,ShoppingBasket,Bone,CircleUser,LogOut} from 'lucide';
+import { createIcons, CircleCheckBig ,Check,Truck,Upload, ShieldCheck,Star,MapPinHouse, User,UserPen,PhoneCall, UserRoundPen, CircleArrowRight,TriangleAlert, Heart,ImageUp,SendHorizontal,PawPrint,ShoppingBag,Bell,MessageSquareText,CircleChevronLeft,Plus,Minus,Trash2,House,ChevronDown,NotebookPen,PhilippinePeso,ShoppingBasket,Bone,CircleUser,LogOut} from 'lucide';
 
 createIcons({
-    icons: { CircleCheckBig,Check,Truck ,ShieldCheck,Upload,Star, User, UserPen ,UserRoundPen, CircleArrowRight,PawPrint,TriangleAlert ,Heart,ImageUp,SendHorizontal, ShoppingBag, Bell,MessageSquareText,CircleChevronLeft,Plus,Minus,Trash2, House,NotebookPen ,ChevronDown,PhilippinePeso, ShoppingBasket,Bone, CircleUser,LogOut},
+    icons: { CircleCheckBig,Check,Truck ,ShieldCheck,Upload,Star, User, MapPinHouse,UserPen ,PhoneCall, UserRoundPen, CircleArrowRight,PawPrint,TriangleAlert ,Heart,ImageUp,SendHorizontal, ShoppingBag, Bell,MessageSquareText,CircleChevronLeft,Plus,Minus,Trash2, House,NotebookPen ,ChevronDown,PhilippinePeso, ShoppingBasket,Bone, CircleUser,LogOut},
 });
 
 
