@@ -18,12 +18,89 @@
 </head>
 
 
+<dialog id="addressModal" class="p-6 rounded-lg shadow-lg w-full max-w-lg backdrop:bg-black/30 focus:outline-none">
+    <form method="POST" action="{{ route('checkoutPage.add') }}" class="relative bg-white p-6 rounded-lg">
+    @csrf
+    <input type="text" name="selected_items" id="selected_item" value="{{ $product_ids }}" hidden>
+        <div class="absolute top-2 right-2  focus:outline-none">
+            <a href="{{ route('shoppingCart') }}" class="focus:outline-none"> <img src=" {{asset ('logo/x.svg')}}" alt="cancel" class="h-5 w-5 md:h-7 md:w-7 hover:cursor-pointer focus:outline-none" /> </a>
+        </div>
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">New Address</h2>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <x-input-label for="fullname">Full Name</x-input-label>
+                <x-text-input type="text" id="fullname" name="fullname" class="border p-2 rounded w-full mt-1" required></x-text-input>
+            </div>
+            <div>
+                <x-input-label for="contact_number">Contact Number</x-input-label>
+                <x-text-input type="text" id="contact_number" name="contact_number" class="border p-2 rounded w-full mt-1" required></x-text-input>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <x-input-label for="province">Province</x-input-label>
+            <x-text-input type="text" id="province" name="province" class="border p-2 rounded w-full mt-1" required></x-text-input>
+        </div>
+
+        <div class="mt-4">
+            <x-input-label for="city">City</x-input-label>
+            <x-text-input type="text" id="city" name="city" class="border p-2 rounded w-full mt-1" required></x-text-input>
+        </div>
+
+        <div class="mt-4">
+            <x-input-label for="barangay">Barangay</x-input-label>
+            <x-text-input type="text" id="barangay" name="barangay" class="border p-2 rounded w-full mt-1" required></x-text-input>
+        </div>
+
+        <div class="mt-4">
+            <x-input-label for="street">Street, Building, House No.</x-input-label>
+            <x-text-input type="text" id="street" name="street" class="border p-2 rounded w-full mt-1" required></x-text-input>
+        </div>
+
+        <div class="mt-4">
+            <x-input-label for="postal_code">Postal Code</x-input-label>
+            <x-text-input type="text" id="postal_code" name="postal_code" class="border p-2 rounded w-full mt-1" required></x-text-input>
+        </div>
+
+        <div class="mt-4">
+            <x-input-label for="description">Description (Optional)</x-input-label>
+            <x-text-input type="text" id="description" name="description" class="border p-2 rounded w-full mt-1"></x-text-input>
+        </div>
+
+        <div class="mt-4 flex items-center">
+            <label for="default" class="inline-flex items-center cursor-pointer">
+                <input id="default" type="checkbox" name="default" class="rounded border-gray-300 text-sky-600 w-[1.3rem] h-[1.3rem]">
+                <span class="ml-2 text-md text-gray-600">Set as Default Address</span>
+            </label>
+        </div>
+
+        <div class="flex justify-end gap-5 mt-6">
+            <a href="{{ route('shoppingCart') }}" class="text-orange-500 hover:text-orange-600">Cancel</a>
+
+            <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg">Add Address</button>
+        </div>
+    </form>
+
+</dialog>
+
+
+
+@if($addresses->isEmpty())
+<script>
+    window.onload = function() {
+        document.getElementById('addressModal').showModal();
+    };
+</script>
+@endif
 <!-- bg-[#60E1FF] blue -->
 <!-- F0A02C  orange-->
 <!-- 38B6FF -->
 <!-- nav part -->
 <x-nav-bar />
 <div class="lg:pt-[90px] pt-[110px] lg:mb-10"></div>
+
+
 
 <body class="font-sans antialiased bg-white-600 dark:text-black/50 min-h-screen flex flex-col">
     <div class="bg-white flex-grow">
@@ -48,6 +125,7 @@
 
             <div>
                 <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 md:px-[10rem] mt-10">
+                    @if(!$addresses->isEmpty())
                     <div class="col-span-6 lg:col-span-6 grid grid-cols-6 gap-4 bg-orange-200 p-8 rounded-lg">
                         <div class="col-span-6 px-2 flex gap-2 text-lg">
                             <i data-lucide="map-pin-house" class="text-orange-500 "></i>
@@ -71,6 +149,10 @@
                             </div>
                         </div>
                     </div>
+                    @endif
+
+
+
                     @php
                     $count = 0;
                     @endphp
@@ -139,14 +221,7 @@
                         <div class="col-span-6 mt-4 ">
                             <form action="{{ route('checkout.process') }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="quantity" value="{{$cartItem->quantity}}">
-                                <input type="hidden" name="discounted_price" value="{{$cartItem->product->discounted_price}}">
-                                <input type="hidden" name="retail_price" value="{{$cartItem->product->price}}">
-                                <input type="hidden" name="total_price" value="{{$total_price}}">
-                                <input type="hidden" name="total_quantity" value="{{$total_quantity}}">
-                                <input type="hidden" name="total_amount" value="{{$total_amount}}">
-                                <input type="hidden" name="shipping_fee" value="50">
-                                <input type="hidden" name="product_id" value="{{$cartItem->product->product_id}}">
+
 
                                 <div class="flex flex-col lg:gap-4 gap-1 justify-end items-end lg:p-4 p-1">
                                     <div class="flex gap-1 text-sm lg:text-lg">

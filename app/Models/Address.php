@@ -8,7 +8,7 @@ class Address extends Model
 {
     protected $table = 'addresses';
     protected $primaryKey = 'address_id';
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'user_id',
@@ -17,7 +17,10 @@ class Address extends Model
         'barangay',
         'street',
         'postal_code',
-        'default' 
+        'default',
+        'fullname',
+        'description',
+        'contact_number',
     ];
 
     public function user()

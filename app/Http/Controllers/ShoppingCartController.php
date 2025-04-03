@@ -253,4 +253,7 @@ class ShoppingCartController extends Controller
         return redirect()->route('product.view', ['product_id' => $encryptedProductId])
             ->with('success', 'Item successfully added to cart!');
     }
+
+
+    
 }

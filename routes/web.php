@@ -34,7 +34,12 @@ use App\Http\Controllers\PaymentController;
 Route::post('/checkout/process', [PaymentController::class, 'process'])->name('checkout.process');
 
 use App\Http\Controllers\checkoutPageController;
-Route::post('/checkoutPage', [checkoutPageController::class, 'index'])->name('checkoutPage');
+Route::get('/checkoutPage', [checkoutPageController::class, 'index'])->name('checkoutPage');
+Route::post('/checkoutPage.add', [checkoutPageController::class, 'add_address'])->name('checkoutPage.add');
+Route::post('/encrypt-items', [ShoppingCartController::class, 'encryptItems']);
+
+
+
 
 Route::get('/shoppingCart', [ShoppingCartController::class, 'index'])->name('shoppingCart');
 Route::post('/cart/add', [ShoppingCartController::class, 'addToCart'])->name('cart.add');
@@ -99,7 +104,10 @@ Route::get('/add-appointment', function () {
 })->name('add-appointment');
 
 
+use App\Http\Controllers\AddressController;
 
+
+    Route::post('/address/add', [AddressController::class, 'add_address'])->name('address.add');
 
 
  
