@@ -63,6 +63,9 @@ class ShoppingCartController extends Controller
 
         return view('cart.shoppingCart', compact('cartItems', 'buyNowProductId' , 'total_amount', 'total_quantity'));
     }
+
+
+
     public function removeFromCart(Request $request)
     {
         $request->validate([
@@ -101,6 +104,10 @@ class ShoppingCartController extends Controller
             'total_amount' => $totalAmount,
         ]);
     }
+
+
+
+    
     public function deleteSelectedItems(Request $request)
     {
         $request->validate([

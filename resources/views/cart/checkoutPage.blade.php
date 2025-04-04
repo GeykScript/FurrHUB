@@ -95,7 +95,6 @@
     </form>
 </dialog>
 
-
 <!-- Modal for creating address -->
 <dialog id="AddaddressModal" class="p-6 rounded-lg shadow-lg w-full max-w-lg backdrop:bg-black/30 focus:outline-none">
     <form method="POST" action="{{ route('checkoutPage') }}" class="relative bg-white p-6 rounded-lg">
