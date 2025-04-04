@@ -27,7 +27,6 @@
             <a href="{{ route('shoppingCart') }}" class="focus:outline-none"> <img src=" {{asset ('logo/x.svg')}}" alt="cancel" class="h-5 w-5 md:h-7 md:w-7 hover:cursor-pointer focus:outline-none" /> </a>
         </div>
         <h2 class="text-lg font-semibold text-gray-800 mb-4">Create Address</h2>
-
         <div class="grid lg:grid-cols-2 gap-4">
             <div>
                 <x-input-label for="fullname">Full Name</x-input-label>
@@ -177,7 +176,6 @@
     <form method="POST" action="{{ route('checkoutPage') }}" class="relative bg-white p-6 rounded-lg">
         @csrf
         <input type="text" name="selected_items" id="selected_item" value="{{ $product_ids }}" hidden>
-
         <div class="absolute top-2 right-2  focus:outline-none">
             <p onclick="document.getElementById('changeAddressModal').close()" class="focus:outline-none"> <img src=" {{asset ('logo/x.svg')}}" alt="cancel" class="h-5 w-5 md:h-7 md:w-7 hover:cursor-pointer focus:outline-none focus:cursor-pointer" /> </p>
         </div>
@@ -199,7 +197,6 @@
                 @endforeach
             </div>
         </div>
-
         <div class="mt-4 flex items-center p-4 text-orange-500 hover:text-orange-400 gap-2 border-t-2 border-b-2 border-orange-200  hover:cursor-pointer">
             <i data-lucide="house-plus" class="hover:cursor-pointer"></i>
             <a onclick="document.getElementById('AddaddressModal').showModal()" class="text-center hover:cursor-pointer font-semibold">Add address</a>
@@ -227,6 +224,7 @@
 <!-- nav part -->
 <x-nav-bar />
 <div class="lg:pt-[90px] pt-[110px] lg:mb-10"></div>
+
 <body class="font-sans antialiased bg-white-600 dark:text-black/50 min-h-screen flex flex-col">
     <div class="bg-white flex-grow">
         <div class="relative  p-2">
@@ -371,22 +369,17 @@
                                     <div class="flex flex-col gap-4 justify-end items-end">
                                         <button type="submit" class="bg-orange-500 hover:bg-orange-400 text-white font-bold py-2 px-4 rounded-xl w-full xl:w-[15rem] xl:h-12">Place Order</button>
                                     </div>
-
                                 </div>
-
-                        </div>
+                            </div>
                         </form>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
     </div>
     </div>
 </body>
-
 
 <!-- Footer -->
 <x-footer bgColor=" bg-gradient-to-r from-orange-600" />
