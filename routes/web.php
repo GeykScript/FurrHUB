@@ -34,9 +34,8 @@ use App\Http\Controllers\PaymentController;
 Route::post('/checkout/process', [PaymentController::class, 'process'])->name('checkout.process');
 
 use App\Http\Controllers\checkoutPageController;
-Route::get('/checkoutPage', [checkoutPageController::class, 'index'])->name('checkoutPage');
-Route::post('/checkoutPage.add', [checkoutPageController::class, 'add_address'])->name('checkoutPage.add');
-Route::post('/encrypt-items', [ShoppingCartController::class, 'encryptItems']);
+Route::post('/checkoutPage', [checkoutPageController::class, 'index'])->name('checkoutPage');
+// Route::post('/checkoutPage.add', [checkoutPageController::class, 'add_address'])->name('checkoutPage.add');
 
 
 

@@ -135,8 +135,8 @@
                     @else
 
                     @foreach ($cartItems as $item)
-                    <form action="{{ route('checkoutPage') }}" method="GET" id="checkout-form" onsubmit="return false;">
-                        
+                    <form action="{{ route('checkoutPage') }}" method="POST" id="checkout-form" onsubmit="return false;">
+                        @csrf
                         <div class=" grid grid-rows-1 xl:grid-cols-5 xl:gap-5 gap-4 bg-white p-4 border-b border-gray-300 text-gray-900 text-xl items-center bg-[#FAFAFA] mt-2">
                         <div class="flex flex-col xl:flex-row items-center xl:gap-20 gap-2 col-span-2">
                             <div class="flex flex-row items-center gap-10">
