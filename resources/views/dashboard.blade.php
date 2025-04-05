@@ -16,16 +16,11 @@
 
 </head>
 
-
-<!-- bg-[#60E1FF] blue -->
-<!-- F0A02C  orange-->
-<!-- 38B6FF -->
 <!-- nav part -->
-
 <x-nav-bar />
 
-<div class="pt-[100px]"></div>
 
+<div class="pt-[100px]"></div>
 <!-- carousel part -->
 <div class="w-full relative mt-2">
     <div class="swiper progress-slide-carousel swiper-container relative ">
@@ -73,9 +68,6 @@
                     </div>
                 </a>
             </div>
-
-
-
         </div>
         <div class="swiper-pagination"></div>
     </div>
@@ -150,10 +142,6 @@
                         <p class="text-sm sm:text-sm font-medium text-center">Essentials</p>
                     </a>
                 </div>
-
-
-
-
             </div>
         </div>
 
@@ -162,9 +150,7 @@
                 <div class="flex flex-row items-center md:gap-5 gap-1 ">
                     <div> <i data-lucide="paw-print" class="md:w-10 md:h-10 w-6 h-6 text-white mx-auto"></i></div>
                     <h1 class="md:text-4xl text-md font-bold text-white ">Best Seller Products!</h1>
-
                 </div>
-
             </div>
         </div>
 
@@ -178,38 +164,35 @@
                         <input type="hidden" name="product_id" value="{{ encrypt($product->product_id) }}">
                         <button type="submit" class="focus:outline-none">
                             <img src="{{ asset('storage/Products/' . $product->image_url) }}" alt="Best-Product" class="aspect-square w-full rounded-lg bg-gray-500 object-cover lg:aspect-auto lg:h-74">
-                            <div class="mt-2 flex justify-between flex flex-col gap-1">
-                                <p class="text-sm font-normal text-gray-500 text-end">{{ $product->quantity_sold }} sold</p>
-                                <h5 class="font-normal text-wrap text-orange-500 text-start text-sm">{{ $product->category->name ?? 'Unknown' }}</h5>
-                                <h4 class="font-semibold text-wrap text-black text-md text-start">{{ $product->name }}</h4>
-                                @if (!empty($product->discount))
-                                <h6 class="font-bold text-wrap text-orange-400 text-xs text-start line-through">
-                                    <span class="text-xs">₱</span> {{ number_format($product->price, 2) }}
-                                </h6>
-                                <h4 class="font-bold text-wrap text-orange-500 text-lg text-start">
-                                    <span class="text-xl">₱</span> {{ number_format($product->discounted_price, 2) }}
-                                </h4>
-                                @else
-                                <h4 class="font-bold text-wrap text-orange-500 text-lg text-start">
-                                    <span class="text-xl">₱</span> {{ number_format($product->price, 2) }}
-                                </h4>
-                                @endif
-                            </div>
+                                <div class="mt-2 flex justify-between flex flex-col gap-1">
+                                    <p class="text-sm font-normal text-gray-500 text-end">{{ $product->quantity_sold }} sold</p>
+                                        <h5 class="font-normal text-wrap text-orange-500 text-start text-sm">{{ $product->category->name ?? 'Unknown' }}</h5>
+                                        <h4 class="font-semibold text-wrap text-black text-md text-start">{{ $product->name }}</h4>
+                                    @if (!empty($product->discount))
+                                        <h6 class="font-bold text-wrap text-orange-400 text-xs text-start line-through">
+                                            <span class="text-xs">₱</span> {{ number_format($product->price, 2) }}
+                                        </h6>
+                                        <h4 class="font-bold text-wrap text-orange-500 text-lg text-start">
+                                            <span class="text-xl">₱</span> {{ number_format($product->discounted_price, 2) }}
+                                        </h4>
+                                    @else
+                                        <h4 class="font-bold text-wrap text-orange-500 text-lg text-start">
+                                            <span class="text-xl">₱</span> {{ number_format($product->price, 2) }}
+                                        </h4>
+                                    @endif
+                                </div>
                         </button>
                     </form>
-
                 </div>
                 @endforeach
             </div>
         </div>
-
-
+        <!--BANNDER-->
         <x-authenticity-banner />
 
         <!-- discover services -->
         <div class=" lg:px-12">
             <div class="grid grid-cols-6 lg:p-4 p-2 lg:gap-4 gap-2 bg-sky-100  mt-2 rounded-lg">
-
                 <div class="col-span-6 lg:col-span-3 justify-center items-center">
                     <a href="{{route('appointment')}}" class="focus:outline-none">
                         <img src="{{asset('images/services/book-now.jpg')}}" alt="" class="rounded-md  lg:w-full transition-transform duration-300 hover:scale-105">
@@ -252,7 +235,7 @@
             <div id="product-container" class="grid grid-cols-2 lg:grid-cols-6 gap-4">
                 @foreach ($products as $product)
                 <div class="group relative xl:min-w-[230px] min-w-[150px] p-4 bg-white rounded-lg shadow-lg border-2 border-gray-100 hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105 hover:opacity-90 
-            {{ $loop->index >= 12 ? 'hidden more-products' : '' }}">
+                    {{ $loop->index >= 12 ? 'hidden more-products' : '' }}">
                     <form action="{{ route('product.view') }}" method="GET">
                         <input type="hidden" name="product_id" value="{{ encrypt($product->product_id) }}">
                         <button type="submit" class="focus:outline-none">

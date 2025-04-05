@@ -27,8 +27,7 @@
 
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="w-full">
-                    @include('profile.partials.address-form')
-                </div>
+                    @include('profile.partials.address-form', ['addresses' => $addresses]) </div>
             </div>
 
 
@@ -36,8 +35,8 @@
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div class="flex flex-col items-center">
-                            <img src="{{ asset('logo/furrhub.png') }}" alt="logo" class="lg:w-[320px] lg:h-[260px] w-[150px] h-[100px] object-cover ">
-                        
+                        <img src="{{ asset('logo/furrhub.png') }}" alt="logo" class="lg:w-[320px] lg:h-[260px] w-[150px] h-[100px] object-cover ">
+
                         <h1 class="lg:text-lg text-md font-medium text-gray-600 mt-3 lg:px-32 text-wrap">
                             Ensure your account is using a long, random password to stay secure.
                         </h1>

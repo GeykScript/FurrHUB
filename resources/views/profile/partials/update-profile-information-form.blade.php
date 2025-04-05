@@ -6,7 +6,7 @@
     </form>
 
 
-    <form method="post" action="{{ route('profile.update') }}" class="flex lg:flex-row justify-evenly flex-col ">
+    <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="flex lg:flex-row justify-evenly flex-col ">
         @csrf
         @method('patch')
 
@@ -15,15 +15,39 @@
 
             <!-- Profile Picture -->
             <div class="col-span-2 flex flex-col items-center">
-                <div class="lg:w-[260px] lg:h-[260px] w-[200px] h-[200px] bg-orange-300 rounded-full flex items-center justify-center">
-                    <img id="preview" src="{{ asset('storage/profile_picture/' . $user->profile_img) }}"  class="lg:w-[260px] lg:h-[260px] w-[200px] h-[200px] rounded-full object-cover">
+                <!-- Existing Profile Image -->
+                <div class="lg:w-[260px] lg:h-[260px] w-[200px] h-[200px] bg-orange-300 rounded-full flex items-center justify-center text-center">
+
+                    <img id="preview" src="{{ asset('storage/profile_picture/' . $user->profile_img) }}" class="{{ $user->profile_img ? 'block' : 'hidden' }} lg:w-[260px] lg:h-[260px] w-[200px] h-[200px] rounded-full object-cover">
+                    @if (!$user->profile_img)
+                    <i data-lucide="user" class="lg:w-[200px] lg:h-[150px] w-[150px] h-[150px] text-orange-100 text-center items-center"></i>
+                    @endif
                 </div>
-                <label for="profile_picture" class="mt-3 inline-flex items-center p-2  gap-2 border border-orange-500 text-orange-500 text-sm rounded-lg hover:bg-orange-100 cursor-pointer">
-                    <input type="file" id="profile_picture" name="profile_picture" class="hidden" accept="image/*">
+
+                <!-- File Input for Editing Profile Picture -->
+                <label for="profile_img" class="mt-3 inline-flex items-center p-2 gap-2 border border-orange-500 text-orange-500 text-sm rounded-lg hover:bg-orange-100 cursor-pointer">
+                    <input type="file" id="profile_img" name="profile_img" class="hidden" accept="image/*" onchange="previewImage(event)">
                     <span class="ml-2">Edit Profile </span><i data-lucide="upload" class="h-4 w-4"></i>
                 </label>
             </div>
-
+            <script>
+                function previewImage(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const preview = document.getElementById('preview');
+                            preview.src = e.target.result;
+                            preview.style.display = 'block'; 
+                            const icon = document.querySelector('[data-lucide="user"]');
+                            if (icon) {
+                                icon.style.display = 'none'; 
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }
+            </script>
         </div>
 
 
@@ -41,29 +65,42 @@
                 </header>
             </div>
             <!-- status show -->
+            <!-- Success Message for Profile Updated -->
             @if (session('status') === 'profile-updated')
-            <div class="col-span-2 ">
+            <div class="col-span-2">
                 <p
                     x-data="{ show: true }"
                     x-show="show"
                     x-transition
-                    class="text-sm bg-green-200 text-gray-900  p-4 px-5 rounded-md">
+                    class="text-lg text-white bg-green-400 text-gray-900 p-4 px-5 rounded-md">
                     {{ __('Profile Updated Successfully!') }}
                 </p>
             </div>
             @endif
 
+            <!-- Message for No Changes -->
+            @if (session('status') === 'no-change')
+            <div class="col-span-2">
+                <p
+                    x-data="{ show: true }"
+                    x-show="show"
+                    x-transition
+                    class="text-lg text-white bg-sky-500 text-gray-900 p-4 px-5 rounded-md">
+                    {{ __('No changes were made to your profile.') }}
+                </p>
+            </div>
+            @endif
 
             <!-- First Name -->
             <div>
                 <x-input-label for="first_name" :value="__('First Name')" />
-                <x-text-input id="first_name" name="first_name" type="text" class="mt-1 block w-full" :value="old('first_name', $user->first_name)" required  autocomplete="first_name" />
+                <x-text-input id="first_name" name="first_name" type="text" class="mt-1 block w-full" :value="old('first_name', $user->first_name)" required autocomplete="first_name" />
                 <x-input-error class="mt-2" :messages="$errors->get('first_name')" />
             </div>
             <!-- last Name -->
             <div>
                 <x-input-label for="last_name" :value="__('Last Name')" />
-                <x-text-input id="last_name" name="last_name" type="text" class="mt-1 block w-full" :value="old('last_name', $user->last_name)" required  autocomplete="last_name" />
+                <x-text-input id="last_name" name="last_name" type="text" class="mt-1 block w-full" :value="old('last_name', $user->last_name)" required autocomplete="last_name" />
                 <x-input-error class="mt-2" :messages="$errors->get('last_name')" />
             </div>
 

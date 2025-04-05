@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Address;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -16,8 +20,15 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $user = Auth::user();
+        $addresses = Address::where('user_id', $user->id)
+            ->orderByDesc('default') // Sort by default descending: default = 1 will come first
+            ->get();
+
         return view('profile.edit', [
             'user' => $request->user(),
+            'addresses' => $addresses,
+            
         ]);
     }
 
@@ -26,17 +37,48 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $user->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // Flag to track if there are any changes
+        $hasChanges = false;
+
+        // Check if the profile picture is updated
+        if ($request->hasFile('profile_img')) {
+            $randomString = Str::random(20);
+            $extension = $request->file('profile_img')->getClientOriginalExtension();
+            $filename = $randomString . '.' . $extension;
+
+            $path = $request->file('profile_img')->storeAs('profile_picture', $filename, 'public');
+
+            // Delete the old profile picture if it exists
+            if ($user->profile_img) {
+                Storage::delete('public/profile_picture/' . $user->profile_img);
+            }
+
+        
+            $user->profile_img = $filename;
+            $hasChanges = true;  
         }
 
-        $request->user()->save();
+        // Check if the email or any other fields are changed
+        if ($user->isDirty()) {
+            $user->save();
+            $hasChanges = true;  // Mark that there was a change
+        }
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        // Clear email verification if email is updated
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+
+        // Save the user data
+        $user->save();
+
+        // Set session status based on changes
+        return Redirect::route('profile.edit')->with('status', $hasChanges ? 'profile-updated' : 'no-change');
     }
-
+    
     /**
      * Delete the user's account.
      */
