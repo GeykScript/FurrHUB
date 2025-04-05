@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Address;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -18,8 +20,15 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $user = Auth::user();
+        $addresses = Address::where('user_id', $user->id)
+            ->orderByDesc('default') // Sort by default descending: default = 1 will come first
+            ->get();
+
         return view('profile.edit', [
             'user' => $request->user(),
+            'addresses' => $addresses,
+            
         ]);
     }
 

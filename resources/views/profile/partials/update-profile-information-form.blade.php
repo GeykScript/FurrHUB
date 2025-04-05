@@ -72,7 +72,7 @@
                     x-data="{ show: true }"
                     x-show="show"
                     x-transition
-                    class="text-lg text-white bg-green-500 text-gray-900 p-4 px-5 rounded-md">
+                    class="text-lg text-white bg-green-400 text-gray-900 p-4 px-5 rounded-md">
                     {{ __('Profile Updated Successfully!') }}
                 </p>
             </div>

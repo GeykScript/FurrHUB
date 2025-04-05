@@ -149,7 +149,7 @@
                                         @endif
                                     </div>
                                     <label for="checkbox-item-{{ $item->product_id }}" class="w-40 h-40 rounded-2">
-                                        <img src="{{ asset('storage/Products/' . $item->product->image_url) }}" alt="product" class="w-40 h-40 rounded-2">
+                                        <img src="{{ asset('storage/Products/' . $item->product->image_url) }}" alt="product" class="w-40 h-40 rounded-md object-cover">
                                     </label>
                                 </div>
                                 <p class="lg:w-80 text-wrap text-center text-xl font-bold xl:text-left"><label for="checkbox-item-{{ $item->product_id }}">{{ $item->product->name }}</label></p>
