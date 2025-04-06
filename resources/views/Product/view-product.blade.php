@@ -364,8 +364,6 @@
                 </form>
             </div>
             @endforeach
-
-
         </div>
 
         <!-- banner -->
@@ -376,7 +374,35 @@
 
     <!-- Return to Top Button -->
     <x-return-top />
+
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const container = document.querySelector("#Quantity-inputs-view"); // The container element
+        const decrementButton = container.querySelector("[data-input-counter-decrement]"); // Decrement button
+        const incrementButton = container.querySelector("[data-input-counter-increment]"); // Increment button
+        const quantityInput = container.querySelector("[data-input-counter]"); // The quantity input field
+
+        // Get the stock quantity from a data attribute
+        const stockQuantity = parseInt(container.getAttribute("data-stock-quantity"), 10);
+
+        // Decrement button logic
+        decrementButton.addEventListener("click", function() {
+            let value = parseInt(quantityInput.value, 10);
+            if (value > 1) {
+                quantityInput.value = value - 1;
+            }
+        });
+
+        // Increment button logic (Prevent exceeding stock quantity)
+        incrementButton.addEventListener("click", function() {
+            let value = parseInt(quantityInput.value, 10);
+            if (value < stockQuantity) {
+                quantityInput.value = value + 1;
+            }
+        });
+    });
+</script>
 <!-- Footer -->
 <x-footer bgColor=" bg-gradient-to-r from-orange-600" />
 

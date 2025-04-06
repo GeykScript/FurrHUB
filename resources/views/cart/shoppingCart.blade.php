@@ -214,7 +214,7 @@
                                 <!-- Hidden input to store selected items id -->
                                 <input type="text" name="selected_items" id="selected-items-input" hidden>
                                 <!-- Checkout Button -->
-                                <button type="button" id="checkout-button" class="bg-orange-500 hover:bg-orange-400 text-white font-bold py-2 px-4 rounded-xl w-full xl:w-[15rem] xl:h-12">
+                                <button type="button" id="checkout-button" class="col-span-2 md:col-span-1 bg-orange-500 hover:bg-orange-400 text-white font-bold py-2 px-4 rounded-xl w-full  xl:h-12">
                                     Checkout
                                 </button>
                             </div>

@@ -342,8 +342,6 @@
                         <div class="col-span-6 mt-4 ">
                             <form action="{{ route('checkout.process') }}" method="POST">
                                 @csrf
-
-
                                 <div class="flex flex-col lg:gap-4 gap-1 justify-end items-end lg:p-4 p-1">
                                     <div class="flex gap-1 text-sm lg:text-lg">
                                         <h1 class="">Items Sub Total:</h1>

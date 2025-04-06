@@ -44,10 +44,11 @@
 
         <div class="col-span-1 border-b border-gray-200 pb-4 px-12">
             <!-- Action Buttons -->
-            <div class="mt-4  lg:flex items-center justify-end  gap-5 ">
+            <div class="mt-4 w-full lg:flex items-center lg:justify-end justify-start  gap-5 ">
                 @if($address->default == 1)
-                <p class="border border-orange-500 text-orange-500 px-3 py-1 rounded-lg hover:border-orange-500 hover:text-orange-500  text-[10px] lg:text-[14px] mt-2">Default Adress</p>
-                @endif
+                <p class="inline-block border border-orange-500 text-orange-500 px-3 py-1 rounded-md text-[10px] lg:text-[14px] mt-2">
+                    Default Address
+                </p> @endif
 
 
                 <!-- Modal edit Address -->
@@ -280,7 +281,7 @@
             const street = button.getAttribute('data-street');
             const postalCode = button.getAttribute('data-postal_code');
             const description = button.getAttribute('data-description');
-            const defaultAddress = button.getAttribute('data-default'); 
+            const defaultAddress = button.getAttribute('data-default');
 
             // Get modal and show it
             const modal = document.getElementById('addressModalEdit');
@@ -315,6 +316,6 @@
 
             document.getElementById('DeleteAddressId').value = address_id;
 
-            console.log(address_id); 
+            console.log(address_id);
         }
     </script>
