@@ -18,11 +18,14 @@
 
 
 <!-- Modal Edit -->
-<dialog id="petEdit" class="p-6 rounded-lg shadow-lg w-full max-w-lg backdrop:bg-black/30">
+<dialog id="petEdit" class="p-6 rounded-lg shadow-lg w-full max-w-lg backdrop:bg-black/30 overflow-hidden">
     <form method="POST" action="{{ route('appointment.editpet') }}" enctype="multipart/form-data" class="relative bg-white p-6 rounded-lg">
         @csrf
         <input type="hidden" name="pet_id" id="pet_id">
-
+        <div class="mb-2">
+            <h1 class="text-2xl font-bold text-center text-orange-500">Edit Pet</h1>
+            <p class="text-sm text-gray-500 text-center">Edit your pet's information.</p>
+        </div>
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <!-- Close Button -->
             <div class="absolute top-2 right-2">
@@ -75,7 +78,7 @@
                     </div>
                 </div>
 
-                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-2">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-2">
                     <div class="lg:col-span-1 col-span-2">
                         <label class="block text-gray-500">Birthday</label>
                         <input type="text" readonly id="pet_birthday" name="pet_birthday" class="text-gray-500 w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none  focus:border-gray-200 focus:ring-0 mt-2" required>
@@ -161,7 +164,7 @@
                             data-age="{{ $pet->age }}"
                             data-color="{{ $pet->color }}"
                             data-gender="{{ $pet->gender }}"
-                            data-birthday ="{{ $pet->birthday }}"
+                            data-birthday="{{ $pet->birthday }}"
                             data-weight="{{ $pet->weight }}"
                             data-size="{{ $pet->Size }}"
                             data-img="{{ asset('storage/pet_picture/' . $pet->pet_img) }}">
@@ -191,7 +194,7 @@
                 <h2 class="text-2xl sm:text-4xl font-semibold text-sky-600">My Appointments</h2>
             </div>
 
-            <a href="{{route('add-appointment')}}" class="flex items-center justify-end hover:underline hover:text-orange-400">
+            <a href="{{route('appointment.add-appointment')}}" class="flex items-center justify-end hover:underline hover:text-orange-400">
                 <i data-lucide="plus" class="w-[20px] h-[20px] sm:w-[30px] sm:h-[30px] text-orange-500"></i>
                 <h2 class="text-sm sm:text-lg font-semibold text-orange-500">Make an Appointment</h2>
             </a>
@@ -373,12 +376,19 @@
 
                             <li class="{{ $isHidden }}">
                                 {{ $grooming->name }}
+
+                                @if (!empty($product->discount))
                                 <div class="flex flex-row gap-2 mt-1">
                                     <p class="text-orange-500 line-through">₱ {{ number_format($grooming->price, 2) }}</p>
                                     <p class="text-orange-500">-</p>
                                     <p class="text-orange-500 font-bold">₱ {{ number_format($grooming->discounted_price, 2) }}</p>
                                     <p class="text-orange-500 text-center">({{ $grooming->discount_value }}% Discount)</p>
                                 </div>
+                                @else
+                                <div class="flex flex-row gap-2 mt-1">
+                                    <p class="text-orange-500 font-bold">₱ {{ number_format($grooming->price, 2) }}</p>
+                                </div>
+                                @endif
                             </li>
                             @endforeach
                         </ul>

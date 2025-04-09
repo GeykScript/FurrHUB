@@ -123,4 +123,28 @@ class AppointmentController extends Controller
 
         return redirect()->route('appointment')->with('success', 'Pet added successfully.');
     }
+
+    public function display_info()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'You must be logged in to view the cart.');
+        }
+        // status 7 - available
+        // status 8 - unavailable
+
+        // category_id 8 - grooming
+        // category_id 9 - veterinary
+        // category_id 10 - wellness
+        // Fetch services based on status and category
+        $grooming_service = Service::where('status', 7)->where('category', 8)->get();
+        $veterinary_service = Service::where('status', 7)->where('category', 9)->get();
+        $wellness_service = Service::where('status', 7)->where('category', 10)->get();
+
+        $pets = Pet::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('services.add-appointment', compact('veterinary_service', 'pets', 'user', 'wellness_service', 'grooming_service'));
+    }
 }

@@ -77,6 +77,7 @@ Route::get('/appointment', [AppointmentController::class, 'index'])->name('appoi
 Route::post('/appointment/editpet', [AppointmentController::class, 'editpet'])->name('appointment.editpet');
 Route::post('/appointment/addpet', [AppointmentController::class, 'addpet'])->name('appointment.addpet');
 
+
 //  notification routes
 Route::get('/notifications', function () {
     return view('profile.notifications');
@@ -99,9 +100,7 @@ Route::get('/add-pet', function () {
     return view('services.add-pet');
 })->name('add-pet');
 
-Route::get('/add-appointment', function () {
-    return view('services.add-appointment');
-})->name('add-appointment');
+Route::get('appointment/add-appointment', [AppointmentController::class, 'display_info'])->name('appointment.add-appointment');
 
 
 

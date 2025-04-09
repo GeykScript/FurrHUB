@@ -43,7 +43,7 @@
             <div class="md:px-[15rem] flex gap-5 items-center px-4  text-sm md:text-lg">
                 <a href="{{route('appointment')}}" class="hover:underline hover:text-orange-400">Dashboard</a>
                 <div> > </div>
-                <a href="{{route('add-appointment')}}" class="hover:underline text-orange-500">Appointment</a>
+                <a href="{{route('appointment.add-appointment')}}" class="hover:underline text-orange-500">Appointment</a>
             </div>
         </div>
 
@@ -53,83 +53,121 @@
                 <!-- Left Column -->
                 <div class="flex flex-col gap-4">
                     <div>
-
-                        @auth
-                        <label class="block text-gray-700">Owner Name</label>
-                        <x-text-input type="text" readonly class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-400 mt-2" required value="{{ Auth::user()->first_name}} {{ Auth::user()->last_name}}"></x-text-input>
+                        <p><strong>Note:</strong> Before availing our services, please ensure that your pet is at least 7 days post-vaccination for their safety and well-being.</p>
                     </div>
-                    @endauth
+                    <div>
+                        <label class="block text-gray-700">Owner Name</label>
+                        <x-text-input type="text" readonly class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-400 mt-2" required value="{{$user->first_name }} {{ $user->last_name }} "></x-text-input>
+                    </div>
                     <div>
                         <label class="block text-gray-700">Pet's Name</label>
                         <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 mt-2" required>
                             <option value="">--Select--</option>
-                            <option value="">Jazz</option>
-                            <option value="">Max</option>
+                            @foreach($pets as $pet)
+                            <option value="{{ $pet->pet_id }}">{{ $pet->pet_name }}</option>
+                            @endforeach
+
                         </select>
                     </div>
+                    <div>
+                        <p>Our services are available from Monday to Friday, between 9:00 AM and 4:00 PM only.</p>
+                    </div>
+
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-gray-700">Date</label>
                             <x-text-input
                                 type="date"
-                                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-400 mt-2 appearance-none"
+                                class="w-full px-4 py-2 border rounded-lg  mt-2 appearance-none"
                                 required
                                 min="1"></x-text-input>
+                            <p class="text-sm text-red-500" id="dateError" hidden>Please select a date between Monday and Friday.</p>
                         </div>
                         <div>
                             <label class="block text-gray-700">Time</label>
-                            <x-text-input type="time" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-400 mt-2" required> </x-text-input>
+                            <x-text-input type="time" class="w-full px-4 py-2 border rounded-lg  mt-2" required></x-text-input>
+                            <p class="text-sm text-red-500" id="timeError" hidden>Please select a time between 9:00 AM and 4:00 PM.</p>
                         </div>
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-medium mb-2">Type of Service</label>
+                        <label class="block text-gray-700  mb-2">Type of Service</label>
                         <div class="flex items-center gap-4">
-                            <!-- Radio option for Dog -->
-                            <label class="w-1/2 flex items-center gap-2 px-4 py-2 rounded-lg text-gray-700 bg-white  ">
-                                <input type="radio" name="Service" value="Grooming" class="peer h-5 w-5 text-orange-400 focus:ring-orange-400 border-gray-300">
-                                <span class="peer-checked:text-orange-400">Grooming</span>
-                            </label>
-                            <!-- Radio option for Cat -->
-                            <label class="w-1/2 flex items-center gap-2 px-4 py-2 rounded-lg text-gray-700 bg-white ">
-                                <input type="radio" name="Service" value="Veterinary" class="peer h-5 w-5 text-orange-400 focus:ring-orange-400 border-gray-300">
-                                <span class="peer-checked:text-orange-400">Veterinary</span>
-                            </label>
-                            <label class="w-1/2 flex items-center gap-2 px-4 py-2 rounded-lg text-gray-700 bg-white ">
-                                <input type="radio" name="Service" value="Wellness & Laboratory" class="peer h-5 w-5 text-orange-400 focus:ring-orange-400 border-gray-300">
-                                <span class="peer-checked:text-orange-400">Wellness & Laboratory</span>
-                            </label>
+                            <!-- Grooming Button -->
+                            <button type="button" class="w-1/2 px-4 py-2 rounded-lg text-gray-700 bg-white border " id="groomingBtn">
+                                Grooming
+                            </button>
+
+                            <!-- Veterinary Button -->
+                            <button type="button" class="w-1/2 px-4 py-2 rounded-lg text-gray-700 bg-white border " id="vetBtn">
+                                Veterinary
+                            </button>
+
+                            <!-- Wellness & Laboratory Button -->
+                            <button type="button" class="w-1/2 px-4 py-3 rounded-lg text-gray-700 text-xs bg-white border" id="wellnessBtn">
+                                Wellness & Laboratory
+                            </button>
+
                         </div>
                     </div>
                     <div>
                         <label class="block text-gray-700">Offered Services:</label>
-                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 mt-2" required>
-                            <option value="">--Select--</option>
-                            <option value="">Dog Full Grooming (31-40kg) - ₱ 1,300</option>
+
+                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 mt-2" id="grooming"  required>
+                            <option value="">--Select Grooming Services--</option>
+                            @foreach($grooming_service as $grooming)
+                            @if (!empty($product->discount))
+                            <option value="{{$grooming->service_id}}">{{$grooming->name}} ₱ {{ number_format($grooming->discounted_price, 2) }}</option>
+                            @else
+                            <option value="{{$grooming->service_id}}">{{$grooming->name}} ₱ {{ number_format($grooming->price, 2) }}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 mt-2" id="vet" hidden required>
+                            <option value="">--Select Vet Services--</option>
+                            @foreach($veterinary_service as $veterinary)
+                            @if (!empty($product->discount))
+                            <option value="{{$veterinary->service_id}}">{{$veterinary->name}} ₱ {{ number_format($veterinary->discounted_price, 2) }}</option>
+                            @else
+                            <option value="{{$veterinary->service_id}}">{{$veterinary->name}} ₱ {{ number_format($veterinary->price, 2) }}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 mt-2" id="wellness" hidden required>
+                            <option value="">--Select Wellness & Lab Services--</option>
+                            @foreach($wellness_service as $wellness)
+                            @if (!empty($product->discount))
+                            <option value="{{$wellness->service_id}}">{{$wellness->name}} ₱ {{ number_format($wellness->discounted_price, 2) }}</option>
+                            @else
+                            <option value="{{$wellness->service_id}}">{{$wellness->name}} ₱ {{ number_format($wellness->price, 2) }}</option>
+                            @endif
+                            @endforeach
                         </select>
                     </div>
-                    <div>
-                        <label class="block text-gray-700">Person in Charge</label>
-                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-400 mt-2" required>
-                            <option value="">--Select--</option>
-                            <option value="">John Doe</option>
-                        </select>
-                    </div>
+
 
                 </div>
 
                 <!-- Right Column -->
-                <div class="flex flex-col gap-10">
+                <div class="flex flex-col gap-10 p-4 rounded-lg shadow-md">
                     <div>
-                        <label class="block text-gray-700">Proof of Vaccination</label>
-                        <div class="border-dashed border-2 p-6 text-center rounded-lg cursor-pointer mt-2 w-full h-40 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('proofVaccination').click()">
-                            <p class="text-gray-500">Drag your photo here or <span class="text-orange-500 cursor-pointer">Browse from device</span></p>
-                            <input type="file" id="proofVaccination" class="hidden" accept="image/*">
-                            <i data-lucide="image-up" class="text-orange-500 ml-1"></i>
+                        <h1 class="text-2xl font-bold text-orange-500 flex gap-2"><span><i data-lucide="paw-print"></i></span>Important Note For Our Customers</h1>
+                        <p class="text-gray-700 mt-2">Please ensure that your pet is properly registered with us. This is important for the safety and well-being of your pet during their visit.</p>
+
+                        <div class="text-gray-700 bg-white rounded-lg shadow-md p-4 mt-4">
+                            <h2 class="text-lg font-bold mt-3">First-Time Customers / No Prior Services</h2>
+                            <p class="ml-2">No additional documents are required for your first visIt, Just ensure your pet is properly registered.</p>
                         </div>
-                    </div>
-                    <div>
-                        <h1 class="text-xl font-bold">Note:</h1>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus natus amet placeat officiis veniam eum dignissimos in blanditiis modi quae, saepe, accusantium quas hic. Aut, impedit minus. Possimus, id a.</p>
+                        <div class="text-gray-700 bg-white rounded-lg shadow-md p-4 mt-4">
+                            <h2 class="text-lg font-bold mt-3">Customers With Prior Services</h2>
+                            <p class="ml-2">Please bring your pet’s booklet or vaccination proof to your appointment.</p>
+                        </div>
+                        <div class="text-gray-700 bg-white rounded-lg shadow-md p-4 mt-4">
+                            <h2 class="text-lg font-bold mt-3">Service Payment</h2>
+                            <p class="ml-2">Please be advised that payment will be settled upon completion of the service.</p>
+                        </div>
+
+
+
                     </div>
                 </div>
 
@@ -147,6 +185,89 @@
 
     <x-return-top />
 
+
+    <script>
+        // Initially, set Grooming as selected
+        let selectedBtn = document.getElementById('groomingBtn');
+        selectedBtn.classList.add('border-orange-400', 'text-orange-400'); // Highlight Grooming button
+
+        document.getElementById('groomingBtn').addEventListener('click', function() {
+            // Remove highlight from all buttons
+            document.getElementById('groomingBtn').classList.add('border-orange-400', 'text-orange-400');
+            document.getElementById('vetBtn').classList.remove('border-orange-400', 'text-orange-400');
+            document.getElementById('wellnessBtn').classList.remove('border-orange-400', 'text-orange-400');
+
+            // Show Grooming select, hide others
+            document.getElementById('grooming').removeAttribute('hidden');
+            document.getElementById('vet').setAttribute('hidden', true);
+            document.getElementById('wellness').setAttribute('hidden', true);
+        });
+
+        document.getElementById('vetBtn').addEventListener('click', function() {
+            // Remove highlight from all buttons
+            document.getElementById('groomingBtn').classList.remove('border-orange-400', 'text-orange-400');
+            document.getElementById('vetBtn').classList.add('border-orange-400', 'text-orange-400');
+            document.getElementById('wellnessBtn').classList.remove('border-orange-400', 'text-orange-400');
+
+            // Show Veterinary select, hide others
+            document.getElementById('vet').removeAttribute('hidden');
+            document.getElementById('grooming').setAttribute('hidden', true);
+            document.getElementById('wellness').setAttribute('hidden', true);
+        });
+
+        document.getElementById('wellnessBtn').addEventListener('click', function() {
+            // Remove highlight from all buttons
+            document.getElementById('groomingBtn').classList.remove('border-orange-400', 'text-orange-400');
+            document.getElementById('vetBtn').classList.remove('border-orange-400', 'text-orange-400');
+            document.getElementById('wellnessBtn').classList.add('border-orange-400', 'text-orange-400');
+
+            // Show Wellness select, hide others
+            document.getElementById('wellness').removeAttribute('hidden');
+            document.getElementById('grooming').setAttribute('hidden', true);
+            document.getElementById('vet').setAttribute('hidden', true);
+        });
+
+
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const dateInput = document.querySelector('input[type="date"]');
+            const timeInput = document.querySelector('input[type="time"]');
+            const dateError = document.getElementById('dateError');
+            const timeError = document.getElementById('timeError');
+
+            // Function to check the selected date and time
+            function checkDateAndTime() {
+                const selectedDate = new Date(dateInput.value);
+                const selectedTime = timeInput.value;
+                const dayOfWeek = selectedDate.getDay(); // Sunday = 0, Monday = 1, ..., Saturday = 6
+
+                // Check if the selected day is Monday to Friday (1-5)
+                if (dayOfWeek === 0 || dayOfWeek === 6) {
+                    dateError.hidden = false; // Show the error message
+                    dateInput.classList.add('border-red-500'); // Add red border to input
+                } else {
+                    dateError.hidden = true; // Hide the error message
+                    dateInput.classList.remove('border-red-500'); // Remove red border
+                }
+
+                // Check if the selected time is between 9:00 AM and 4:00 PM
+                const [hours, minutes] = selectedTime.split(":");
+                const timeInMinutes = parseInt(hours) * 60 + parseInt(minutes);
+                if (timeInMinutes < 540 || timeInMinutes > 960) { // 9:00 AM = 540, 4:00 PM = 960
+                    timeError.hidden = false; // Show the error message
+                    timeInput.classList.add('border-red-500'); // Add red border to input
+                } else {
+                    timeError.hidden = true; // Hide the error message
+                    timeInput.classList.remove('border-red-500'); // Remove red border
+                }
+            }
+
+            // Event listeners to trigger the validation
+            dateInput.addEventListener("change", checkDateAndTime);
+            timeInput.addEventListener("change", checkDateAndTime);
+        });
+    </script>
 </body>
 <!-- Footer -->
 <x-footer bgColor=" bg-gradient-to-r from-orange-600" />
