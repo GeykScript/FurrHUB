@@ -19,7 +19,7 @@
 
 <!-- Modal Edit -->
 <dialog id="petEdit" class="p-6 rounded-lg shadow-lg w-full max-w-lg backdrop:bg-black/30">
-    <form method="POST" class="relative bg-white p-6 rounded-lg">
+    <form method="POST" action="{{ route('appointment.editpet') }}" enctype="multipart/form-data" class="relative bg-white p-6 rounded-lg">
         @csrf
         <input type="hidden" name="pet_id" id="pet_id">
 
@@ -39,7 +39,6 @@
                     <input type="file" id="pet_img" name="pet_img" class="hidden" accept="image/*" onchange="previewImage(event)">
                     <span class="ml-2">Edit Profile </span><i data-lucide="upload" class="h-4 w-4"></i>
                 </label>
-            
             </div>
 
             <!-- Pet's Name -->
@@ -51,18 +50,18 @@
                     </div>
                     <div class="lg:col-span-1 col-span-2">
                         <label class="block text-gray-700" for="pet_age">Age (yr.)</label>
-                        <x-text-input type="text" id="pet_age" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 mt-2 appearance-none" required></x-text-input>
+                        <x-text-input type="text" id="pet_age" name="pet_age" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 mt-2 appearance-none" required></x-text-input>
                     </div>
                     <div class="lg:col-span-1 col-span-2">
                         <label class="block text-gray-500" for="pet_gender">Gender</label>
-                        <input readonly type="text" id="pet_gender" class="text-gray-500 w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none  focus:border-gray-200 focus:ring-0 mt-2" required>
+                        <input readonly type="text" id="pet_gender" name="pet_gender" class="text-gray-500 w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none  focus:border-gray-200 focus:ring-0 mt-2" required>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-2">
                     <div class="lg:col-span-1 col-span-2">
                         <label class="block text-gray-700" for="pet_weight">Weight (kg)</label>
-                        <x-text-input type="text" id="pet_weight" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 mt-2" required></x-text-input>
+                        <x-text-input type="text" id="pet_weight" name="pet_weight" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 mt-2" required></x-text-input>
                     </div>
                     <div class="lg:col-span-1 col-span-2">
                         <label class="block text-gray-700">Size</label>
@@ -76,26 +75,31 @@
                     </div>
                 </div>
 
-                <div class="mt-2">
-                    <label class="block text-gray-500">Color</label>
-                    <input readonly type="text" id="pet_color" class="text-gray-500 w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none  focus:border-gray-200 focus:ring-0 mt-2" required>
+                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-2">
+                    <div class="lg:col-span-1 col-span-2">
+                        <label class="block text-gray-500">Birthday</label>
+                        <input type="text" readonly id="pet_birthday" name="pet_birthday" class="text-gray-500 w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none  focus:border-gray-200 focus:ring-0 mt-2" required>
+                    </div>
+                    <div class="lg:col-span-1 col-span-2">
+                        <label class="block text-gray-500">Color</label>
+                        <input readonly type="text" id="pet_color" name="pet_color" class="text-gray-500 w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none  focus:border-gray-200 focus:ring-0 mt-2" required>
+                    </div>
                 </div>
-
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-2">
                     <div class="lg:col-span-1 col-span-2">
                         <label class="block text-gray-500">Type</label>
-                        <input type="text" readonly id="pet_type" class="text-gray-500 w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none  focus:border-gray-200 focus:ring-0 mt-2" required>
+                        <input type="text" readonly id="pet_type" name="pet_type" class="text-gray-500 w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none  focus:border-gray-200 focus:ring-0 mt-2" required>
                     </div>
                     <div class="lg:col-span-1 col-span-2">
                         <label class="block text-gray-500">Breed</label>
-                        <input readonly type="text" id="pet_breed" class="text-gray-500 w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none  focus:border-gray-200 focus:ring-0 mt-2" required>
+                        <input readonly type="text" id="pet_breed" name="pet_breed" class="text-gray-500 w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none  focus:border-gray-200 focus:ring-0 mt-2" required>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Buttons -->
         <div class="flex flex-col-reverse lg:flex-row justify-end items-center gap-4 mt-6 w-full">
-            <a href="{{route('appointment')}}" class="text-gray-500 hover:text-gray-700">Cancel</a>
+            <a onclick="document.getElementById('petEdit').close()" class="text-gray-500 hover:text-gray-700 hover:cursor-pointer">Cancel</a>
             <button type="submit" class="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 w-full sm:w-auto">Submit</button>
         </div>
     </form>
@@ -138,13 +142,17 @@
                             <h1 class="xl:text-4xl  text-3xl font-bold text-sky-600 ">My Pets</h1>
                         </div>
 
+                        @if (session()->has('success'))
+                        <div class="col-span-3 mt-1 text-white bg-green-400  border border-green-400 p-3 rounded relative">
+                            <span class="text-sm font-medium ">{{ session('success') }}</span>
+                        </div>
+                        @endif
                     </div>
                     <!---pet images-->
-                    <div class="grid grid-cols-2 gap-2  md:grid-cols-3 lg:grid-cols-3 lg:gap-6 mt-6 justify-center">
+                    <div class="grid grid-cols-2 gap-2  md:grid-cols-3 lg:grid-cols-3 lg:gap-6 mt-6 justify-center ">
                         @foreach ($pets as $pet)
-
                         <button
-                            class="edit-pet-btn"
+                            class="edit-pet-btn hover:cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
                             onclick="openPetEditModal(this)"
                             data-id="{{ $pet->pet_id }}"
                             data-name="{{ $pet->pet_name }}"
@@ -153,6 +161,7 @@
                             data-age="{{ $pet->age }}"
                             data-color="{{ $pet->color }}"
                             data-gender="{{ $pet->gender }}"
+                            data-birthday ="{{ $pet->birthday }}"
                             data-weight="{{ $pet->weight }}"
                             data-size="{{ $pet->Size }}"
                             data-img="{{ asset('storage/pet_picture/' . $pet->pet_img) }}">
@@ -522,6 +531,7 @@
             document.getElementById('pet_weight').value = button.getAttribute('data-weight');
             document.getElementById('pet_size').value = button.getAttribute('data-size');
             document.getElementById('preview').src = button.getAttribute('data-img');
+            document.getElementById('pet_birthday').value = button.getAttribute('data-birthday');
 
             document.getElementById('petEdit').showModal();
         }

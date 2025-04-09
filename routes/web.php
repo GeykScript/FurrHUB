@@ -74,6 +74,8 @@ Route::post('/checkout/process', [PaymentController::class, 'process'])->name('c
 
 
 Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment');
+Route::post('/appointment/editpet', [AppointmentController::class, 'editpet'])->name('appointment.editpet');
+Route::post('/appointment/addpet', [AppointmentController::class, 'addpet'])->name('appointment.addpet');
 
 //  notification routes
 Route::get('/notifications', function () {
