@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
 {
-    
+    protected $table = 'services'; // Specify the table name if different from the model name
+    protected $primaryKey = 'service_id'; // Specify the primary key if different from 'id'
+    public $timestamps = true; // Enable timestamps if your table has 'created_at' and 'updated_at' columns
+    public $incrementing = true; // Set to false if your primary key is not auto-incrementing
     protected $fillable = [
         'name',
         'description',

@@ -76,6 +76,12 @@ Route::post('/checkout/process', [PaymentController::class, 'process'])->name('c
 Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment');
 Route::post('/appointment/editpet', [AppointmentController::class, 'editpet'])->name('appointment.editpet');
 Route::post('/appointment/addpet', [AppointmentController::class, 'addpet'])->name('appointment.addpet');
+Route::get('appointment/add-appointment', [AppointmentController::class, 'display_info'])->name('appointment.add-appointment');
+Route::post('/appointment/make-appointment', [AppointmentController::class, 'add_appointment'])->name('appointment.make-appointment');
+Route::get('/appointment/view-appointment', [AppointmentController::class, 'view_added_appointment'])->name('appointment.view-appointment');
+Route::post('/appointment/cancel-appointment', [AppointmentController::class, 'cancel_appointment'])->name('appointment.cancel-appointment');
+
+
 
 
 //  notification routes
@@ -100,7 +106,6 @@ Route::get('/add-pet', function () {
     return view('services.add-pet');
 })->name('add-pet');
 
-Route::get('appointment/add-appointment', [AppointmentController::class, 'display_info'])->name('appointment.add-appointment');
 
 
 

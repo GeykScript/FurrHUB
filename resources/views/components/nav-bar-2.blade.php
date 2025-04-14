@@ -7,7 +7,7 @@
             <div></div>
 
             <div class="flex flex-row lg:gap-20 lg:text-lg text-sm gap-10">
-                <a href="{{route ('dashboard')}}" class="hover:text-white text-gray-900 flex"><i data-lucide="house"></i><span class="md:block hidden"> Home</span></a>
+                <a href="{{route ('appointment')}}" class="hover:text-white text-gray-900 flex"><i data-lucide="house"></i><span class="md:block hidden"> Home</span></a>
                 <a href="#pets" class="hover:text-white text-gray-900 flex"><i data-lucide="paw-print"></i><span class="md:block hidden"> My Pets</span></a>
                 <a href="#appointments" class="hover:text-white text-gray-900 flex"><i data-lucide="notebook-pen"></i><span class="md:block hidden">Appointments</span></a>
                 <a href="#pricelists" class="hover:text-white text-gray-900 flex"><i data-lucide="philippine-peso"></i><span class="md:block hidden">Price Lists</span></a>

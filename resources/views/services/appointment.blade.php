@@ -22,6 +22,7 @@
     <form method="POST" action="{{ route('appointment.editpet') }}" enctype="multipart/form-data" class="relative bg-white p-6 rounded-lg">
         @csrf
         <input type="hidden" name="pet_id" id="pet_id">
+        
         <div class="mb-2">
             <h1 class="text-2xl font-bold text-center text-orange-500">Edit Pet</h1>
             <p class="text-sm text-gray-500 text-center">Edit your pet's information.</p>
@@ -108,6 +109,29 @@
     </form>
 </dialog>
 
+<dialog id="cancelAppointment" class="p-6 rounded-lg shadow-lg w-full max-w-md backdrop:bg-black/30 border-none outline-none">
+    <div class="bg-white p-6 rounded-lg text-center justify-center">
+        <div class="flex justify-center items-center text-center">
+            <i data-lucide="triangle-alert" class="text-center w-20 h-20 text-red-500"></i>
+            <!-- Hidden input for appointment ID -->
+            <form id="cancelAppointmentForm" method="POST" action="{{ route('appointment.cancel-appointment') }}">
+                @csrf
+                <input type="hidden" name="appointment_id" id="appointment_id">
+            </form>
+        </div>
+        <p class="mt-2 text-lg text-gray-800">Are you sure you want to cancel this appointment?</p>
+        <div class="flex justify-center mt-4">
+            <!-- Button to submit the form and cancel the appointment -->
+            <button id="confirmDeleteBtn" class="mr-4 w-full outline-none focus:outline-none border-white bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600" onclick="document.getElementById('cancelAppointmentForm').submit();">
+                Yes
+            </button>
+            <!-- Button to close the modal without cancellation -->
+            <button onclick="document.getElementById('cancelAppointment').close();" class="w-full outline-none focus:outline-none border-red-500 bg-white text-red-600 py-2 px-4 rounded-lg hover:border-red-600 hover:bg-red-100">
+                No
+            </button>
+        </div>
+    </div>
+</dialog>
 
 <!-- nav part -->
 <x-nav-bar-2></x-nav-bar-2>
@@ -193,7 +217,11 @@
                 <i data-lucide="notebook-pen" class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] text-sky-600"></i>
                 <h2 class="text-2xl sm:text-4xl font-semibold text-sky-600">My Appointments</h2>
             </div>
-
+            @if (session()->has('appointment_success'))
+            <div class="col-span-3 mt-1 text-white bg-green-400  border border-green-400 p-3 rounded relative">
+                <span class="text-sm font-medium ">{{ session('appointment_success') }}</span>
+            </div>
+            @endif
             <a href="{{route('appointment.add-appointment')}}" class="flex items-center justify-end hover:underline hover:text-orange-400">
                 <i data-lucide="plus" class="w-[20px] h-[20px] sm:w-[30px] sm:h-[30px] text-orange-500"></i>
                 <h2 class="text-sm sm:text-lg font-semibold text-orange-500">Make an Appointment</h2>
@@ -202,7 +230,7 @@
             <!-- Appointment Categories -->
             <div class="flex flex-col items-center justify-center w-full px-4">
                 <!-- Filters -->
-                <div class="flex flex-row  mt-6 text-[12px] md:text-lg">
+                <div class="flex flex-row mt-6 text-[12px] md:text-lg">
                     <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="Grooming" onclick="filterAppointments('Grooming')">Grooming</button>
                     <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="Wellness & Laboratory" onclick="filterAppointments('Wellness & Laboratory')">Wellness & Laboratory</button>
                     <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="Veterinary" onclick="filterAppointments('Veterinary')">Veterinary</button>
@@ -210,41 +238,41 @@
             </div>
 
             <div class="flex flex-col items-center justify-center w-full px-4">
-                @php
-                $appointments = [
-                [
-                'service' => 'Grooming',
-                'date' => '3/26/2025',
-                'description' => 'Keep your pet fresh and clean with our professional grooming services.',
-                'details' => 'Includes a full bath, haircut, nail trimming, and ear cleaning.'
-                ],
-                [
-                'service' => 'Wellness & Laboratory',
-                'date' => '4/05/2025',
-                'description' => 'Ensure your pet’s health with up-to-date vaccinations.',
-                'details' => 'Rabies, DHPP, and other essential vaccines for your pet’s well-being.'
-                ],
-                [
-                'service' => 'Veterinary',
-                'date' => '',
-                'description' => 'No Appointments',
-                'details' => 'No Appointments for Veterinary'
-                ],
-                ];
-                @endphp
                 @foreach ($appointments as $appointment)
-                <div class="appointments flex flex-col lg:flex-row items-center lg:items-start gap-6 p-6 md:px-12 mt-6 border pb-6 w-full max-w-5xl mx-auto rounded-lg shadow-md bg-white" services="{{ $appointment['service'] }}">
+                @php
+                $category = match($appointment->service?->category) {
+                8 => 'Grooming',
+                9 => 'Veterinary',
+                10 => 'Wellness & Laboratory',
+                default => $appointment->service?->category?->name ?? 'No Category'
+                };
+                @endphp
+
+
+                <div class="appointments flex flex-col lg:flex-row items-center lg:items-start gap-6 p-6 md:px-12 mt-6 border pb-6 w-full max-w-5xl mx-auto rounded-lg shadow-md bg-white" data-category="{{ $category }}">
                     <!-- Image Section -->
                     <div class="flex-shrink-0">
                         <img src="{{ asset('logo/furrhub.png') }}"
                             alt="Notification Image"
                             class="w-32 h-32 rounded-lg object-contain">
                     </div>
+
                     <!-- Notification Details -->
                     <div class="flex-1 text-center lg:text-left gap-2">
-                        <h2 class="text-xl font-bold">{{ $appointment['service'] }} Appointment</h2>
-                        <p class="text-gray-500">{{ $appointment['date'] }}</p>
-                        <p class="text-gray-500">{{ $appointment['description'] }}</p>
+                        <h2 class="text-xl font-bold flex flex-row justify-between">{{ $appointment->service->name }}
+                            @if ($appointment->status->status_name == 'Completed')
+                            <span class="text-green-500">{{$appointment->status->status_name}}</span>
+                            @elseif ($appointment->status->status_name == 'Pending')
+                            <span class="text-orange-500">{{$appointment->status->status_name}}</span>
+                            @elseif ($appointment->status->status_name == 'Cancelled')
+                            <span class="text-red-500">{{$appointment->status->status_name}}</span>
+                            @endif
+                        </h2>
+                        <p class="text-lg text-gray-500 flex flex-row gap-4">
+                            <b>Date:</b> {{ $appointment->appointment_date }}
+                            <span><b>Time:</b> {{ $appointment->appointment_time }}</span>
+                        </p>
+                        <p class="text-lg text-gray-500"><b>Pet: </b>{{ $appointment->pet->pet_name }}</p>
 
                         <!-- Hidden Details -->
                         <details class="mt-3">
@@ -252,15 +280,34 @@
                                 View Details
                             </summary>
                             <div class="mt-2 p-4 border rounded-lg bg-gray-100">
-                                <p class="text-gray-700">{{ $appointment['details'] }}</p>
+                                <h1 class="text-lg text-gray-700 ml-2"><span class="text-gray-900 mr-2">Service:</span> {{ $appointment->service->name }}</h1>
+                                <h1 class="text-lg text-gray-700 ml-2"><span class="text-gray-900 mr-2">Initial Service Fee:</span> ₱{{ number_format(!empty($appointment->service->discounted_price) ? $appointment->service->discounted_price : $appointment->service->price, 2) }}</h1>
+                                <h1 class="text-lg text-gray-700 ml-2"><span class="text-gray-900 mr-2">Payment Method:</span> {{ $appointment->payment->payment_name }}</h1>
+                                <h1 class="text-lg text-gray-700 ml-2"><span class="text-gray-900 mr-2">Payment Status:</span> {{ $appointment->statuses->status_name }}</h1>
+                                @if ($appointment->status->status_name == 'Pending' )
+                                <div class="flex justify-end items-end">
+                                    <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 mt-2 "
+                                        onclick=" cancelModal(this)"
+                                        data-id="{{ $appointment->appointment_id }}">Cancel Appointment</button>
+                                </div>
+                                @endif
                             </div>
                         </details>
                     </div>
                 </div>
+
                 @endforeach
+                <div id="noAppointmentsMessage" class="hidden text-center mt-10 text-gray-500 text-lg font-semibold">
+                    <div class="flex justify-center items-center">
+                        <img src="{{ asset('logo/furrhub.png') }}"
+                            alt="Notification Image"
+                            class="w-32 h-32 rounded-lg object-contain">
+                    </div>
+                    <p> No appointments. </p>
 
-
+                </div>
             </div>
+
         </div>
 
     </div>
@@ -481,25 +528,32 @@
             });
         });
 
-
         document.addEventListener("DOMContentLoaded", function() {
-            filterAppointments("Grooming"); // Show default category
+            filterAppointments("Grooming"); // Show default category on load
         });
 
-        function filterAppointments(status) {
+        function filterAppointments(category) {
             let appointments = document.querySelectorAll(".appointments");
+            let hasVisible = false;
 
             appointments.forEach(appointment => {
-                let appointmentStatus = appointment.getAttribute("services");
+                let appointmentCategory = appointment.getAttribute("data-category")?.trim();
 
-                if (appointmentStatus === status) {
+                if (appointmentCategory === category) {
                     appointment.style.display = "flex";
+                    hasVisible = true;
                 } else {
                     appointment.style.display = "none";
                 }
             });
 
-            updateActiveTab(status);
+            // Show or hide the "no appointments" message
+            const noAppointmentsMessage = document.getElementById("noAppointmentsMessage");
+            if (noAppointmentsMessage) {
+                noAppointmentsMessage.style.display = hasVisible ? "none" : "block";
+            }
+
+            updateActiveTab(category);
         }
 
         function updateActiveTab(activeTab) {
@@ -512,6 +566,7 @@
                 }
             });
         }
+
 
         function previewImage(event) {
             const file = event.target.files[0];
@@ -544,6 +599,11 @@
             document.getElementById('pet_birthday').value = button.getAttribute('data-birthday');
 
             document.getElementById('petEdit').showModal();
+        }
+
+        function cancelModal(button) {
+            document.getElementById('appointment_id').value = button.getAttribute('data-id');
+            document.getElementById('cancelAppointment').showModal();
         }
     </script>
 
