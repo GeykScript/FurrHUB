@@ -134,18 +134,6 @@
                         </div>
                     </div>
 
-                    <!-- Proof of Vaccination Section -->
-                    <div>
-                        <label class="block text-gray-700">Proof of Vaccination</label>
-                        <div class="border-dashed border-2 p-6 text-center rounded-lg cursor-pointer mt-2 w-full h-40 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('proofVaccination').click()">
-                            <p id="text-proofVaccination" class="text-gray-500">
-                                Drag your photo here or <span class="text-orange-500 cursor-pointer">Browse from device</span>
-                            </p>
-                            <p id="fileName-proofVaccination" class="mt-2 text-sm text-orange-600  px-3 py-1 rounded-md w-fit max-w-full truncate" hidden></p>
-                            <input type="file" id="proofVaccination" name="proofVaccination" class="hidden" accept="image/*">
-                            <i data-lucide="image-up" class="text-orange-500 ml-1"></i>
-                        </div>
-                    </div>
 
                 </div>
 

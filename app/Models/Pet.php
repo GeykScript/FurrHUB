@@ -21,7 +21,6 @@ class Pet extends Model
         'gender',
         'birthday',
         'weight',
-        'vaccination_proof',
         'animal_type',
         'pet_breed',
         'color',

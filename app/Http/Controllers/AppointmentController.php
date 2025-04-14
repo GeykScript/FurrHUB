@@ -80,20 +80,7 @@ class AppointmentController extends Controller
     public function addpet(request $request ){
         $user = Auth::user();
 
-        if ($request->hasFile('proofVaccination')) {
-            $randomString = Str::random(20);
-            $extension = $request->file('proofVaccination')->getClientOriginalExtension();
-            $filename = $randomString . '.' . $extension;
-
-            // Store the vaccination proof
-           $request->file('proofVaccination')->storeAs(
-                'vaccination_proofs',
-                $filename,
-                'public'
-            );
-            $vaccinationProof = $filename; 
-        }
-
+ 
         // Handle pet image file upload with a random filename
         $petImg = null;
         if ($request->hasFile('uploadPhoto')) {
@@ -122,7 +109,6 @@ class AppointmentController extends Controller
             'weight' => $request->pet_weight,
             'color' => $request->pet_color,
             'Size' => $request->pet_size,
-            'vaccination_proof' => $vaccinationProof, // Set vaccination proof
             'pet_img' => $petImg, // Set pet image
         ]);
 
