@@ -7,44 +7,90 @@ window.Alpine = Alpine;
 Alpine.start();
 
 
-
-//lucide icons
-import { createIcons, CircleCheckBig ,Check,Truck,Upload, ShieldCheck,Star,MapPinHouse, HousePlus, User,MapPinPlus, UserPen,PhoneCall, UserRoundPen, CircleArrowRight,TriangleAlert, Heart,ImageUp,SendHorizontal,PawPrint,ShoppingBag,Bell,MessageSquareText,CircleChevronLeft,Plus,Minus,Trash2,House,ChevronDown,NotebookPen,PhilippinePeso,ShoppingBasket,Bone,CircleUser,LogOut} from 'lucide';
+// lucide icons
+import {
+        createIcons,
+        Bell,
+        Bone,
+        Check,
+        ChevronDown,
+        CircleArrowRight,
+        CircleCheckBig,
+        CircleChevronLeft,
+        CircleUser,
+        Heart,
+        House,
+        HousePlus,
+        ImageUp,
+        LogOut,
+        MapPinHouse,
+        MapPinPlus,
+        MessageSquareText,
+        Minus,
+        NotebookPen,
+        PawPrint,
+        PhilippinePeso,
+        PhoneCall,
+        Plus,
+        SendHorizontal,
+        ShieldCheck,
+        ShoppingBag,
+        ShoppingBasket,
+        Star,
+        Trash2,
+        TriangleAlert,
+        Truck,
+        Upload,
+        User,
+        UserPen,
+        UserRoundPen,
+} from 'lucide';
 
 createIcons({
-    icons: { CircleCheckBig,Check,Truck ,ShieldCheck,Upload,Star, User, MapPinHouse,UserPen ,HousePlus,MapPinPlus, PhoneCall, UserRoundPen, CircleArrowRight,PawPrint,TriangleAlert ,Heart,ImageUp,SendHorizontal, ShoppingBag, Bell,MessageSquareText,CircleChevronLeft,Plus,Minus,Trash2, House,NotebookPen ,ChevronDown,PhilippinePeso, ShoppingBasket,Bone, CircleUser,LogOut},
+  icons: {
+        Bell,
+        Bone,
+        Check,
+        ChevronDown,
+        CircleArrowRight,
+        CircleCheckBig,
+        CircleChevronLeft,
+        CircleUser,
+        Heart,
+        House,
+        HousePlus,
+        ImageUp,
+        LogOut,
+        MapPinHouse,
+        MapPinPlus,
+        MessageSquareText,
+        Minus,
+        NotebookPen,
+        PawPrint,
+        PhilippinePeso,
+        PhoneCall,
+        Plus,
+        SendHorizontal,
+        ShieldCheck,
+        ShoppingBag,
+        ShoppingBasket,
+        Star,
+        Trash2,
+        TriangleAlert,
+        Truck,
+        Upload,
+        User,
+        UserPen,
+        UserRoundPen,
+  },
 });
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    const container = document.querySelector("#Quantity-inputs-view"); // The container element
-    const decrementButton = container.querySelector("[data-input-counter-decrement]"); // Decrement button
-    const incrementButton = container.querySelector("[data-input-counter-increment]"); // Increment button
-    const quantityInput = container.querySelector("[data-input-counter]"); // The quantity input field
-
-    // Get the stock quantity from a data attribute
-    const stockQuantity = parseInt(container.getAttribute("data-stock-quantity"), 10);
-
-    // Decrement button logic
-    decrementButton.addEventListener("click", function () {
-        let value = parseInt(quantityInput.value, 10);
-        if (value > 1) {
-            quantityInput.value = value - 1;
-        }
-    });
-
-    // Increment button logic (Prevent exceeding stock quantity)
-    incrementButton.addEventListener("click", function () {
-        let value = parseInt(quantityInput.value, 10);
-        if (value < stockQuantity) {
-            quantityInput.value = value + 1;
-        }
-    });
-});
 
 
-// js show more
+
+// js show more for product
     document.addEventListener('DOMContentLoaded', function () {
     // Select the button and the hidden product container
     const showMoreBtn = document.getElementById('showMoreBtn');
@@ -65,6 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+// js return to top
 document.addEventListener("DOMContentLoaded", function () {
   const returnTopButton = document.getElementById("return-top");
 
@@ -83,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
+// js show more for price list
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.see-more-btn').forEach(button => {
         button.addEventListener('click', function() {
@@ -103,7 +150,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
+// Add event listener to the wishlist button
+// togle note for wishlist
    document.getElementById("wishlistBtn").addEventListener("click", function() {
                         document.getElementById("note").classList.toggle("hidden");
                     });

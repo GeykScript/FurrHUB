@@ -276,6 +276,7 @@
 
                     @php
                     $count = 0;
+                    $product_ids = '';
                     @endphp
 
                     @foreach($cartItems as $cartItem)
@@ -295,6 +296,8 @@
                                 <img src="{{ asset('storage/Products/' . $cartItem->product->image_url) }}" alt="Best-Product" class="aspect-square w-32 rounded-lg bg-gray-500 object-cover lg:aspect-auto lg:h-74">
                             </div>
                         </div>
+
+
                         <div class="col-span-6 lg:col-span-2 p-4">
                             <p class="font-semibold text-lg">{{$cartItem->product->name}}</p>
                             <p class="mt-2">Retail Price: <span class="font-semibold">₱ {{number_format($cartItem->product->price,2)}}</span></p>
@@ -338,12 +341,11 @@
 
                         </div>
                     </div>
+
                     <div class="col-span-6 grid grid-cols-6 gap-4  p-6 rounded-lg shadow-lg ">
                         <div class="col-span-6 mt-4 ">
                             <form action="{{ route('checkout.process') }}" method="POST">
                                 @csrf
-
-
                                 <div class="flex flex-col lg:gap-4 gap-1 justify-end items-end lg:p-4 p-1">
                                     <div class="flex gap-1 text-sm lg:text-lg">
                                         <h1 class="">Items Sub Total:</h1>
@@ -357,11 +359,21 @@
                                         $shipping_fee = $shipping_fee * $count;
                                         @endphp
                                         <h1 class="font-bold">₱ {{number_format($shipping_fee,2)}}</h1>
+                                        <input type="hidden" name="shipping_fee" id="shipping_fee" value="{{ $shipping_fee }}">
                                     </div>
 
                                     <div class="flex gap-1 mt-3">
                                         <h1 class="font-bold lg:text-2xl text-lg">Total Payment </h1>
                                         <h1 class="text-orange-500 font-bold lg:text-2xl text-lg">₱ {{number_format($total_amount + $shipping_fee,2)}}</h1>
+
+                                        {{-- Hidden inputs for cart items --}}
+                                        @foreach($cartItems as $cartItem)
+                                        <input type="hidden" name="product_ids[]" value="{{ $cartItem->product_id }}">
+                                        <input type="hidden" name="product_prices[]" value="{{ $cartItem->product->discounted_price }}">
+                                        <input type="hidden" name="quantities[]" value="{{ $cartItem->quantity }}">
+                                        @endforeach
+                                        <input type="hidden" name="address_id" id="address_id" value="{{ $defaultAddress->address_id }}">
+                                        <input type="hidden" name="total_payment" id="total_payment" value="{{ $total_amount + $shipping_fee }}">
                                     </div>
                                 </div>
                                 <hr>
@@ -370,7 +382,7 @@
                                         <button type="submit" class="bg-orange-500 hover:bg-orange-400 text-white font-bold py-2 px-4 rounded-xl w-full xl:w-[15rem] xl:h-12">Place Order</button>
                                     </div>
                                 </div>
-                            </div>
+                        </div>
                         </form>
                     </div>
                 </div>

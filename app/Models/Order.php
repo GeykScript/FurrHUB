@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    protected $table = 'orders';
+    protected $primaryKey = 'order_id';
+
     protected $fillable = [
         'user_id',
         'total_amount',
@@ -13,7 +16,8 @@ class Order extends Model
         'status',
         'payment_status',
         'payment_method',
-        'shipping_address'  ,
+        'shipping_address',
+        'shipping_fee',
     ];
 
     public function user()
@@ -33,5 +37,17 @@ class Order extends Model
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
+    }
+    public function status ()
+    {
+        return $this->belongsTo(Status::class);
+    }
+    public function payment()
+    {
+        return $this->belongsTo(Payment_method::class);
     }
 }

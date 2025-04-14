@@ -11,6 +11,9 @@ class Category extends Model
 
     protected $table = 'categories';
     protected $fillable = ['name', 'description'];
+    protected $primaryKey = 'category_id'; // Specify the primary key if different from 'id'
+    public $timestamps = true; // Enable timestamps if your table has 'created_at' and 'updated_at' columns
+    public $incrementing = true; // Set to false if your primary key is not auto-incrementing
 
     public function products()
     {
