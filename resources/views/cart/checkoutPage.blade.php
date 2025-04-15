@@ -343,7 +343,7 @@
                     </div>
 
                     <div class="col-span-6 grid grid-cols-6 gap-4  p-10 rounded-lg shadow-lg ">
-                        <div class="lg:col-span-4 col-span-6 px-8 flex justify-center items-center gap-2">
+                        <div class="lg:col-span-4 col-span-6  flex justify-center items-center gap-2">
                             <div class="flex flex-col gap-4">
                                 <h1 class="font-bold lg:text-3xl text-lg">Payment Method</h1>
                                 <p class="text-sm">Please select your payment method.</p>

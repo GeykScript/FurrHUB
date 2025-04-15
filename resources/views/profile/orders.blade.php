@@ -19,28 +19,31 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        filterOrders("All"); // Show all orders by default
+        filterOrders("All"); // default filter on page load
     });
 
-    function filterOrders(status) {
-        let orders = document.querySelectorAll(".order-item");
+    function filterOrders(category) {
+        const orders = document.querySelectorAll(".orders");
+        let hasVisible = false;
 
         orders.forEach(order => {
-            let orderStatus = order.getAttribute("data-status");
-
-            if (status === "All" || orderStatus === status) {
+            const orderCategory = order.getAttribute("data-category")?.trim();
+            if (category == "All" || orderCategory === category) {
                 order.style.display = "flex";
+                hasVisible = true;
             } else {
                 order.style.display = "none";
             }
         });
 
-        updateActiveTab(status);
+        const noMsg = document.getElementById("noOrdersMessage");
+        if (noMsg) noMsg.style.display = hasVisible ? "none" : "block";
+
+        updateActiveTab(category);
     }
 
     function updateActiveTab(activeTab) {
-        let tabs = document.querySelectorAll(".filter-tab");
-        tabs.forEach(tab => {
+        document.querySelectorAll(".filter-tab").forEach(tab => {
             if (tab.getAttribute("data-filter") === activeTab) {
                 tab.classList.add("border-orange-500", "text-orange-500", "font-bold");
             } else {
@@ -77,92 +80,84 @@
                 <a href="{{route('orders')}}" class="hover:underline text-orange-500">Orders</a>
             </div>
         </div>
-        @if(request('status') == 'success')
-        <div class="alert alert-success">Payment successful!</div>
-        @endif
-
 
         <div class="flex flex-col items-center justify-center w-full px-4">
             <!-- Filters -->
-            <div class="flex flex-row  mt-6 text-[12px] md:text-lg">
+            <div class="flex flex-row mt-6 text-[12px] md:text-lg">
                 <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="All" onclick="filterOrders('All')">All</button>
-                <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="To Pay" onclick="filterOrders('To Pay')">To Pay</button>
+                <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="Paid" onclick="filterOrders('Paid')">Paid</button>
                 <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="To Ship" onclick="filterOrders('To Ship')">To Ship</button>
                 <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="Delivered" onclick="filterOrders('Delivered')">Delivered</button>
                 <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="Cancelled" onclick="filterOrders('Cancelled')">Cancelled</button>
             </div>
         </div>
-        <div class="order-item flex flex-col lg:flex-row items-center lg:items-start gap-6 p-6 md:px-12 mt-6 border pb-6 w-full max-w-5xl mx-auto rounded-lg shadow-md bg-white" data-status="Delivered">
-            <!-- Image Section -->
-            <div class="flex-shrink-0">
-                <img src="{{ asset('images/products/dog.jpg') }}"
-                    alt="Notification Image"
-                    class="w-32 h-32 rounded-lg object-cover bg-gray-500">
-            </div>
-            <div class="flex-1 text-center lg:text-left">
-                <h2 class="text-xl font-bold">Parcel has been delivered</h2>
-                <p class="text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio dolorum ipsum ducimus, provident ipsam veritatis cum animi qui nemo eum nulla modi id? Ea quam veritatis dolorem, officia nam eos.</p>
-                <p class="text-gray-500">x2</p>
-            </div>
-            <div class="flex flex-col items-right gap-12 justify-between">
-                <p class="text-green-500 font-bold text-right">Delivered</p>
-                <p class="font-bold text-gray-700">Order Total: <span class="text-orange-500">₱ 400.00 </span></p>
-            </div>
-        </div>
-        <div class="order-item flex flex-col lg:flex-row items-center lg:items-start gap-6 p-6 md:px-12 mt-6 border pb-6 w-full max-w-5xl mx-auto rounded-lg shadow-md bg-white" data-status="To Pay">
-            <!-- Image Section -->
-            <div class="flex-shrink-0">
-                <img src="{{ asset('images/products/dog.jpg') }}"
-                    alt="Notification Image"
-                    class="w-32 h-32 rounded-lg object-cover bg-gray-500">
-            </div>
-            <div class="flex-1 text-center lg:text-left">
-                <h2 class="text-xl font-bold">Awaiting payment</h2>
-                <p class="text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio dolorum ipsum ducimus, provident ipsam veritatis cum animi qui nemo eum nulla modi id? Ea quam veritatis dolorem, officia nam eos.</p>
-                <p class="text-gray-500">x2</p>
-            </div>
-            <div class="flex flex-col items-right gap-12 justify-between">
-                <p class="text-yellow-500 font-bold text-right">To Pay</p>
-                <p class="font-bold text-gray-700">Order Total: <span class="text-orange-500">₱ 400.00 </span></p>
-            </div>
-        </div>
-        <div class="order-item flex flex-col lg:flex-row items-center lg:items-start gap-6 p-6 md:px-12 mt-6 border pb-6 w-full max-w-5xl mx-auto rounded-lg shadow-md bg-white" data-status="To Ship">
-            <!-- Image Section -->
-            <div class="flex-shrink-0">
-                <img src="{{ asset('images/products/dog.jpg') }}"
-                    alt="Notification Image"
-                    class="w-32 h-32 rounded-lg object-cover bg-gray-500">
-            </div>
-            <div class="flex-1 text-center lg:text-left">
-                <h2 class="text-xl font-bold">Parcel is being prepared</h2>
-                <p class="text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio dolorum ipsum ducimus, provident ipsam veritatis cum animi qui nemo eum nulla modi id? Ea quam veritatis dolorem, officia nam eos.</p>
-                <p class="text-gray-500">x2</p>
-            </div>
-            <div class="flex flex-col items-right gap-12 justify-between">
-                <p class="text-sky-500 font-bold text-right">To Ship</p>
-                <p class="font-bold text-gray-700">Order Total: <span class="text-orange-500">₱ 400.00 </span></p>
-            </div>
-        </div>
-        <div class="order-item flex flex-col lg:flex-row items-center lg:items-start gap-6 p-6 md:px-12 mt-6 border pb-6 w-full max-w-5xl mx-auto rounded-lg shadow-md bg-white" data-status="Cancelled">
-            <!-- Image Section -->
-            <div class="flex-shrink-0">
-                <img src="{{ asset('images/products/dog.jpg') }}"
-                    alt="Notification Image"
-                    class="w-32 h-32 rounded-lg object-cover bg-gray-500">
-            </div>
-            <div class="flex-1 text-center lg:text-left">
-                <h2 class="text-xl font-bold">Parcel has been cancelled</h2>
-                <p class="text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio dolorum ipsum ducimus, provident ipsam veritatis cum animi qui nemo eum nulla modi id? Ea quam veritatis dolorem, officia nam eos.</p>
-                <p class="text-gray-500">x2</p>
-            </div>
-            <div class="flex flex-col items-right gap-12 justify-between">
-                <p class="text-red-500 font-bold text-right">Cancelled</p>
-                <p class="font-bold text-gray-700">Order Total: <span class="text-orange-500">₱ 400.00 </span></p>
-            </div>
-        </div>
 
+        <div class="flex flex-col items-center justify-center w-full px-4">
+            @foreach ($all_orders as $order)
+            @php
+            $statusName = $order->statuses->status_name ?? null;
+
+            $category = match ($statusName) {
+            'Paid' => 'Paid',
+            'To Ship' => 'To Ship',
+            'Delivered' => 'Delivered',
+            'Cancelled' => 'Cancelled',
+            default => 'All',
+            };
+
+            $items = $order_items->where('order_id', $order->order_id);
+
+            @endphp
+
+            <div class="orders flex flex-col lg:flex-row items-center lg:items-start gap-6 p-6 md:px-12 mt-6 border pb-6 w-full max-w-5xl mx-auto rounded-lg shadow-md bg-white" data-category="{{ $category }}">
+                <!-- Image Section -->
+                <div class="flex-shrink-0">
+                    <img src="{{ asset('logo/furrhub.png') }}" alt="Order Image" class="w-32 h-32 rounded-lg object-contain">
+                </div>
+
+                <!-- Order Details -->
+                <div class="flex-1 text-center lg:text-left gap-2">
+                    <h2 class="text-xl font-bold flex flex-row justify-between items-center">
+                        Reference Number: {{ $order->reference_number }}
+
+                    </h2>
+
+                    <p class="text-lg text-gray-500 flex flex-row gap-4">
+                        <b>Date:</b> {{ $order->created_at }}
+                    </p>
+
+                    <!-- Details Toggle -->
+                    <details class="mt-3">
+                        <summary class="cursor-pointer bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg text-sm inline-block">
+                            View Details
+                        </summary>
+                        <div class="mt-2 p-4 border rounded-lg bg-gray-100">
+                            @foreach ($items as $order_item)
+                            <div>
+                                <h1>{{$order_item->product->name}}</h1>
+                            </div>
+                            @endforeach
+                            @if ($order->status == 1)
+                            <div class="flex justify-end items-end">
+                                <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 mt-2" onclick="cancelModal(this)" data-id="{{ $order->order_id }}">Cancel Appointment</button>
+                            </div>
+                            @endif
+                        </div>
+                    </details>
+                </div>
+            </div>
+            @endforeach
+            <div id="noOrdersMessage" class="hidden text-center mt-10 text-gray-500 text-lg font-semibold">
+                <div class="flex justify-center items-center">
+                    <img src="{{ asset('logo/furrhub.png') }}"
+                        alt="Notification Image"
+                        class="w-32 h-32 rounded-lg object-contain">
+                </div>
+                <p> No Orders. </p>
+
+            </div>
+        </div>
     </div>
-
     </div>
 
 

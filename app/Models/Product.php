@@ -11,8 +11,8 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $table = 'products'; // Explicitly define the table (optional)
-    
+    protected $table = 'products'; 
+    protected $primaryKey = 'product_id'; 
 
     protected $fillable = [
         'name',

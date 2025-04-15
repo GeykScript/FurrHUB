@@ -86,6 +86,8 @@ Route::get('/appointment/view-appointment', [AppointmentController::class, 'view
 Route::post('/appointment/cancel-appointment', [AppointmentController::class, 'cancel_appointment'])->name('appointment.cancel-appointment');
 
 
+use App\Http\Controllers\OrderController;
+Route::get('/orders', [OrderController::class, 'index'])->name('orders');
 
 
 //  notification routes
@@ -94,11 +96,6 @@ Route::get('/notifications', function () {
 })->name('notifications');
 
 
-
-//   my purchases routes
-Route::get('/orders', function () {
-    return view('profile.orders');
-})->name('orders');
 
 Route::get('/orders-successfull', function () {
     return view('profile.order-successfull');

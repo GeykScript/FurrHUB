@@ -22,7 +22,7 @@ class Order extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class , 'user_id' );
     }
 
     public function cart()
@@ -42,9 +42,9 @@ class Order extends Model
     {
         return $this->belongsTo(Address::class);
     }
-    public function status ()
+    public function statuses()
     {
-        return $this->belongsTo(Status::class);
+        return $this->belongsTo(Status::class, 'status', 'status_id');
     }
     public function payment()
     {
