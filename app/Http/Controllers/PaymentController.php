@@ -87,7 +87,7 @@ class PaymentController extends Controller
 
         // Check if session has required data
         if (!session()->has('reference_number')) {
-            return redirect()->route('orders');
+            return redirect()->route('orders-successfull');
         }
 
         $productIds = session('product_ids');
@@ -135,6 +135,63 @@ class PaymentController extends Controller
         // Clear session data to avoid double submission
         session()->forget(['product_ids', 'product_prices', 'product_names', 'quantities', 'reference_number', 'address_id', 'shipping_fee', 'total_payment']);
 
-        return view('profile.orders')->with('success', 'Payment successful! Your order has been placed.');
+        return view('profile.order-successfull')->with('success', 'Payment successful! Your order has been placed.');
     }
+
+
+
+    public function pay_direct(Request $request){
+        $user = Auth::user();
+        $productIds = $request->input('product_ids');
+        $productPrices = $request->input('product_prices');
+
+        $quantities = $request->input('quantities');
+        $shipping_total = $request->input('shipping_total');
+
+        $referenceNumber = uniqid();
+        $addressId = $request->input('address_id');
+        $totalPayment = $request->input('total_payment');
+
+
+        // Check if session has required data
+        if (!session()->has('reference_number')) {
+            return redirect()->route('orders-successfull');
+        }
+
+        // Create the order
+        $order = Order::create([
+            'user_id' => $user->id,
+            'total_amount' => $totalPayment,
+            'reference_number' => $referenceNumber,
+            'status' => 3, //to ship
+            'payment_status' => 10,//not paid
+            'payment_method' => 3, //cash on delivery
+            'shipping_address' => $addressId,
+            'shipping_fee' => $shipping_total,
+        ]);
+
+        foreach ($productIds as $index => $productId) {
+            Order_item::create([
+                'order_id' => $order->order_id,
+                'product_id' => $productId,
+                'quantity' => $quantities[$index],
+                'price' => $productPrices[$index],
+            ]);
+        }
+        $cart = Cart::where('user_id', $user->id)->first();
+
+        Cart_item::whereIn('product_id', $productIds)
+            ->where('cart_id', $cart->cart_id)
+            ->delete();
+
+
+        foreach ($productIds as $index => $productId) {
+            Product::where('product_id', $productId)->update([
+                'quantity_sold' => DB::raw("quantity_sold + {$quantities[$index]}"),
+                'stock_quantity' => DB::raw("stock_quantity - {$quantities[$index]}") // Assuming you want to reduce stock after order
+            ]);
+        }
+        return view('profile.order-successfull')->with('success', 'Payment successful! Your order has been placed.');
+    }
+    
 }

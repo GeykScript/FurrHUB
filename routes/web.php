@@ -71,7 +71,9 @@ require __DIR__.'/auth.php';
 
 use App\Http\Controllers\PaymentController;
 Route::post('/checkout/process', [PaymentController::class, 'process'])->name('checkout.process');
+Route::post('/checkout/direct', [PaymentController::class, 'pay_direct'])->name('checkout.direct');
 Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+
 
 
 
@@ -97,6 +99,10 @@ Route::get('/notifications', function () {
 Route::get('/orders', function () {
     return view('profile.orders');
 })->name('orders');
+
+Route::get('/orders-successfull', function () {
+    return view('profile.order-successfull');
+})->name('orders-successfull');
 
 //   my purchases routes
 Route::get('/messages', function () {
