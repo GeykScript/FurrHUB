@@ -142,6 +142,7 @@ class PaymentController extends Controller
 
     public function pay_direct(Request $request){
         $user = Auth::user();
+
         $productIds = $request->input('product_ids');
         $productPrices = $request->input('product_prices');
 
@@ -152,11 +153,6 @@ class PaymentController extends Controller
         $addressId = $request->input('address_id');
         $totalPayment = $request->input('total_payment');
 
-
-        // Check if session has required data
-        if (!session()->has('reference_number')) {
-            return redirect()->route('orders-successfull');
-        }
 
         // Create the order
         $order = Order::create([
