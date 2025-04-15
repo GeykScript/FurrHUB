@@ -71,6 +71,8 @@ require __DIR__.'/auth.php';
 
 use App\Http\Controllers\PaymentController;
 Route::post('/checkout/process', [PaymentController::class, 'process'])->name('checkout.process');
+Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+
 
 
 Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment');

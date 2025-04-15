@@ -77,7 +77,9 @@
                 <a href="{{route('orders')}}" class="hover:underline text-orange-500">Orders</a>
             </div>
         </div>
-
+        @if(request('status') == 'success')
+        <div class="alert alert-success">Payment successful!</div>
+        @endif
         <div class="flex flex-col items-center justify-center w-full px-4">
             <!-- Filters -->
             <div class="flex flex-row  mt-6 text-[12px] md:text-lg">

@@ -356,24 +356,29 @@
                                         <h1 class="">Shipping Sub Total:</h1>
                                         @php
                                         $shipping_fee = 50;
-                                        $shipping_fee = $shipping_fee * $count;
+                                        $shipping_total = $shipping_fee * $count;
                                         @endphp
-                                        <h1 class="font-bold">₱ {{number_format($shipping_fee,2)}}</h1>
+                                        <h1 class="font-bold">₱ {{number_format($shipping_total,2)}}</h1>
                                         <input type="hidden" name="shipping_fee" id="shipping_fee" value="{{ $shipping_fee }}">
+                                        <input type="hidden" name="shipping_total" id="shipping_total" value="{{ $shipping_total }}">
+                                        <input type="hidden" name="shipping_count" id="shipping_count" value="{{ $count }}">
+
+
                                     </div>
 
                                     <div class="flex gap-1 mt-3">
                                         <h1 class="font-bold lg:text-2xl text-lg">Total Payment </h1>
-                                        <h1 class="text-orange-500 font-bold lg:text-2xl text-lg">₱ {{number_format($total_amount + $shipping_fee,2)}}</h1>
+                                        <h1 class="text-orange-500 font-bold lg:text-2xl text-lg">₱ {{number_format($total_amount + $shipping_total,2)}}</h1>
 
                                         {{-- Hidden inputs for cart items --}}
                                         @foreach($cartItems as $cartItem)
                                         <input type="hidden" name="product_ids[]" value="{{ $cartItem->product_id }}">
+                                        <input type="hidden" name="product_names[]" value="{{ $cartItem->product->name }}">
                                         <input type="hidden" name="product_prices[]" value="{{ $cartItem->product->discounted_price }}">
                                         <input type="hidden" name="quantities[]" value="{{ $cartItem->quantity }}">
                                         @endforeach
                                         <input type="hidden" name="address_id" id="address_id" value="{{ $defaultAddress->address_id }}">
-                                        <input type="hidden" name="total_payment" id="total_payment" value="{{ $total_amount + $shipping_fee }}">
+                                        <input type="hidden" name="total_payment" id="total_payment" value="{{ $total_amount + $shipping_total }}">
                                     </div>
                                 </div>
                                 <hr>
