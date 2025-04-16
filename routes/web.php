@@ -88,6 +88,8 @@ Route::post('/appointment/cancel-appointment', [AppointmentController::class, 'c
 
 use App\Http\Controllers\OrderController;
 Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+Route::POST('orders/cancel-order', [OrderController::class, 'cancel_order'])->name('orders.cancel-order');
+Route::POST('orders/review-order', [OrderController::class, 'review_order'])->name('orders.review-order');
 
 
 //  notification routes

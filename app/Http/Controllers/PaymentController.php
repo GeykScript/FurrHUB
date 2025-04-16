@@ -160,7 +160,7 @@ class PaymentController extends Controller
             'total_amount' => $totalPayment,
             'reference_number' => $referenceNumber,
             'status' => 3, //to ship
-            'payment_status' => 9,//not paid
+            'payment_status' => 10,//not paid
             'payment_method' => 3, //cash on delivery
             'shipping_address' => $addressId,
             'shipping_fee' => $shipping_total,
