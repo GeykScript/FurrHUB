@@ -85,7 +85,6 @@
             <!-- Filters -->
             <div class="flex flex-row mt-6 text-[12px] md:text-lg">
                 <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="All" onclick="filterOrders('All')">All</button>
-                <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="Paid" onclick="filterOrders('Paid')">Paid</button>
                 <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="To Ship" onclick="filterOrders('To Ship')">To Ship</button>
                 <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="Delivered" onclick="filterOrders('Delivered')">Delivered</button>
                 <button class="text-wrap px-3 sm:px-8 py-2 filter-tab border-b-2 w-full sm:w-auto text-center" data-filter="Cancelled" onclick="filterOrders('Cancelled')">Cancelled</button>
@@ -98,7 +97,6 @@
             $statusName = $order->statuses->status_name ?? null;
 
             $category = match ($statusName) {
-            'Paid' => 'Paid',
             'To Ship' => 'To Ship',
             'Delivered' => 'Delivered',
             'Cancelled' => 'Cancelled',
@@ -110,36 +108,63 @@
             @endphp
 
             <div class="orders flex flex-col lg:flex-row items-center lg:items-start gap-6 p-6 md:px-12 mt-6 border pb-6 w-full max-w-5xl mx-auto rounded-lg shadow-md bg-white" data-category="{{ $category }}">
-                <!-- Image Section -->
-                <div class="flex-shrink-0">
-                    <img src="{{ asset('logo/furrhub.png') }}" alt="Order Image" class="w-32 h-32 rounded-lg object-contain">
-                </div>
 
                 <!-- Order Details -->
                 <div class="flex-1 text-center lg:text-left gap-2">
-                    <h2 class="text-xl font-bold flex flex-row justify-between items-center">
-                        Reference Number: {{ $order->reference_number }}
-
+                    <h2 class="text-xl font-bold flex justify-end">
+                        @if ($order->statuses->status_name == 'Delivered')
+                        <span class="text-green-500">{{$order->statuses->status_name}}</span>
+                        @elseif ($order->statuses->status_name == 'To Ship')
+                        <span class="text-orange-500">{{$order->statuses->status_name}}</span>
+                        @elseif ($order->statuses->status_name == 'Cancelled')
+                        <span class="text-red-500">{{$order->statuses->status_name}}</span>
+                        @endif
                     </h2>
+                    @php
+                    $total_item = 0;
+                    @endphp
 
-                    <p class="text-lg text-gray-500 flex flex-row gap-4">
-                        <b>Date:</b> {{ $order->created_at }}
-                    </p>
+                    @foreach ($items as $order_item)
+                    @php
 
+                    $total_item = $order_item->quantity + $total_item; ;
+                    @endphp
+                    <div class="flex flex-col lg:flex-row items-center gap-4 px-12  border-b-2 py-2 ">
+                        <!-- Image Section -->
+                        <div class="flex-shrink-0">
+                            <img src="{{ asset('storage/Products/' . $order_item->product->image_url) }}" alt="Order Image" class="w-20 h-20 rounded-lg object-cover">
+                        </div>
+                        <div class=" w-full flex justify-between items-center gap-2">
+                            <h1 class="text-wrap">{{$order_item->product->name}}</h1>
+                            <div class="flex gap-5 items-center">
+                                <h1>x{{$order_item->quantity}}</h1>
+                                <h1>₱ {{$order_item->price}}</h1>
+                            </div>
+
+                        </div>
+                    </div>
+                    @endforeach
                     <!-- Details Toggle -->
-                    <details class="mt-3">
-                        <summary class="cursor-pointer bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg text-sm inline-block">
+                    <details class="mt-3 px-12 ">
+                        <summary class="cursor-pointer text-gray-500 hover:text-gray-600 font-bold py-2 px-4 rounded-lg text-sm text-end ">
                             View Details
                         </summary>
-                        <div class="mt-2 p-4 border rounded-lg bg-gray-100">
-                            @foreach ($items as $order_item)
+                        <div class="mt-2 p-4 px-12 border rounded-lg bg-gray-100">
                             <div>
-                                <h1>{{$order_item->product->name}}</h1>
+                                <h1>Total Amount: <span class="font-semibold"> ₱ {{$order->total_amount}}</span></h1>
+                                <h1>Total Items: {{$total_item}} items</h1>
+                                <h1 class="flex ">{{$order->payment->payment_name}} - {{$order->payment_status_relation?->status_name}}</h1>
                             </div>
-                            @endforeach
-                            @if ($order->status == 1)
+
+                            @if ($order->payment_status_relation?->status_name == 'Not Paid')
                             <div class="flex justify-end items-end">
-                                <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 mt-2" onclick="cancelModal(this)" data-id="{{ $order->order_id }}">Cancel Appointment</button>
+                                <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 mt-2" onclick="cancelModal(this)" data-id="{{ $order->order_id }}">Cancel Order</button>
+                            </div>
+                            @endif
+
+                            @if ($order->statuses->status_name == 'Delivered')
+                            <div class="flex justify-end items-end">
+                                <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 mt-2" onclick="cancelModal(this)" data-id="{{ $order->order_id }}">Review Order</button>
                             </div>
                             @endif
                         </div>
