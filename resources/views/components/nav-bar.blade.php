@@ -177,7 +177,6 @@
                                         10
                                     </span>
                                 </div>
-
                                 {{ __('Notifications') }}
                             </div>
 
@@ -188,10 +187,27 @@
                                 <div class="relative">
                                     <i data-lucide="message-square-text" class=" text-black"></i>
                                     <!-- Notification Badge -->
-                                    <span class="absolute -top-1 -left-1 bg-red-500 text-white rounded-full h-[16px] w-[16px] text-[9px] font-semibold flex items-center justify-center">
-                                        22
+
+                                    <span id="unreadReplyBadge" class="absolute -top-1 -left-1 bg-red-500 text-white rounded-full h-[16px] w-[16px] text-[9px] font-semibold flex items-center justify-center">
+                                        0
                                     </span>
                                 </div>
+
+                                <script>
+                                    $(document).ready(function() {
+                                        $.ajax({
+                                            url: '/message/count',
+                                            type: 'GET',
+                                            success: function(response) {
+                                                if (response.unreadReplyCount > 0) {
+                                                    $('#unreadReplyBadge')
+                                                        .text(response.unreadReplyCount)
+                                                        .removeClass('hidden');
+                                                }
+                                            }
+                                        });
+                                    });
+                                </script>
                                 {{ __('Messages') }}
                             </div>
 

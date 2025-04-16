@@ -85,11 +85,23 @@ Route::post('/appointment/make-appointment', [AppointmentController::class, 'add
 Route::get('/appointment/view-appointment', [AppointmentController::class, 'view_added_appointment'])->name('appointment.view-appointment');
 Route::post('/appointment/cancel-appointment', [AppointmentController::class, 'cancel_appointment'])->name('appointment.cancel-appointment');
 
+// add pet route
+Route::get('/add-pet', function () {
+    return view('services.add-pet');
+})->name('add-pet');
+
+
+
 
 use App\Http\Controllers\OrderController;
 Route::get('/orders', [OrderController::class, 'index'])->name('orders');
 Route::POST('orders/cancel-order', [OrderController::class, 'cancel_order'])->name('orders.cancel-order');
 Route::POST('orders/review-order', [OrderController::class, 'review_order'])->name('orders.review-order');
+
+Route::get('/orders-successfull', function () {
+    return view('profile.order-successfull');
+})->name('orders-successfull');
+
 
 
 //  notification routes
@@ -99,22 +111,10 @@ Route::get('/notifications', function () {
 
 
 
-Route::get('/orders-successfull', function () {
-    return view('profile.order-successfull');
-})->name('orders-successfull');
-
 //   my purchases routes
-Route::get('/messages', function () {
-    return view('profile.messages');
-})->name('messages');
 
 
-Route::get('/add-pet', function () {
-    return view('services.add-pet');
-})->name('add-pet');
-
-
-
-
-
- 
+use App\Http\Controllers\MessageController;
+Route::get('/messages', [MessageController::class, 'index'])->name('messages');
+Route::post('/messages/send', [MessageController::class, 'send_message'])->name('messages.send');
+Route::get('/message/count', [MessageController::class, 'message_count']);

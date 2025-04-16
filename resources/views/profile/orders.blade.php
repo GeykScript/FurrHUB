@@ -261,7 +261,7 @@
                             <img src="{{ asset('storage/Products/' . $order_item->product->image_url) }}" alt="Order Image" class="w-20 h-20 rounded-lg object-cover">
                         </div>
                         <div class=" w-full flex justify-between items-center gap-2">
-                            <h1 class="text-wrap">{{$order_item->product->name}}</h1>
+                            <h1 class="text-wrap font-semibold">{{$order_item->product->name}}</h1>
                             <div class="flex gap-5 items-center">
                                 <h1>x{{$order_item->quantity}}</h1>
                                 <h1>₱ {{$order_item->price}}</h1>
@@ -276,7 +276,7 @@
                         <h1 class="italic">Please review your order. It will be automatically marked as reviewed after 3 days.</h1>
                     </div>
                     @elseif ($order->statuses->status_name == 'Delivered' && in_array($order->order_id, $reviewed_orders) && $order->payment_status_relation?->status_name == 'Paid')
-                    <div class="flex justify-end items-end text-sm mt-2 text-gray-600">
+                    <div class="flex justify-end items-end text-sm mt-2 text-green-500">
                         <h1 class="italic">This order has already been reviewed.</h1>
                     </div>
                     @endif
