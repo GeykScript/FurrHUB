@@ -61,7 +61,7 @@ class ShoppingCartController extends Controller
         session(['cart_items_count' => $cartItems->count()]);
 
 
-        return view('cart.shoppingCart', compact('cartItems', 'buyNowProductId' , 'total_amount', 'total_quantity'));
+        return view('cart.shoppingCart', compact('cartItems', 'buyNowProductId' , 'total_quantity'));
     }
 
 

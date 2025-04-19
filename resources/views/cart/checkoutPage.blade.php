@@ -342,9 +342,44 @@
                         </div>
                     </div>
 
-                    <div class="col-span-6 grid grid-cols-6 gap-4  p-6 rounded-lg shadow-lg ">
-                        <div class="col-span-6 mt-4 ">
-                            <form action="{{ route('checkout.process') }}" method="POST">
+                    <div class="col-span-6 grid grid-cols-6 gap-4  p-10 rounded-lg shadow-lg ">
+                        <div class="lg:col-span-4 col-span-6  flex justify-center items-center gap-2">
+                            <div class="flex flex-col gap-4">
+                                <h1 class="font-bold lg:text-3xl text-lg">Payment Method</h1>
+                                <p class="text-sm">Please select your payment method.</p>
+
+                                <div class="flex items-center gap-2 group cursor-pointer">
+                                    <input
+                                        type="radio"
+                                        name="payment_method"
+                                        id="cash_on_delivery"
+                                        value="Cash on Delivery"
+                                        class="w-5 h-5 text-orange-600 focus:ring-orange-500">
+                                    <label
+                                        for="cash_on_delivery"
+                                        class="text-base group-hover:text-orange-600 transition-colors">
+                                        Cash on Delivery
+                                    </label>
+                                </div>
+
+                                <div class="flex items-center gap-2 group cursor-pointer">
+                                    <input
+                                        type="radio"
+                                        name="payment_method"
+                                        id="pay_online"
+                                        value="Pay Online"
+                                        class="w-5 h-5 text-orange-600 focus:ring-orange-500">
+                                    <label
+                                        for="pay_online"
+                                        class="text-base group-hover:text-orange-600 transition-colors">
+                                        Pay Online
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-2  col-span-6  flex justify-center items-center gap-2">
+                            <form id="checkoutForm" action="{{ route('checkout.direct') }}" method="POST">
                                 @csrf
                                 <div class="flex flex-col lg:gap-4 gap-1 justify-end items-end lg:p-4 p-1">
                                     <div class="flex gap-1 text-sm lg:text-lg">
@@ -356,24 +391,27 @@
                                         <h1 class="">Shipping Sub Total:</h1>
                                         @php
                                         $shipping_fee = 50;
-                                        $shipping_fee = $shipping_fee * $count;
+                                        $shipping_total = $shipping_fee * $count;
                                         @endphp
-                                        <h1 class="font-bold">₱ {{number_format($shipping_fee,2)}}</h1>
+                                        <h1 class="font-bold">₱ {{number_format($shipping_total,2)}}</h1>
                                         <input type="hidden" name="shipping_fee" id="shipping_fee" value="{{ $shipping_fee }}">
+                                        <input type="hidden" name="shipping_total" id="shipping_total" value="{{ $shipping_total }}">
+                                        <input type="hidden" name="shipping_count" id="shipping_count" value="{{ $count }}">
                                     </div>
 
                                     <div class="flex gap-1 mt-3">
                                         <h1 class="font-bold lg:text-2xl text-lg">Total Payment </h1>
-                                        <h1 class="text-orange-500 font-bold lg:text-2xl text-lg">₱ {{number_format($total_amount + $shipping_fee,2)}}</h1>
+                                        <h1 class="text-orange-500 font-bold lg:text-2xl text-lg">₱ {{number_format($total_amount + $shipping_total,2)}}</h1>
 
                                         {{-- Hidden inputs for cart items --}}
                                         @foreach($cartItems as $cartItem)
                                         <input type="hidden" name="product_ids[]" value="{{ $cartItem->product_id }}">
+                                        <input type="hidden" name="product_names[]" value="{{ $cartItem->product->name }}">
                                         <input type="hidden" name="product_prices[]" value="{{ $cartItem->product->discounted_price }}">
                                         <input type="hidden" name="quantities[]" value="{{ $cartItem->quantity }}">
                                         @endforeach
                                         <input type="hidden" name="address_id" id="address_id" value="{{ $defaultAddress->address_id }}">
-                                        <input type="hidden" name="total_payment" id="total_payment" value="{{ $total_amount + $shipping_fee }}">
+                                        <input type="hidden" name="total_payment" id="total_payment" value="{{ $total_amount + $shipping_total }}">
                                     </div>
                                 </div>
                                 <hr>
@@ -392,7 +430,27 @@
     </div>
     </div>
 </body>
+<script>
+    const form = document.getElementById('checkoutForm');
+    const cashRadio = document.getElementById('cash_on_delivery');
+    const onlineRadio = document.getElementById('pay_online');
 
+    // Define your routes
+    const processRoute = "{{ route('checkout.process') }}";
+    const directRoute = "{{ route('checkout.direct') }}";
+
+    // Add event listeners
+    cashRadio.addEventListener('change', updateAction);
+    onlineRadio.addEventListener('change', updateAction);
+
+    function updateAction() {
+        if (onlineRadio.checked) {
+            form.action = processRoute;
+        } else if (cashRadio.checked) {
+            form.action = directRoute;
+        }
+    }
+</script>
 <!-- Footer -->
 <x-footer bgColor=" bg-gradient-to-r from-orange-600" />
 

@@ -56,76 +56,138 @@
             </div>
 
             <div class="col-span-2 flex flex-col h-[400px] ">
-                <div class="bg-white p-4 rounded-r-xl shadow-md flex-1 overflow-y-auto h-[calc(100vh-150px)] custom-scrollbar  border border-gray-200 ">
+                <div id="messagesContainer" class="bg-white p-4 rounded-r-xl shadow-md flex-1 overflow-y-auto h-[calc(100vh-150px)] custom-scrollbar  border border-gray-200 ">
                     <!-- Chat Messages -->
+
+                    <!-- No Messages -->
+                    <div id="noMessages" class="{{ $messages->isEmpty() ? 'flex' : 'hidden' }} items-center justify-center h-full">
+                        <h1 class="text-center text-gray-500">No messages yet.</h1>
+                    </div>
+
+                    @foreach ($messages as $message)
+
+                    @if ($message->user_msg != null)
                     <div class="flex items-start mb-4">
                         <div class="flex items-center gap-3">
-                            <img src="{{ asset('images/services/jazz.jpg') }}" class="xl:w-10 w-6 h-6 xl:h-10 rounded-full">
-                            <div class="bg-white shadow-lg border border-gray-200 p-3 rounded-md max-w-xs">Lorem ipsum dolor sit amet consectetur.</div>
+                            <img src="{{ asset('storage/profile_picture/' . Auth::user()->profile_img) }}" class="xl:w-10 w-6 h-6 xl:h-10 rounded-full object-cover">
+                            <div class="bg-white shadow-lg border border-gray-200 p-3 rounded-md max-w-xs md:text-lg text-xs">{{$message->user_msg}}</div>
                         </div>
-
                     </div>
-                    <!-- Reply Messages -->
+                    @endif
+                    
+                    @if ($message->admin_reply != null)
                     <div class="flex items-start justify-end mb-4">
                         <div class="flex items-center gap-3">
-                            <div class="bg-white shadow-lg border border-gray-200 p-3 rounded-md max-w-xs">Lorem ipsum dolor sit amet consectetur.</div>
-                            <img src="{{ asset('images/services/max.jpg') }}" class="xl:w-10 w-6 h-6 xl:h-10 rounded-full">
+                            <div class="bg-white shadow-lg border border-gray-200 p-3 rounded-md max-w-xs md:text-lg text-xs">{{$message->admin_reply}}</div>
+                            <img src="{{ asset('logo/furrhub.png') }}" class="xl:w-20 w-10 h-6 xl:h-16 rounded-full object-cover">
                         </div>
                     </div>
-                    <!-- Chat Messages -->
-                    <div class="flex items-start mb-4">
-                        <div class="flex items-center gap-3">
-                            <img src="{{ asset('images/services/jazz.jpg') }}" class="xl:w-10 w-6 h-6 xl:h-10 rounded-full">
-                            <div class="bg-white shadow-lg border border-gray-200 p-3 rounded-md max-w-xs">Lorem ipsum dolor sit amet consectetur.</div>
-                        </div>
-
-                    </div>
-                    <!-- Reply Messages -->
-                    <div class="flex items-start justify-end mb-4">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-white shadow-lg border border-gray-200 p-3 rounded-md max-w-xs">Lorem ipsum dolor sit amet consectetur.</div>
-                            <img src="{{ asset('images/services/max.jpg') }}" class="xl:w-10 w-6 h-6 xl:h-10 rounded-full">
-                        </div>
-                    </div>
-                    <!-- Chat Messages -->
-                    <div class="flex items-start mb-4">
-                        <div class="flex items-center gap-3">
-                            <img src="{{ asset('images/services/jazz.jpg') }}" class="xl:w-10 w-6 h-6 xl:h-10 rounded-full">
-                            <div class="bg-white shadow-lg border border-gray-200 p-3 rounded-md max-w-xs">Lorem ipsum dolor sit amet consectetur.</div>
-                        </div>
-
-                    </div>
-                    <!-- Reply Messages -->
-                    <div class="flex items-start justify-end mb-4">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-white shadow-lg border border-gray-200 p-3 rounded-md max-w-xs">Lorem ipsum dolor sit amet consectetur.</div>
-                            <img src="{{ asset('images/services/max.jpg') }}" class="xl:w-10 w-6 h-6 xl:h-10 rounded-full">
-                        </div>
-                    </div>
-
+                    @endif
+                    @endforeach
                 </div>
 
-                <div class="mt-2 flex items-center border border-gray-300 gap-2 rounded-lg p-2">
-                    <label for="upload" class="inline-flex items-center p-2  gap-2 border border-orange-500 text-orange-500 text-sm rounded-lg hover:bg-orange-100 cursor-pointer">
-                        <input type="file" id="upload" name="upload" class="hidden">
+                <!-- REMOVE IMAGE SEND FEATURE-->
+                <!-- <div id="previewContainer" class="hidden flex items-center justify-between bg-white p-4 rounded-b-xl shadow-md border border-gray-200 mt-2">
+                    <div>
+                        <img id="preview"
+                            src="#"
+                            alt="message_photo"
+                            class="xl:w-12 w-10 h-10 xl:h-12 rounded-md object-cover">
+                    </div>
+                    <button type="button"
+                        onclick="removeImage()"
+                        class="ml-4 text-sm text-red-500 hover:underline"
+                        id="removeBtn">
+                        Remove
+                    </button>
+                </div> -->
+
+                <form action="{{route('messages.send')}}" id="messageForm" class="mt-2 flex items-center border border-gray-300 gap-2 rounded-lg p-2" method="POST" enctype="multipart/form-data">
+                    @csrf
+
+                    <!-- REMOVE IMAGE SEND FEATURE-->
+                    <!-- <label for="upload" class="inline-flex items-center p-2 gap-2 border border-orange-500 text-orange-500 text-sm rounded-lg hover:bg-orange-100 cursor-pointer">
+                        <input type="file" id="upload" name="upload" class="hidden" onchange="previewImage(event)">
                         <i data-lucide="image-up" class="h-4 w-4"></i>
-                    </label>
+                    </label> -->
                     <x-text-input
                         type="text"
+                        name="message"
+                        id="message"
                         class=" p-2 focus:outline-none focus:ring-1 focus:ring-orange-300 focus:border-orange-300 w-full"
                         placeholder="Type a message...">
                     </x-text-input>
-                    <button>
+                    <button type="submit">
                         <i data-lucide="send-horizontal" class="text-orange-400 hover:text-orange-500"></i>
                     </button>
-                </div>
+                </form>
             </div>
         </div>
+        
+        <!-- REMOVE IMAGE SEND FEATURE-->
+        <!-- <script>
+            function previewImage(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const preview = document.getElementById('preview');
+                        const container = document.getElementById('previewContainer');
 
+                        preview.src = e.target.result;
+                        container.classList.remove('hidden'); // Show the container
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
 
+            function removeImage() {
+                const preview = document.getElementById('preview');
+                const container = document.getElementById('previewContainer');
+                const uploadInput = document.getElementById('upload');
 
+                preview.src = '#';
+                uploadInput.value = '';
+                container.classList.add('hidden'); // Hide the container
+            }
+        </script> -->
     </div>
+    <script>
+        $('#messageForm').on('submit', function(e) {
+            e.preventDefault();
 
+            let message = $('#message').val();
+            if (!message.trim()) return;
+
+            $.ajax({
+                url: "{{ route('messages.send') }}",
+                method: "POST",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    message: message
+                },
+                success: function(response) {
+                    $('#message').val('');
+
+                    // Hide "No messages yet" if it's visible
+                    $('#noMessages').addClass('hidden').removeClass('flex');
+
+                    // Append the new message
+                    $('#messagesContainer').append(`
+                <div class="flex items-start mb-4">
+                    <div class="flex items-center gap-3">
+                        <img src="{{ asset('storage/profile_picture/' . Auth::user()->profile_img) }}" class="xl:w-10 w-6 h-6 xl:h-10 rounded-full object-cover">
+                        <div class="bg-white shadow-lg border border-gray-200 p-3 rounded-md max-w-xs md:text-lg text-xs">${message}</div>
+                    </div>
+                </div>
+            `);
+                },
+                error: function() {
+                    alert("Message failed to send.");
+                }
+            });
+        });
+    </script>
 
 
     <x-return-top />

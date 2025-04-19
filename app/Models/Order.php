@@ -22,7 +22,7 @@ class Order extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class , 'user_id' );
     }
 
     public function cart()
@@ -42,12 +42,19 @@ class Order extends Model
     {
         return $this->belongsTo(Address::class);
     }
-    public function status ()
+    public function statuses()
     {
-        return $this->belongsTo(Status::class);
+        return $this->belongsTo(Status::class, 'status', 'status_id');
     }
+
+    public function payment_status_relation()
+    {
+        return $this->belongsTo(Status::class, 'payment_status', 'status_id');
+    }
+
     public function payment()
     {
-        return $this->belongsTo(Payment_method::class);
+        return $this->belongsTo(Payment_method::class , 'payment_method', 'payment_method_id');
     }
+
 }

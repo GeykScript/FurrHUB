@@ -259,7 +259,7 @@
 
                     <!-- Notification Details -->
                     <div class="flex-1 text-center lg:text-left gap-2">
-                        <h2 class="text-xl font-bold flex flex-row justify-between">{{ $appointment->service->name }}
+                        <h2 class="text-xl font-bold flex lg:flex-row flex-col flex-col-reverse justify-between">{{ $appointment->service->name }}
                             @if ($appointment->status->status_name == 'Completed')
                             <span class="text-green-500">{{$appointment->status->status_name}}</span>
                             @elseif ($appointment->status->status_name == 'Pending')

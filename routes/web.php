@@ -71,6 +71,10 @@ require __DIR__.'/auth.php';
 
 use App\Http\Controllers\PaymentController;
 Route::post('/checkout/process', [PaymentController::class, 'process'])->name('checkout.process');
+Route::post('/checkout/direct', [PaymentController::class, 'pay_direct'])->name('checkout.direct');
+Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+
+
 
 
 Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment');
@@ -81,6 +85,22 @@ Route::post('/appointment/make-appointment', [AppointmentController::class, 'add
 Route::get('/appointment/view-appointment', [AppointmentController::class, 'view_added_appointment'])->name('appointment.view-appointment');
 Route::post('/appointment/cancel-appointment', [AppointmentController::class, 'cancel_appointment'])->name('appointment.cancel-appointment');
 
+// add pet route
+Route::get('/add-pet', function () {
+    return view('services.add-pet');
+})->name('add-pet');
+
+
+
+
+use App\Http\Controllers\OrderController;
+Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+Route::POST('orders/cancel-order', [OrderController::class, 'cancel_order'])->name('orders.cancel-order');
+Route::POST('orders/review-order', [OrderController::class, 'review_order'])->name('orders.review-order');
+
+Route::get('/orders-successfull', function () {
+    return view('profile.order-successfull');
+})->name('orders-successfull');
 
 
 
@@ -92,22 +112,9 @@ Route::get('/notifications', function () {
 
 
 //   my purchases routes
-Route::get('/orders', function () {
-    return view('profile.orders');
-})->name('orders');
-
-//   my purchases routes
-Route::get('/messages', function () {
-    return view('profile.messages');
-})->name('messages');
 
 
-Route::get('/add-pet', function () {
-    return view('services.add-pet');
-})->name('add-pet');
-
-
-
-
-
- 
+use App\Http\Controllers\MessageController;
+Route::get('/messages', [MessageController::class, 'index'])->name('messages');
+Route::post('/messages/send', [MessageController::class, 'send_message'])->name('messages.send');
+Route::get('/message/count', [MessageController::class, 'message_count']);

@@ -296,7 +296,7 @@
                     @foreach (['review_img', 'review_img2', 'review_img3'] as $index => $img)
                     @if (!empty($review->$img))
                     <button onclick="document.getElementById('view-pic{{ $index + 1 }}').showModal()">
-                        <img src="{{ asset('storage/Products/' . $review->$img) }}" alt="review-photo" class="lg:h-[10rem] lg:w-[10rem] w-[5rem] h-[5rem] object-contain" />
+                        <img src="{{ asset('storage/order_reviews/' . $review->$img) }}" alt="review-photo" class="lg:h-[10rem] lg:w-[10rem] w-[5rem] h-[5rem] object-contain" />
                     </button>
                     @endif
                     @endforeach
@@ -307,7 +307,7 @@
                 <dialog id="view-pic{{ $index + 1 }}" class="backdrop:bg-black/50 p-4 rounded-lg shadow-lg">
                     <div class="relative bg-white p-4 rounded-lg">
                         <button onclick="document.getElementById('view-pic{{ $index + 1 }}').close()" class="absolute top-2 right-2 text-gray-600 hover:text-red-500 text-xl">&times;</button>
-                        <img src="{{ asset('storage/Products/' . $review->$img) }}" alt="review-photo" class="h-[20rem] w-[20rem] object-contain mx-auto" />
+                        <img src="{{ asset('storage/order_reviews/' . $review->$img) }}" alt="review-photo" class="h-[20rem] w-[20rem] object-contain mx-auto" />
                     </div>
                 </dialog>
                 @endif
