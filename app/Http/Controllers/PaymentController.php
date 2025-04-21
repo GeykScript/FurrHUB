@@ -10,6 +10,8 @@ use App\Models\Order;
 use App\Models\Order_item;
 use App\Models\Product;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderSuccessMail;
 
 class PaymentController extends Controller
 {
@@ -131,6 +133,18 @@ class PaymentController extends Controller
                 'stock_quantity' => DB::raw("stock_quantity - {$quantities[$index]}") // Assuming you want to reduce stock after order
             ]);
         }
+
+        // Prepare product details for email
+        $products = [];
+        foreach ($productIds as $index => $productId) {
+            $product = Product::where('product_id', $productId)->first();
+            $products[] = [
+                'name' => $product->name,
+                'quantity' => $quantities[$index],
+                'price' => $productPrices[$index],
+            ];
+        }
+        Mail::to($user->email)->send(new OrderSuccessMail($user, $products, $referenceNumber, $totalPayment));
 
         // Clear session data to avoid double submission
         session()->forget(['product_ids', 'product_prices', 'product_names', 'quantities', 'reference_number', 'address_id', 'shipping_fee', 'total_payment']);

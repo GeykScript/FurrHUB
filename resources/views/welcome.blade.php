@@ -23,8 +23,7 @@
 <!-- nav part -->
 <x-nav-bar />
 
-<div class="pt-[100px]"></div>
-
+<div class="pt-[110px]  lg:pt-[100px]"></div>
 
 <!-- carousel part -->
 <div class="w-full relative mt-2 ">
@@ -32,46 +31,48 @@
     <div class="swiper-wrapper">
       <div class="swiper-slide">
         <a href="{{ route('login') }}" class="">
-          <div class="rounded-2xl h-[15rem] md:h-full ">
-            <img src="{{ asset('images/Furrhub-carousel/1.jpg') }}" alt="carousel-pet-services" class="w-[100%] h-[100%] object-cover " />
+          <div class="rounded-2xl h-[7rem] md:h-full ">
+            <img src="{{ asset('images/Furrhub-carousel/1.png') }}" alt="carousel-pet-services" class="w-full h-full object-cover" />
           </div>
         </a>
       </div>
       <div class="swiper-slide">
         <a href="{{ route('login') }}" class="">
-          <div class="rounded-2xl h-[15rem] md:h-full ">
-            <img src="{{ asset('images/Furrhub-carousel/2.jpg') }}" alt="carousel-pet-services" class="w-[100%] h-[100%] object-cover " />
+          <div class="rounded-2xl h-[7rem] md:h-full ">
+            <img src="{{ asset('images/Furrhub-carousel/2.png') }}" alt="carousel-pet-services" class="w-full h-full object-cover" />
           </div>
         </a>
       </div>
       <div class="swiper-slide">
         <a href="{{ route('login') }}" class="">
-          <div class="rounded-2xl h-[15rem] md:h-full ">
-            <img src="{{ asset('images/Furrhub-carousel/3.jpg') }}" alt="carousel-pet-services" class="w-[100%] h-[100%] object-cover " />
+          <div class="rounded-2xl h-[7rem] md:h-full ">
+            <img src="{{ asset('images/Furrhub-carousel/3.png') }}" alt="carousel-pet-services" class="w-full h-full object-cover" />
           </div>
         </a>
       </div>
       <div class="swiper-slide">
         <a href="{{ route('login') }}" class="">
-          <div class="rounded-2xl h-[15rem] md:h-full ">
-            <img src="{{ asset('images/Furrhub-carousel/4.jpg') }}" alt="carousel-pet-services" class="w-[100%] h-[100%] object-cover " />
+          <div class="rounded-2xl h-[7rem] md:h-full ">
+            <img src="{{ asset('images/Furrhub-carousel/4.png') }}" alt="carousel-pet-services" class="w-full h-full object-cover" />
           </div>
         </a>
       </div>
       <div class="swiper-slide">
         <a href="{{ route('login') }}" class="">
-          <div class="rounded-2xl h-[15rem] md:h-full ">
-            <img src="{{ asset('images/Furrhub-carousel/5.jpg') }}" alt="carousel-pet-services" class="w-[100%] h-[100%] object-cover " />
+          <div class="rounded-2xl h-[7rem] md:h-full ">
+            <img src="{{ asset('images/Furrhub-carousel/5.png') }}" alt="carousel-pet-services" class="w-full h-full object-cover" />
           </div>
         </a>
       </div>
       <div class="swiper-slide">
         <a href="{{ route('login') }}" class="">
-          <div class="rounded-2xl h-[15rem] md:h-full ">
-            <img src="{{ asset('images/Furrhub-carousel/6.jpg') }}" alt="carousel-pet-services" class="w-[100%] h-[100%] object-cover " />
+          <div class="rounded-2xl h-[7rem] md:h-full ">
+            <img src="{{ asset('images/Furrhub-carousel/6.png') }}" alt="carousel-pet-services" class="w-full h-full object-cover" />
           </div>
         </a>
       </div>
+
+
     </div>
     <div class="swiper-pagination"></div>
   </div>

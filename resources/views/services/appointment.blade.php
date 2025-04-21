@@ -142,7 +142,7 @@
 <body class="font-sans antialiased bg-white-400 dark:text-black/50 min-h-screen flex flex-col">
     <div class="bg-white flex-grow">
         <div class="rounded-2xl  md:h-full ">
-            <img src="{{asset('images/welcome-booking.jpg')}}" alt="" class="w-full lg:h-full h-[160px]  object-cover" />
+            <img src="{{asset('images/welcome-booking.png')}}" alt="" class="w-full lg:h-full h-[150px]  object-contain" />
         </div>
         <!-- welcome to furrhub services -->
         <div class="relative xl:p-6 p-2 items-start mt-2" id="pets">

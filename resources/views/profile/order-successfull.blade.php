@@ -13,7 +13,7 @@
 
     <link href="https://fonts.bunny.net/css?family=poppins:400,500,600&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/welcome-page.css', 'resources/js/carousel.jsx'])
-    @vite('resources/js/app.jsx')
+   
 
 </head>
 

@@ -13,7 +13,7 @@
 
     <link href="https://fonts.bunny.net/css?family=poppins:400,500,600&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/welcome-page.css', 'resources/js/carousel.jsx'])
-    @vite('resources/js/app.jsx')
+
 
 </head>
 
@@ -410,7 +410,15 @@
                                         <input type="hidden" name="product_prices[]" value="{{ $cartItem->product->discounted_price }}">
                                         <input type="hidden" name="quantities[]" value="{{ $cartItem->quantity }}">
                                         @endforeach
-                                        <input type="hidden" name="address_id" id="address_id" value="{{ $defaultAddress->address_id }}">
+
+                                        @php
+                                        if ($defaultAddress) {
+                                        $address_id = $defaultAddress->address_id;
+                                        } else {
+                                        $address_id = null;
+                                        }
+                                        @endphp
+                                        <input type="hidden" name="address_id" id="address_id" value="{{ $address_id  }}">
                                         <input type="hidden" name="total_payment" id="total_payment" value="{{ $total_amount + $shipping_total }}">
                                     </div>
                                 </div>
@@ -446,6 +454,7 @@
     function updateAction() {
         if (onlineRadio.checked) {
             form.action = processRoute;
+            
         } else if (cashRadio.checked) {
             form.action = directRoute;
         }

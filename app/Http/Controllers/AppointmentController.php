@@ -55,11 +55,21 @@ class AppointmentController extends Controller
 
                 // Store the new image
                 $request->file('pet_img')->storeAs('pet_picture', $filename, 'public');
+                //FOR DEPLOYMENT STORAGE
+                // $path = $request->file('pet_img')->storeAs('pet_picture', $filename, 'public_direct');
 
                 // Delete old pet image if it exists
                 if ($pet->pet_img) {
                     Storage::delete('public/pet_picture/' . $pet->pet_img);
                 }
+                //THIS IS USED FOR DELETING IN DEPLOYMENT STORAGE
+                // if ($pet->pet_img) {
+                //     $filePath = public_path('storage/pet_picture/' . $pet->pet_img);
+                //     if (file_exists($filePath)) {
+                //         unlink($filePath);
+                //     }
+                // }
+
 
                 // Set new filename
                 $pet->pet_img = $filename;
@@ -94,6 +104,10 @@ class AppointmentController extends Controller
                 $filename,
                 'public'
             );
+
+            //FOR DEPLOYMENT STORAGE
+            // $path = $request->file('uploadPhoto')->storeAs('pet_picture',$filename,'public_direct');
+
             $petImg = $filename;
         }
 
