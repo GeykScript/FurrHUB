@@ -44,6 +44,12 @@ import {
         User,
         UserPen,
         UserRoundPen,
+        CalendarClock,
+        NotepadText,
+        ShoppingCart,
+        NotebookText,
+        MessagesSquare,
+      
 } from 'lucide';
 
 createIcons({
@@ -82,12 +88,18 @@ createIcons({
         User,
         UserPen,
         UserRoundPen,
+        CalendarClock,
+        NotepadText,
+        ShoppingCart,
+        NotebookText,
+        MessagesSquare,
   },
 });
 
 
-
-
+     import DataTable from 'datatables.net-dt';
+        let table = new DataTable('#myTable');
+      
 
 
 // js show more for product

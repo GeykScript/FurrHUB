@@ -26,6 +26,7 @@ class MessageController extends Controller
             'user_id' => $user->id,
             'user_msg' => $request->input('message'),
             'msg_status' => 12, // 12 = unread
+            'admin_id' => 1, // 1 = admin
         ]);
 
         return response()->json(['success' => true, 'message' => $message  ]);

@@ -291,6 +291,7 @@
                             <div class="mt-2 p-4  border rounded-lg bg-gray-50">
 
                                 <div class="flex flex-col gap-2 px-10">
+                                    <h1>Shipping Fee: <span class="font-semibold"> ₱ 50</span></h1>
                                     <h1>Total Amount: <span class="font-semibold"> ₱ {{$order->total_amount}}</span></h1>
                                     <h1>Total Items: <span class="font-semibold"> {{$total_item}} items</span></h1>
                                     <h1>Payment Method: <span class="font-semibold">{{$order->payment->payment_name}}</span></h1>

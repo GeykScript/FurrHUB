@@ -11,6 +11,7 @@ use App\Http\Controllers\checkoutPageController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\SearchController;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -112,9 +113,76 @@ Route::get('/notifications', function () {
 
 
 //   my purchases routes
-
-
 use App\Http\Controllers\MessageController;
 Route::get('/messages', [MessageController::class, 'index'])->name('messages');
 Route::post('/messages/send', [MessageController::class, 'send_message'])->name('messages.send');
 Route::get('/message/count', [MessageController::class, 'message_count']);
+
+
+
+
+use App\Http\Controllers\Auth\AdminLoginController;
+Route::post('admin/login', [AdminLoginController::class, 'login'])->name('admin.login');
+
+Route::get('/admin-login', function () {
+    return view('admin.admin_login');
+})->name('admin-login');
+
+Route::post('/admin/logout', function () {
+    Auth::guard('admin')->logout();
+    return redirect()->route('admin-login'); // Redirect to your admin login view
+})->name('admin.logout');
+
+
+use App\Http\Controllers\AdminDashboardController;
+Route::get('/admin_dashboard', [AdminDashboardController::class, 'index'])->name('admin_dashboard');
+
+use App\Http\Controllers\AdminMessageController;
+Route::get('/admin_messages/{user_id?}', [AdminMessageController::class, 'index'])->name('admin_messages');
+Route::Post('/admin_messages/send_message}', [AdminMessageController::class, 'send_message'])->name('send_message');
+Route::get('/fetch_new_messages', [MessageController::class, 'fetchNewMessages'])->name('fetch_new_messages');
+
+
+use App\Http\Controllers\AdminServicesController;
+Route::get('/admin_services', [AdminServicesController::class, 'index'])->name('admin_services');
+Route::get('/admin_services.page', [AdminServicesController::class, 'add_service_page'])->name('admin_services.page');
+Route::POST('/admin_services.add', [AdminServicesController::class, 'add_service'])->name('admin_services.add');
+Route::post('/admin_services.edit', [AdminServicesController::class, 'edit_service'])->name('admin_services.edit');
+Route::POST('/admin_services.save', [AdminServicesController::class, 'save_changes'])->name('admin_services.save');
+
+
+Route::get('/admin/services/export/excel', [AdminServicesController::class, 'exportExcel'])->name('admin_services.export_excel');
+
+
+
+
+Route::get('/admin-products', function () {
+    return view('admin.products');
+})->name('admin-products');
+
+Route::get('/admin-orders', function () {
+    return view('admin.orders');
+})->name('admin-orders');
+
+
+Route::get('/admin-appointments', function () {
+    return view('admin.appointments');
+})->name('admin-appointments');
+
+Route::get('admin-messages', function () {
+    return view('admin.messages');
+})->name('admin-messages');
+
+
+Route::get('/service_history', function () {
+    return view('admin.service_history');
+})->name('service_history');
+
+Route::get('/add-products', function () {
+    return view('admin.add_product');
+})->name('add-products');
+
+
+Route::get('/edit-product', function () {
+    return view('admin.edit-products');
+})->name('edit-product');

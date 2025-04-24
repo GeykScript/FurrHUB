@@ -44,8 +44,10 @@ class Product extends Model
     {
         if ($this->discount) {
             if ($this->discount->discount_type === 'percentage') {
-                return $this->price - ($this->price * ($this->discount->discount_value / 100));
+                // Apply the percentage discount correctly as a decimal
+                return $this->price - ($this->price * $this->discount->discount_value);
             } elseif ($this->discount->discount_type === 'fixed') {
+                // Apply the fixed discount
                 return max(0, $this->price - $this->discount->discount_value);
             }
         }

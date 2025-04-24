@@ -22,7 +22,7 @@
     <form method="POST" action="{{ route('appointment.editpet') }}" enctype="multipart/form-data" class="relative bg-white p-6 rounded-lg">
         @csrf
         <input type="hidden" name="pet_id" id="pet_id">
-        
+
         <div class="mb-2">
             <h1 class="text-2xl font-bold text-center text-orange-500">Edit Pet</h1>
             <p class="text-sm text-gray-500 text-center">Edit your pet's information.</p>
@@ -424,12 +424,12 @@
                             <li class="{{ $isHidden }}">
                                 {{ $grooming->name }}
 
-                                @if (!empty($product->discount))
+                                @if ($grooming->discount_id != null)
                                 <div class="flex flex-row gap-2 mt-1">
                                     <p class="text-orange-500 line-through">₱ {{ number_format($grooming->price, 2) }}</p>
                                     <p class="text-orange-500">-</p>
                                     <p class="text-orange-500 font-bold">₱ {{ number_format($grooming->discounted_price, 2) }}</p>
-                                    <p class="text-orange-500 text-center">({{ $grooming->discount_value }}% Discount)</p>
+                                    <p class="text-orange-500 text-center">({{ $grooming->discount_value }} Discount)</p>
                                 </div>
                                 @else
                                 <div class="flex flex-row gap-2 mt-1">
@@ -460,12 +460,18 @@
 
                             <li class="{{ $isHidden }}">
                                 {{ $wellness->name }}
+                                @if ($wellness->discount_id != null)
                                 <div class="flex flex-row gap-2 mt-1">
                                     <p class="text-orange-500 line-through">₱ {{ number_format($wellness->price, 2) }}</p>
                                     <p class="text-orange-500">-</p>
                                     <p class="text-orange-500 font-bold">₱ {{ number_format($wellness->discounted_price, 2) }}</p>
-                                    <p class="text-orange-500 text-center">({{ $wellness->discount_value }}% Discount)</p>
+                                    <p class="text-orange-500 text-center">({{ $wellness->discount_value }} Discount)</p>
                                 </div>
+                                @else
+                                <div class="flex flex-row gap-2 mt-1">
+                                    <p class="text-orange-500 font-bold">₱ {{ number_format($wellness->price, 2) }}</p>
+                                </div>
+                                @endif
                             </li>
                             @endforeach
                         </ul>
@@ -490,12 +496,19 @@
 
                             <li class="{{ $isHidden }}">
                                 {{ $veterinary->name }}
+                                @if ($veterinary->discount_id != null)
+
                                 <div class="flex flex-row gap-2 mt-1">
                                     <p class="text-orange-500 line-through">₱ {{ number_format($veterinary->price, 2) }}</p>
                                     <p class="text-orange-500">-</p>
                                     <p class="text-orange-500 font-bold">₱ {{ number_format($veterinary->discounted_price, 2) }}</p>
-                                    <p class="text-orange-500 text-center">({{ $veterinary->discount_value }}% Discount)</p>
+                                    <p class="text-orange-500 text-center">({{ $veterinary->discount_value }} Discount)</p>
                                 </div>
+                                @else
+                                <div class="flex flex-row gap-2 mt-1">
+                                    <p class="text-orange-500 font-bold">₱ {{ number_format($veterinary->price, 2) }}</p>
+                                </div>
+                                @endif
                             </li>
                             @endforeach
                     </div>

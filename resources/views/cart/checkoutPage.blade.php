@@ -302,7 +302,7 @@
                             <p class="font-semibold text-lg">{{$cartItem->product->name}}</p>
                             <p class="mt-2">Retail Price: <span class="font-semibold">₱ {{number_format($cartItem->product->price,2)}}</span></p>
                             <p>Discount: <span class="font-bold">{{$cartItem->product->discount_value}}</span></p>
-                            <h1 class="mt-6">Shipping Fee: <span class="text-orange-500 font-bold">₱ 50 </span></h1>
+                            <h1 class="mt-6">Shipping Fee: <span class="text-orange-500 font-bold">₱ 15 </span></h1>
                         </div>
                         <div class="col-span-6 lg:col-span-1">
                             <div class="flex flex-col gap-2">
@@ -390,7 +390,7 @@
                                     <div class="flex gap-1 text-sm lg:text-lg">
                                         <h1 class="">Shipping Sub Total:</h1>
                                         @php
-                                        $shipping_fee = 50;
+                                        $shipping_fee = 15;
                                         $shipping_total = $shipping_fee * $count;
                                         @endphp
                                         <h1 class="font-bold">₱ {{number_format($shipping_total,2)}}</h1>
