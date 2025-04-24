@@ -150,8 +150,11 @@ Route::POST('/admin_services.add', [AdminServicesController::class, 'add_service
 Route::post('/admin_services.edit', [AdminServicesController::class, 'edit_service'])->name('admin_services.edit');
 Route::POST('/admin_services.save', [AdminServicesController::class, 'save_changes'])->name('admin_services.save');
 
-
+//generate report routes
 Route::get('/admin/services/export/excel', [AdminServicesController::class, 'exportExcel'])->name('admin_services.export_excel');
+Route::get('/admin/services/export-pdf', [AdminServicesController::class, 'exportPDF'])->name('admin_services.export_pdf');
+Route::get('/admin/services/preview-pdf', [AdminServicesController::class, 'previewPDF'])->name('admin_services.preview_pdf');
+
 
 
 

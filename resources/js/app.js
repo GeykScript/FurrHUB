@@ -49,7 +49,9 @@ import {
         ShoppingCart,
         NotebookText,
         MessagesSquare,
-      
+        Sheet,
+        FileText,
+        Eye,
 } from 'lucide';
 
 createIcons({
@@ -93,6 +95,9 @@ createIcons({
         ShoppingCart,
         NotebookText,
         MessagesSquare,
+        Sheet,
+        FileText,
+        Eye,
   },
 });
 

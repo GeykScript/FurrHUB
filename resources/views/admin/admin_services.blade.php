@@ -114,15 +114,20 @@
                 </div>
             </div>
 
-            <div class="flex flex-col items-center justify-center mt-10 w-full px-20">
+            <div class="flex flex-col items-center justify-center mt-5 w-full px-20">
                 <div class="overflow-x-auto w-full shadow-lg rounded-lg p-6">
                     @if (session()->has('success'))
                     <div class="col-span-3 mt-1 text-white bg-green-400  border border-green-400 p-3 rounded relative mb-3">
                         <span class="text-sm font-medium ">{{ session('success') }}</span>
                     </div>
                     @endif
-                    <div class="flex justify-end items-end">
-                        <a href="{{ route('admin_services.export_excel') }}" class="bg-green-500 text-white px-4 py-2 rounded">Export to Excel</a>
+                    <div class="flex justify-end items-end gap-1">
+                        <p class="p-3">Generate Report: </p>
+                        <a href="{{ route('admin_services.preview_pdf') }}" target="_blank" class="bg-blue-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-blue-600 transition duration-200"><i data-lucide="eye"></i>Preview</a>
+
+                        <a href="{{ route('admin_services.export_pdf') }}" class="bg-red-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-red-600 transition duration-200">PDF<i data-lucide="file-text"></i></a>
+
+                        <a href="{{ route('admin_services.export_excel') }}" class=" mr-2 bg-green-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg  hover:bg-green-600 transition duration-200">EXCEL<i data-lucide="sheet"></i></a>
 
                         <a href="{{route('admin_services.page')}}" class="bg-orange-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg  hover:bg-orange-600 transition duration-200">
                             <i data-lucide="plus"></i>
