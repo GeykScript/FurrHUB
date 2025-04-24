@@ -47,7 +47,7 @@
                             </a>
                         </li>
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('service_history')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
+                            <a href="{{route('admin_services_history')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
                                 <i data-lucide="notebook-text" class="w-10 h-10 pr-2 ml-2"></i>
                                 Service History
                             </a>
@@ -124,8 +124,17 @@
                             </svg>
                         </div>
                         <div>
+
                             <div class="text-xs text-gray-500 mb-1">TOTAL REVENUE</div>
-                            <div class="text-lg font-bold text-gray-800">₱ {{number_format($total_revenue,2)}}</div>
+                            @php
+                            $appointment_revenue = 0;
+                            @endphp
+                            @foreach($appointments as $appointment)
+                            @php
+                            $appointment_revenue += number_format(!empty($appointment->service->discounted_price) ? $appointment->service->discounted_price : $appointment->service->price, 2)
+                            @endphp
+                            @endforeach
+                            <div class="text-lg font-bold text-gray-800">₱ {{number_format($appointment_revenue + $order_revenue)}}</div>
                         </div>
                     </div>
                     <div class="bg-white rounded-lg shadow p-4 flex items-center">

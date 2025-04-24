@@ -156,7 +156,11 @@ Route::get('/admin/services/export-pdf', [AdminServicesController::class, 'expor
 Route::get('/admin/services/preview-pdf', [AdminServicesController::class, 'previewPDF'])->name('admin_services.preview_pdf');
 
 
-
+use App\Http\Controllers\AdminServicesHistoryController;
+Route::get('/admin_services_history', [AdminServicesHistoryController::class, 'index'])->name('admin_services_history');
+Route::get('/admin/services_history/export/excel', [AdminServicesHistoryController::class, 'exportExcel'])->name('admin_services_history.export_excel');
+Route::get('/admin/services_history/export-pdf', [AdminServicesHistoryController::class, 'exportPDF'])->name('admin_services_history.export_pdf');
+Route::get('/admin/services_history/preview-pdf', [AdminServicesHistoryController::class, 'previewPDF'])->name('admin_services_history.preview_pdf');
 
 
 Route::get('/admin-products', function () {
@@ -176,10 +180,6 @@ Route::get('admin-messages', function () {
     return view('admin.messages');
 })->name('admin-messages');
 
-
-Route::get('/service_history', function () {
-    return view('admin.service_history');
-})->name('service_history');
 
 Route::get('/add-products', function () {
     return view('admin.add_product');

@@ -103,7 +103,8 @@ createIcons({
 
 
      import DataTable from 'datatables.net-dt';
-        let table = new DataTable('#myTable');
+        let table = new DataTable('#ServiceTable');
+        let table2 = new DataTable('#ServiceHistoryTable');
       
 
 

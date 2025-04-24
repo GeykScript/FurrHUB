@@ -49,7 +49,7 @@
                             </a>
                         </li>
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('service_history')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
+                            <a href="{{route('admin_services_history')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
                                 <i data-lucide="notebook-text" class="w-10 h-10 pr-2 ml-2"></i>
                                 Service History
                             </a>
@@ -138,7 +138,7 @@
                     </div>
 
 
-                    <table id="myTable" class="min-w-full divide-y divide-gray-200 text-sm text-left text-gray-700">
+                    <table id="ServiceTable" class="min-w-full divide-y divide-gray-200 text-sm text-left text-gray-700">
                         <thead class="bg-orange-300 text-gray-700 uppercase text-xs">
                             <tr>
                                 <th class="px-4 py-3">Name</th>

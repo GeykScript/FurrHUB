@@ -23,13 +23,19 @@ class AdminDashboardController extends Controller
     $total_users = User::count();
     $total_appointments = Appointment::count();
 
-    $total_revenue = Order::where('payment_status', 9)->sum('total_amount');
+    $order_revenue = Order::where('payment_status', 9)->sum('total_amount');
+
+    $appointments = Appointment::where('payment_status', 9)
+      ->where('Status', 15)
+      ->get();
+
+
     $best_selling_products = Product::orderBy('quantity_sold', 'desc')->take(5)->get();
     $shipping_orders = Order::where('status', 3)->count();
     $delivered_orders = Order::where('status', 1)->count();
     $cancelled_orders = Order::where('status', 2)->count();
 
 
-        return view('admin.admin_dashboard', compact('admin', 'total_orders', 'total_users', 'total_appointments', 'total_revenue', 'best_selling_products' , 'shipping_orders', 'delivered_orders', 'cancelled_orders'));
+        return view('admin.admin_dashboard', compact('admin', 'total_orders', 'total_users', 'total_appointments', 'order_revenue','appointments', 'best_selling_products' , 'shipping_orders', 'delivered_orders', 'cancelled_orders'));
   }
 }

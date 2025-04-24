@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link rel="icon" href="{{ asset('logo/logo1.png') }}" type="image/png">
 
+    <link rel="stylesheet" href="//cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
+
     <link href="https://fonts.bunny.net/css?family=poppins:400,500,600&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/welcome-page.css', 'resources/js/carousel.jsx'])
 
@@ -28,37 +30,32 @@
                 <nav class="font-bold">
                     <ul>
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{ route('admin_dashboard') }}" class="block p-3 flex items-center text-lg text-black hover:bg-gray-300  rounded transition duration-200">
+                            <a href="{{ route('admin_dashboard') }}" class="block p-3 flex items-center text-lg text-black hover:bg-gray-300 rounded transition duration-200">
                                 <i data-lucide="house" class="w-10 h-10 pr-2 ml-2"></i>
                                 Dashboard
                             </a>
                         </li>
+
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('users')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300  rounded transition duration-200">
-                                <i data-lucide="circle-user" class="w-10 h-10 pr-2 ml-2"></i>
-                                Users
-                            </a>
-                        </li>
-                        <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('messages')}}" class="block p-3 text-lg flex items-center text-black hover:bg-gray-300 rounded transition duration-200">
+                            <a href="{{route('admin_messages')}}" class="block p-3 text-lg flex items-center text-black hover:bg-gray-300 rounded transition duration-200">
                                 <i data-lucide="messages-square" class="w-10 h-10 pr-2 ml-2"></i>
                                 Messages
                             </a>
                         </li>
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('services')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
+                            <a href="{{route('admin_services')}}" class="block p-3 flex items-center text-lg text-black hover:bg-gray-300 rounded transition duration-200">
                                 <i data-lucide="heart" class="w-10 h-10 pr-2 ml-2"></i>
                                 Services
                             </a>
                         </li>
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('service_history')}}" class="block p-3 flex text-lg items-center text-white bg-[#F0A02C]  rounded transition duration-200">
+                            <a href="{{route('admin_services_history')}}" class="block p-3 flex text-lg items-center text-white bg-[#F0A02C] rounded transition duration-200">
                                 <i data-lucide="notebook-text" class="w-10 h-10 pr-2 ml-2"></i>
                                 Service History
                             </a>
                         </li>
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('products')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
+                            <a href="{{route('admin-products')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
                                 <i data-lucide="shopping-basket" class="w-10 h-10 pr-2 ml-2"></i>
                                 Manage Products
                             </a>
@@ -89,138 +86,131 @@
             <div class="bg-[#F0A02C] shadow-sm h-26">
                 <div class="max-w-full mx-auto px-4 py-3 flex justify-between items-center">
                     <div class="flex items-center">
-                        <svg fill="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 pl-2">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <path d="m22 2.25h-3.25v-1.5c-.014-.404-.344-.726-.75-.726s-.736.322-.75.725v.001 1.5h-4.5v-1.5c-.014-.404-.344-.726-.75-.726s-.736.322-.75.725v.001 1.5h-4.5v-1.5c-.014-.404-.344-.726-.75-.726s-.736.322-.75.725v.001 1.5h-3.25c-1.104 0-2 .895-2 1.999v17.75c0 1.105.895 2 2 2h20c1.105 0 2-.895 2-2v-17.75c0-1.104-.896-1.999-2-1.999zm.5 19.75c0 .276-.224.499-.499.5h-20.001c-.276 0-.5-.224-.5-.5v-17.75c.001-.276.224-.499.5-.499h3.25v1.5c.014.404.344.726.75.726s.736-.322.75-.725v-.001-1.5h4.5v1.5c.014.404.344.726.75.726s.736-.322.75-.725v-.001-1.5h4.5v1.5c.014.404.344.726.75.726s.736-.322.75-.725v-.001-1.5h3.25c.276 0 .499.224.499.499z"></path>
-                                <path d="m5.25 9h3v2.25h-3z"></path>
-                                <path d="m5.25 12.75h3v2.25h-3z"></path>
-                                <path d="m5.25 16.5h3v2.25h-3z"></path>
-                                <path d="m10.5 16.5h3v2.25h-3z"></path>
-                                <path d="m10.5 12.75h3v2.25h-3z"></path>
-                                <path d="m10.5 9h3v2.25h-3z"></path>
-                                <path d="m15.75 16.5h3v2.25h-3z"></path>
-                                <path d="m15.75 12.75h3v2.25h-3z"></path>
-                                <path d="m15.75 9h3v2.25h-3z"></path>
-                            </g>
-                        </svg>
+                        <i data-lucide="calendar-clock" class=" w-16 h-16 pr-2 ml-4 text-white"></i>
                         <div id="datetime" class="text-2xl text-white font-bold mr-6 ml-4"></div>
                     </div>
-                    <div class="flex items-center">
-                        <div class="flex items-center">
-                            <span class="text-2xl text-black font-bold">John Doe</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-10 h-10 pr-2 ml-2"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-                                <path d="M406.5 399.6C387.4 352.9 341.5 320 288 320l-64 0c-53.5 0-99.4 32.9-118.5 79.6C69.9 362.2 48 311.7 48 256C48 141.1 141.1 48 256 48s208 93.1 208 208c0 55.7-21.9 106.2-57.5 143.6zm-40.1 32.7C334.4 452.4 296.6 464 256 464s-78.4-11.6-110.5-31.7c7.3-36.7 39.7-64.3 78.5-64.3l64 0c38.8 0 71.2 27.6 78.5 64.3zM256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-272a40 40 0 1 1 0-80 40 40 0 1 1 0 80zm-88-40a88 88 0 1 0 176 0 88 88 0 1 0 -176 0z" />
-                            </svg>
-                            <div x-data="{ open: false }" class="relative ml-4">
-                                <button @click="open = !open" class="focus:outline-none">
-                                    <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" stroke-width="2"
-                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </button>
-                                <div x-show="open" @click.outside="open = false"
-                                    class="absolute right-1 mt-2 w-48 bg-white rounded-md shadow-lg z-50">
-                                    <a href="#" class="block px-4 py-2 text-lg text-black hover:bg-gray-300">Profile</a>
-                                    <a href="#" class="block px-4 py-2 text-lg text-black hover:bg-gray-300">Settings</a>
-                                </div>
-                            </div>
+                    <div class="flex items-center ">
+                        <div class="flex items-center justify-between ">
+                            <span class="text-2xl text-black  font-semibold">{{$admin->fname}} {{$admin->lname}}</span>
+                            <i data-lucide="circle-user" class=" w-10 h-10 pr-2 ml-2"> </i>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Content -->
-            <div class="flex-1 overflow-auto p-6">
-                <div class="bg-white rounded-lg shadow-sm p-6">
-                    <div class="flex items-center mb-6">
-                        <div class="flex items-center text-[#F0A02C] text-xl font-bold">
-                            <i class="fas fa-clipboard-check mr-2"></i>
-                            <h2>Vet & Grooming Logs</h2>
-                        </div>
+
+            <div>
+                <div class="flex flex-row items-center justify-start md:px-10 px-2 mt-5 h-20  ">
+                    <div class="flex flex-row items-center md:gap-2 gap-1 ">
+                        <div> <i data-lucide="heart" class="md:w-12 md:h-12 w-6 h-6 text-orange-500 mx-auto"></i></div>
+                        <h1 class="md:text-4xl text-md font-bold text-orange-500 ">Services History</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2 w-full">
+                <div class="md:px-[5rem] flex gap-5 items-center px-4  text-sm md:text-lg">
+                    <a href="{{route('admin_dashboard')}}" class="hover:underline hover:text-orange-400">Dashboard</a>
+                    <div> > </div>
+                    <a href="{{route('admin_services')}}" class="hover:underline text-orange-500">Services Provided History</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center justify-center mt-5 w-full px-20">
+                <div class="overflow-x-auto w-full shadow-lg rounded-lg p-6">
+                    @if (session()->has('success'))
+                    <div class="col-span-3 mt-1 text-white bg-green-400  border border-green-400 p-3 rounded relative mb-3">
+                        <span class="text-sm font-medium ">{{ session('success') }}</span>
+                    </div>
+                    @endif
+                    <div class="flex justify-end items-end gap-1">
+                        <p class="p-3">Generate Report: </p>
+                        <a href="{{route('admin_services_history.preview_pdf')}}" target="_blank" class="bg-blue-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-blue-600 transition duration-200"><i data-lucide="eye"></i>Preview</a>
+
+                        <a href="{{route('admin_services_history.export_pdf')}}" class="bg-red-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-red-600 transition duration-200">PDF<i data-lucide="file-text"></i></a>
+
+                        <a href="{{route('admin_services_history.export_excel')}}" class=" mr-2 bg-green-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg  hover:bg-green-600 transition duration-200">EXCEL<i data-lucide="sheet"></i></a>
+
                     </div>
 
-                    <div class="flex justify-between mb-4">
-                        <div class="relative">
-                            <input type="text" placeholder="Search" class="pl-10 pr-4 py-2 border rounded-md w-64">
-                            <i class="fas fa-search absolute left-3 top-3 text-gray-400 border-black"></i>
-                        </div>
 
-                        <div class="flex items-center space-x-2">
-                            <span class="text-sm text-gray-600">Status:</span>
-                            <select class="border rounded-md px-3 py-2 bg-white">
-                                <option>All</option>
-                            </select>
+                    <table id="ServiceHistoryTable" class="min-w-full divide-y divide-gray-200 text-sm text-left text-gray-700">
+                        <thead class="bg-orange-300 text-gray-700 uppercase text-xs">
+                            <tr>
+                                <th class="px-4 py-3">Customer Name</th>
+                                <th class="px-4 py-3">Pet Name</th>
+                                <th class="px-4 py-3">Type of Service</th>
+                                <th class="px-4 py-3">Service Availed</th>
+                                <th class="px-4 py-3">Initial Fee</th>
+                                <th class="px-4 py-3">Appointment Date </th>
+                                <th class="px-4 py-3">Time </th>
+                                <th class="px-4 py-3">Total Payment</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @foreach($appointments as $appointment)
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-4 py-2">{{ $appointment->user->first_name}} {{ $appointment->user->last_name}}</td>
+                                <td class="px-4 py-2">{{ $appointment->pet->pet_name}}</td>
 
-                            <span class="ml-4 text-sm text-gray-600">Generate Report:</span>
-                            <button class="text-blue-500">
-                                <i class="fas fa-file-pdf"></i>
-                            </button>
-                            <button class="text-blue-500">
-                                <i class="fas fa-print"></i>
-                            </button>
-                        </div>
-                    </div>
+                                <td class="px-4 py-2">
+                                    @if ($appointment->service?->category == 8)
+                                    Grooming
+                                    @elseif ($appointment->service?->category == 9)
+                                    Veterinary
+                                    @elseif ($appointment->service?->category == 10)
+                                    Wellness & Laboratory
+                                    @else
+                                    {{ $appointment->service?->category?->name ?? 'No Category' }}
+                                    @endif
+                                </td>
+                                <td class="px-4 py-2">{{ $appointment->service->name}}</td>
+                                <td class="px-4 py-2"><span class="font-semibold">₱</span> {{ number_format(!empty($appointment->service->discounted_price) ? $appointment->service->discounted_price : $appointment->service->price, 2) }}</td>
+                                <td class="px-4 py-2">{{$appointment->appointment_date}}</td>
+                                <td class="px-4 py-2">{{$appointment->appointment_time}}</td>
+                                <td class="px-4 py-2"><span class="font-semibold">₱</span> {{ number_format($appointment->total_payment, 2) }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
 
-                    <div class="overflow-x-auto">
-                        <div class="border border-black rounded-lg">
-                            <table class="min-w-full border-collapse">
-                                <thead>
-                                    <tr>
-                                        <th class="px-4 py-3 text-left text-m font-bold text-black">Transaction ID</th>
-                                        <th class="px-4 py-3 text-left text-m font-bold text-black">Customer Name</th>
-                                        <th class="px-4 py-3 text-left text-m font-bold text-black">Customer's Pet Name</th>
-                                        <th class="px-4 py-3 text-left text-m font-bold text-black">Type of Service</th>
-                                        <th class="px-4 py-3 text-left text-m font-bold text-black">Service Availed</th>
-                                        <th class="px-4 py-3 text-left text-m font-bold text-black">Appointment Date</th>
-                                        <th class="px-4 py-3 text-left text-m font-bold text-black">Service Provider</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="px-4 py-3">1</td>
-                                        <td class="px-4 py-3">Bob</td>
-                                        <td class="px-4 py-3">Jazz</td>
-                                        <td class="px-4 py-3">Vaccination</td>
-                                        <td class="px-4 py-3">TriCat Vaccine</td>
-                                        <td class="px-4 py-3">25-03-2025</td>
-                                        <td class="px-4 py-3">Dr. John Doe</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                </div>
+            </div>
 
-                    <script>
-                        function updateDateTime() {
-                            const now = new Date();
 
-                            // Format date
-                            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-                            const month = months[now.getMonth()];
-                            const day = now.getDate();
-                            const year = now.getFullYear();
+        </main>
+    </div>
+    </div>
+    </div>
 
-                            // Format time
-                            let hours = now.getHours();
-                            const minutes = now.getMinutes().toString().padStart(2, '0');
-                            const ampm = hours >= 12 ? 'PM' : 'AM';
+    <script>
+        function updateDateTime() {
+            const now = new Date();
 
-                            hours = hours % 12;
-                            hours = hours ? hours : 12; // Convert 0 to 12
+            // Format date
+            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const month = months[now.getMonth()];
+            const day = now.getDate();
+            const year = now.getFullYear();
 
-                            // Create formatted strings
-                            const dateString = `${month} ${day}, ${year}`;
-                            const timeString = `${hours}:${minutes} ${ampm}`;
+            // Format time
+            let hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
 
-                            // Update DOM
-                            document.getElementById('datetime').innerHTML = `${dateString} <br> ${timeString}`;
-                        }
+            hours = hours % 12;
+            hours = hours ? hours : 12; // Convert 0 to 12
 
-                        // Update immediately and then every second
-                        updateDateTime();
-                        setInterval(updateDateTime, 1000);
-                    </script>
+            // Create formatted strings
+            const dateString = `${month} ${day}, ${year}`;
+            const timeString = `${hours}:${minutes} ${ampm}`;
+
+            // Update DOM
+            document.getElementById('datetime').innerHTML = `${dateString} <br> ${timeString}`;
+        }
+
+        // Update immediately and then every second
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+    </script>
 </body>
 
 </html>
