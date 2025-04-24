@@ -43,7 +43,7 @@
                             </a>
                         </li>
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('admin_services')}}" class="block p-3 flex items-center text-lg text-white bg-[#F0A02C] rounded transition duration-200">
+                            <a href="{{route('admin_services')}}" class="block p-3 flex items-center text-lg  text-black hover:bg-gray-300rounded transition duration-200">
                                 <i data-lucide="heart" class="w-10 h-10 pr-2 ml-2"></i>
                                 Services
                             </a>
@@ -55,7 +55,7 @@
                             </a>
                         </li>
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('admin_products')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
+                            <a href="{{route('admin_products')}}" class="block p-3 flex text-lg items-center text-white bg-[#F0A02C]   rounded transition duration-200">
                                 <i data-lucide="shopping-basket" class="w-10 h-10 pr-2 ml-2"></i>
                                 Manage Products
                             </a>
@@ -101,84 +101,90 @@
             <div>
                 <div class="flex flex-row items-center justify-start md:px-10 px-2 mt-5 h-20  ">
                     <div class="flex flex-row items-center md:gap-2 gap-1 ">
-                        <div> <i data-lucide="heart" class="md:w-12 md:h-12 w-6 h-6 text-orange-500 mx-auto"></i></div>
-                        <h1 class="md:text-4xl text-md font-bold text-orange-500 ">Services</h1>
+                        <div> <i data-lucide="shopping-basket" class="md:w-12 md:h-12 w-6 h-6 text-orange-500 mx-auto"></i></div>
+                        <h1 class="md:text-4xl text-md font-bold text-orange-500 ">Manage Products</h1>
                     </div>
                 </div>
             </div>
             <div class="mt-2 w-full">
                 <div class="md:px-[5rem] flex gap-5 items-center px-4  text-sm md:text-lg">
-                    <a href="{{route('admin_services')}}" class="hover:underline hover:text-orange-400">Dashboard</a>
+                    <a href="{{route('admin_dashboard')}}" class="hover:underline hover:text-orange-400">Dashboard</a>
                     <div> > </div>
-                    <a href="{{route('admin_services')}}" class="hover:underline hover:text-orange-400">Services</a>
-                    <div> > </div>
-                    <a href="{{route('admin_services.page')}}" class="hover:underline text-orange-500">Add Services</a>
+                    <a href="{{route('admin_products')}}" class="hover:underline text-orange-500">Products</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center justify-center mt-5 w-full px-2">
+                <div class="overflow-x-auto w-full shadow-lg rounded-lg p-6">
+                    @if (session()->has('success'))
+                    <div class="col-span-3 mt-1 text-white bg-green-400  border border-green-400 p-3 rounded relative mb-3">
+                        <span class="text-sm font-medium ">{{ session('success') }}</span>
+                    </div>
+                    @endif
+                    <div class="flex justify-end items-end gap-1">
+                        <p class="p-3">Generate Report: </p>
+                        <a href="{{ route('admin_services.preview_pdf') }}" target="_blank" class="bg-blue-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-blue-600 transition duration-200"><i data-lucide="eye"></i>Preview</a>
+
+                        <a href="{{ route('admin_services.export_pdf') }}" class="bg-red-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-red-600 transition duration-200">PDF<i data-lucide="file-text"></i></a>
+
+                        <a href="{{ route('admin_services.export_excel') }}" class=" mr-2 bg-green-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg  hover:bg-green-600 transition duration-200">EXCEL<i data-lucide="sheet"></i></a>
+
+                        <a href="{{route('admin_products.page')}}" class="bg-orange-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg  hover:bg-orange-600 transition duration-200">
+                            <i data-lucide="plus"></i>
+                            <p>Add Product</p>
+                        </a>
+
+
+                    </div>
+
+
+                    <table id="ProductTable" class="min-w-full divide-y divide-gray-200 text-sm text-left text-gray-700">
+                        <thead class="bg-orange-300 text-gray-700 uppercase text-xs">
+                            <tr>
+                                <th class="px-4 py-3">PSN</th>
+                                <th class="px-4 py-3">Image</th>
+                                <th class="px-4 py-3">Name</th>
+                                <th class="px-4 py-3">Category</th>
+                                <th class="px-4 py-3">Description</th>
+                                <th class="px-4 py-3">Stock</th>
+                                <th class="px-4 py-3">Price</th>
+                                <th class="px-4 py-3">Discount</th>
+                                <th class="px-4 py-3">Total Price</th>
+                                <th class="px-4 py-3">Sold</th>
+                                <th class="px-4 py-3">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @foreach($products as $product)
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-4 py-2">{{ $product->serial_number }}</td>
+                                <td class="px-4 py-2">
+                                    <img src="{{ asset('storage/Products/' . $product->image_url) }}" alt="Product Image" class="w-16 h-16 object-cover rounded-lg">
+                                </td>
+                                <td class="px-4 py-2">{{ $product->name }}</td>
+                                <td class="px-4 py-2">{{ $product->category->name ?? 'Unknown' }}</td>
+                                <td class="px-4 py-2">{{ $product->description }}</td>
+                                <td class="px-4 py-2">{{ $product->stock_quantity }}</td>
+                                <td class="px-4 py-2">₱ {{ number_format($product->price,2) }}</td>
+                                <td class="px-4 py-2">{{ $product->discount_value }}</td>
+                                <td class="px-4 py-2">₱ {{ number_format($product->discounted_price,2) }}</td>
+                                <td class="px-4 py-2">{{ $product->quantity_sold }}</td>
+                                <td class="px-4 py-2">
+                                    <form action="#" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="">
+                                        <button type="submit"><i data-lucide="square-pen" class="text-orange-500"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
 
                 </div>
             </div>
 
-            <div class="flex flex-col items-center justify-center mt-10 w-full px-12">
-                <div class="overflow-x-auto  shadow-lg bg-white rounded-lg p-20">
 
-                    <form action="{{ route('admin_services.add') }}" method="POST" class="flex flex-col gap-4">
-                        @csrf
-
-                        <div>
-                            <label for="service_name" class="block text-gray-700 text-sm font-semibold mb-2">Service Name:</label>
-                            <input type="text" id="service_name" name="service_name" required
-                                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm">
-                        </div>
-
-                        <div>
-                            <label for="service_description" class="block text-gray-700 text-sm font-semibold mb-2">Service Description:</label>
-                            <textarea id="service_description" name="service_description" rows="4" required
-                                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm resize-none"></textarea>
-                        </div>
-
-                        <div>
-                            <label for="service_category" class="block text-gray-700 text-sm font-semibold mb-2">Category:</label>
-                            <select name="service_category" id="service_category" required
-                                class="w-full border border-gray-300 rounded-lg px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm">
-                                <option value="">Select Category</option>
-                                <option value="8">Grooming</option>
-                                <option value="9">Veterinary</option>
-                                <option value="10">Wellness & Laboratory</option>
-                            </select>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label for="service_price" class="block text-gray-700 text-sm font-semibold mb-2">Service Price:</label>
-                                <input type="number" id="service_price" name="service_price" required
-                                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm">
-                            </div>
-
-
-
-                            <div>
-                                <label for="discount" class="block text-gray-700 text-sm font-semibold mb-2">Apply Discount:</label>
-                                <select name="discount" id="discount"
-                                    class="w-full border border-gray-300 rounded-lg px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm">
-                                    <option value="">Select Discount</option>
-                                    @foreach ($discounts as $discount)
-                                    <option value="{{ $discount->id }}">{{$discount->discount_value * 100 }}%</option>
-                                    @endforeach
-                                    <option value="">No Discount</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="pt-4 flex justify-end gap-3 items-end">
-                            <a href="{{route('admin_services')}}" class="py-2 px-4">Cancel</a>
-                            <button type="submit"
-                                class=" bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-orange-600 transition-colors shadow-md font-semibold">
-                                Submit
-                            </button>
-
-                        </div>
-                    </form>
-                </div>
-            </div>
         </main>
     </div>
     </div>

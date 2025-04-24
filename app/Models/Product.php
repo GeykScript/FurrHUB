@@ -24,7 +24,10 @@ class Product extends Model
         'serial_number',
         'expiry_date',
         'quantity_sold',
-        'discount_id'
+        'discount_id',
+        'image_url_2',
+        'image_url_3',
+
     ];
 
     protected $dates = ['expiry_date']; // Cast expiry_date to Carbon instance

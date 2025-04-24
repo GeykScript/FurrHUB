@@ -47,6 +47,7 @@ class AdminServicesController extends Controller
     }
 
 
+    
     public function add_service_page()
     {
         $admin = Auth::guard('admin')->user();

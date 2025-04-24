@@ -52,6 +52,7 @@ import {
         Sheet,
         FileText,
         Eye,
+        SquarePen,
 } from 'lucide';
 
 createIcons({
@@ -98,6 +99,7 @@ createIcons({
         Sheet,
         FileText,
         Eye,
+        SquarePen,
   },
 });
 
@@ -105,6 +107,7 @@ createIcons({
      import DataTable from 'datatables.net-dt';
         let table = new DataTable('#ServiceTable');
         let table2 = new DataTable('#ServiceHistoryTable');
+        let table3 = new DataTable('#ProductTable');
       
 
 

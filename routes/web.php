@@ -162,6 +162,13 @@ Route::get('/admin/services_history/export/excel', [AdminServicesHistoryControll
 Route::get('/admin/services_history/export-pdf', [AdminServicesHistoryController::class, 'exportPDF'])->name('admin_services_history.export_pdf');
 Route::get('/admin/services_history/preview-pdf', [AdminServicesHistoryController::class, 'previewPDF'])->name('admin_services_history.preview_pdf');
 
+use App\Http\Controllers\AdminProductController;
+Route::get('/admin_products', [AdminProductController::class, 'index'])->name('admin_products');
+Route::get('/admin_products.page', [AdminProductController::class, 'add_product_page'])->name('admin_products.page');
+Route::POST('/admin_products.add', [AdminProductController::class, 'add_product'])->name('admin_products.add');
+
+
+
 
 Route::get('/admin-products', function () {
     return view('admin.products');
@@ -181,11 +188,3 @@ Route::get('admin-messages', function () {
 })->name('admin-messages');
 
 
-Route::get('/add-products', function () {
-    return view('admin.add_product');
-})->name('add-products');
-
-
-Route::get('/edit-product', function () {
-    return view('admin.edit-products');
-})->name('edit-product');

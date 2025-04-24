@@ -55,7 +55,7 @@
                             </a>
                         </li>
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('admin-products')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
+                            <a href="{{route('admin_products')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
                                 <i data-lucide="shopping-basket" class="w-10 h-10 pr-2 ml-2"></i>
                                 Manage Products
                             </a>
@@ -111,10 +111,11 @@
                     <a href="{{route('admin_dashboard')}}" class="hover:underline hover:text-orange-400">Dashboard</a>
                     <div> > </div>
                     <a href="{{route('admin_services')}}" class="hover:underline text-orange-500">Services</a>
+
                 </div>
             </div>
 
-            <div class="flex flex-col items-center justify-center mt-5 w-full px-20">
+            <div class="flex flex-col items-center justify-center mt-5 w-full px-12">
                 <div class="overflow-x-auto w-full shadow-lg rounded-lg p-6">
                     @if (session()->has('success'))
                     <div class="col-span-3 mt-1 text-white bg-green-400  border border-green-400 p-3 rounded relative mb-3">
@@ -177,7 +178,7 @@
                                     <form action="{{route('admin_services.edit')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="service_id" value="{{$service->service_id}}">
-                                        <button type="submit"><i data-lucide="notebook-pen" class="text-orange-500"></i></button>
+                                        <button type="submit"><i data-lucide="square-pen" class="text-orange-500"></i></button>
                                     </form>
                                 </td>
                             </tr>

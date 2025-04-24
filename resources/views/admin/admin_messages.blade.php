@@ -53,7 +53,7 @@
                             </a>
                         </li>
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('admin-products')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
+                            <a href="{{route('admin_products')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
                                 <i data-lucide="shopping-basket" class="w-10 h-10 pr-2 ml-2"></i>
                                 Manage Products
                             </a>
@@ -111,7 +111,7 @@
                 <div class="md:px-[15rem] flex gap-5 items-center px-4  text-sm md:text-lg">
                     <a href="{{route('admin_dashboard')}}" class="hover:underline hover:text-orange-400">Dashboard</a>
                     <div> > </div>
-                    <a href="{{route('messages')}}" class="hover:underline text-orange-500">Messages</a>
+                    <a href="{{route('admin_messages')}}" class="hover:underline text-orange-500">Messages</a>
                 </div>
             </div>
             <div class="grid grid-cols-1 xl:grid-cols-3 gap-2 xl:gap-0  xl:px-[13rem] p-8">
