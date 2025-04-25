@@ -102,7 +102,7 @@
                 <div class="flex flex-row items-center justify-start md:px-10 px-2 mt-5 h-20  ">
                     <div class="flex flex-row items-center md:gap-2 gap-1 ">
                         <div> <i data-lucide="shopping-basket" class="md:w-12 md:h-12 w-6 h-6 text-orange-500 mx-auto"></i></div>
-                        <h1 class="md:text-4xl text-md font-bold text-orange-500 ">Manage Products</h1>
+                        <h1 class="md:text-4xl text-md font-bold text-orange-500 ">Add Products</h1>
                     </div>
                 </div>
             </div>
@@ -116,106 +116,119 @@
                 </div>
             </div>
 
-            <div class="flex flex-col items-center justify-center mt-5 w-full px-2">
+            <div class="flex flex-col items-center justify-center mt-5 w-full px-8">
 
-                <div class="bg-white shadow-md rounded-lg p-6 w-full max-w-2xl">
-                    <h2 class="text-2xl font-bold mb-4 text-center">Add Product</h2>
+                <div class="bg-white shadow-md rounded-lg p-6 w-full px-20 ">
                     <form action="{{route('admin_products.add')}}" method="POST" enctype="multipart/form-data">
                         @csrf
 
-                        <div class="mb-4">
-                            <label for="product_name" class="block text-gray-700 text-sm font-bold mb-2">Product Name</label>
-                            <input type="text" id="product_name" name="product_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div class="col-span-1">
 
-                        <div class="mb-4">
-                            <label for="product_category" class="block text-gray-700 text-sm font-bold mb-2">Product Category</label>
-                            <select id="product_category" name="product_category" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                                <option value="" disabled selected>Select a category</option>
-                                <option value="1">Food</option>
-                                <option value="2">Treats</option>
-                                <option value="3">Toys</option>
-                                <option value="4">Grooming Supplies</option>
-                                <option value="5">Accessories</option>
-                                <option value="6">Health Needs</option>
-                                <option value="7">Essentials</option>
-                            </select>
-                        </div>
-                        <div class="mb-4">
-                            <label for="product_psn" class="block text-gray-700 text-sm font-bold mb-2">Product Serial Number</label>
-                            <input type="text" id="product_psn" name="product_psn" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="product_description" class="block text-gray-700 text-sm font-bold mb-2">Product Description</label>
-                            <textarea id="product_description" name="product_description" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
-                        </div>
+                                <div class="mb-4">
+                                    <label for="product_psn" class="block text-gray-700 text-sm font-bold mb-2">Product Serial Number</label>
+                                    <input type="text" id="product_psn" name="product_psn" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="product_name" class="block text-gray-700 text-sm font-bold mb-2">Product Name</label>
+                                    <input type="text" id="product_name" name="product_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="product_category" class="block text-gray-700 text-sm font-bold mb-2">Product Category</label>
+                                    <select id="product_category" name="product_category" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                        <option value="" disabled selected>Select a category</option>
+                                        <option value="1">Food</option>
+                                        <option value="2">Treats</option>
+                                        <option value="3">Toys</option>
+                                        <option value="4">Grooming Supplies</option>
+                                        <option value="5">Accessories</option>
+                                        <option value="6">Health Needs</option>
+                                        <option value="7">Essentials</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="product_description" class="block text-gray-700 text-sm font-bold mb-2">Product Description</label>
+                                    <textarea id="product_description" name="product_description" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-2 ">
+                                    <div class="mb-4">
+                                        <label for="product_quantity" class="block text-gray-700 text-sm font-bold mb-2">Product Quantity</label>
+                                        <input type="number" id="product_quantity" name="product_quantity" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="expiration_date" class="block text-gray-700 text-sm font-bold mb-2">Expiration Date</label>
+                                        <input type="date" id="expiration_date" name="expiration_date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                    </div>
+
+                                </div>
 
 
-                        <div class="mb-4">
-                            <label for="product_quantity" class="block text-gray-700 text-sm font-bold mb-2">Product Quantity</label>
-                            <input type="number" id="product_quantity" name="product_quantity" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                        </div>
+                            </div>
+                            <div class="col-span-1">
 
-                        <div class="mt-4">
-                            <label for="uploadPhoto" class="block text-gray-700">Upload Photo</label>
-                            <div class="border-dashed border-2  text-center rounded-lg cursor-pointer mt-2 w-full h-20 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('uploadPhoto').click()">
-                                <p id="text-uploadPhoto" class="text-gray-500">
-                                    Drag your photo here or <span class="text-orange-500 cursor-pointer">Browse from device</span>
-                                </p>
-                                <p id="fileName-uploadPhoto" class="mt-2 text-sm text-orange-600 px-3 py-1 rounded-md w-fit max-w-full truncate" hidden></p>
-                                <input type="file" id="uploadPhoto" name="uploadPhoto" class="hidden" accept="image/*">
+                                <div class="mt-4">
+                                    <label for="uploadPhoto" class="block text-gray-700">Upload Photo</label>
+                                    <div class="border-dashed border-2 border-gray-300  text-center rounded-lg cursor-pointer mt-2 w-full h-20 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('uploadPhoto').click()">
+                                        <p id="text-uploadPhoto" class="text-gray-500">
+                                            Drag your photo here or <span class="text-orange-500 cursor-pointer">Browse from device</span>
+                                        </p>
+                                        <p id="fileName-uploadPhoto" class="mt-2 text-sm text-orange-600 px-3 py-1 rounded-md w-fit max-w-full truncate" hidden></p>
+                                        <input type="file" id="uploadPhoto" name="uploadPhoto" class="hidden" accept="image/*">
+                                    </div>
+                                </div>
+                                <div class="mt-4"><label class="block text-gray-700  text-xs">Upload Optional Photo</label></div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div class="col-span-1 ">
+                                        <div class="border-dashed border-2 border-gray-300  text-center rounded-lg cursor-pointer mt-2 w-full h-20 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('uploadPhoto2').click()">
+                                            <p id="text-uploadPhoto2" class="text-gray-500 text-xs">
+                                                Drag your photo here or <span class="text-orange-500 cursor-pointer">Browse from device</span>
+                                            </p>
+                                            <p id="fileName-uploadPhoto2" class="mt-2 text-sm text-orange-600 px-3 py-1 rounded-md w-fit max-w-full truncate" hidden></p>
+                                            <input type="file" id="uploadPhoto2" name="uploadPhoto2" class="hidden" accept="image/*">
+                                        </div>
+                                    </div>
+                                    <div class="col-span-1">
+                                        <div class="border-dashed border-2 border-gray-300 text-center rounded-lg cursor-pointer mt-2 w-full h-20 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('uploadPhoto3').click()">
+                                            <p id="text-uploadPhoto3" class="text-gray-500 text-xs">
+                                                Drag your photo here or <span class="text-orange-500 cursor-pointer">Browse from device</span>
+                                            </p>
+                                            <p id="fileName-uploadPhoto3" class="mt-2 text-sm text-orange-600 px-3 py-1 rounded-md w-fit max-w-full truncate" hidden></p>
+                                            <input type="file" id="uploadPhoto3" name="uploadPhoto3" class="hidden" accept="image/*">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="grid grid-cols-2 gap-2 mt-2">
+                                    <div class="mb-4">
+                                        <label for="product_price" class="block text-gray-700 text-sm font-bold mb-2">Product Price</label>
+                                        <input type="number" id="product_price" name="product_price" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="discount" class="block text-gray-700 text-sm font-bold mb-2">Discount</label>
+                                        <select id="discount" name="discount" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                            <option value="">Select Discount</option>
+                                            @foreach ($discounts as $discount)
+                                            <option value="{{ $discount->id }}">{{ $discount->discount_value*100 }}%</option>
+                                            @endforeach
+                                            <option value="">No Discount</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col gap-2">
+                                    <button type="submit" class="bg-[#F0A02C] hover:bg-orange-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+                                        submit
+                                    </button>
+                                    <a href="{{route('admin_products')}}" class="text-center bg-white  hover:bg-gray-100 text-gray-600 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">Cancel</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="mt-4">
-                            <label for="uploadPhoto" class="block text-gray-700">Upload Photo</label>
-                            <div class="border-dashed border-2  text-center rounded-lg cursor-pointer mt-2 w-full h-20 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('uploadPhoto2').click()">
-                                <p id="text-uploadPhoto2" class="text-gray-500">
-                                    Drag your photo here or <span class="text-orange-500 cursor-pointer">Browse from device</span>
-                                </p>
-                                <p id="fileName-uploadPhoto2" class="mt-2 text-sm text-orange-600 px-3 py-1 rounded-md w-fit max-w-full truncate" hidden></p>
-                                <input type="file" id="uploadPhoto2" name="uploadPhoto2" class="hidden" accept="image/*">
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <label for="uploadPhoto" class="block text-gray-700">Upload Photo</label>
-                            <div class="border-dashed border-2  text-center rounded-lg cursor-pointer mt-2 w-full h-20 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('uploadPhoto3').click()">
-                                <p id="text-uploadPhoto3" class="text-gray-500">
-                                    Drag your photo here or <span class="text-orange-500 cursor-pointer">Browse from device</span>
-                                </p>
-                                <p id="fileName-uploadPhoto3" class="mt-2 text-sm text-orange-600 px-3 py-1 rounded-md w-fit max-w-full truncate" hidden></p>
-                                <input type="file" id="uploadPhoto3" name="uploadPhoto3" class="hidden" accept="image/*">
-                            </div>
-                        </div>
-
-
-                        <div class="mb-4">
-                            <label for="product_price" class="block text-gray-700 text-sm font-bold mb-2">Product Price</label>
-                            <input type="number" id="product_price" name="product_price" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="discount" class="block text-gray-700 text-sm font-bold mb-2">Discount</label>
-                            <select id="discount" name="discount" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                                <option value="">Select Discount</option>
-                                @foreach ($discounts as $discount)
-                                <option value="{{ $discount->id }}">{{ $discount->discount_value*100 }}%</option>
-                                @endforeach
-                                <option value="">No Discount</option>
-                            </select>
-                        </div>
-
-
-                        <div class="mb-4">
-                            <label for="expiration_date" class="block text-gray-700 text-sm font-bold mb-2">Expiration Date</label>
-                            <input type="date" id="expiration_date" name="expiration_date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                        </div>
-
-
-                        <button type="submit" class="bg-[#F0A02C] hover:bg-orange-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
-                            submit
-                        </button>
-                        <a href="{{route('admin_products')}}" class="py-2 px-4">Cancel</a>
-
-
                     </form>
                 </div>
 
