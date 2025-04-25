@@ -170,9 +170,9 @@
                                 <td class="px-4 py-2">₱ {{ number_format($product->discounted_price,2) }}</td>
                                 <td class="px-4 py-2">{{ $product->quantity_sold }}</td>
                                 <td class="px-4 py-2">
-                                    <form action="#" method="POST">
+                                    <form action="{{route('admin_products.edit')}}" method="POST">
                                         @csrf
-                                        <input type="hidden" name="product_id" value="">
+                                        <input type="hidden" name="product_id" value="{{ $product->product_id }}">
                                         <button type="submit"><i data-lucide="square-pen" class="text-orange-500"></i></button>
                                     </form>
                                 </td>

@@ -225,7 +225,7 @@
                                     <button type="submit" class="bg-[#F0A02C] hover:bg-orange-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
                                         submit
                                     </button>
-                                    <a href="{{route('admin_products')}}" class="text-center bg-white  hover:bg-gray-100 text-gray-600 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">Cancel</a>
+                                    <a href="{{route('admin_products')}}" class="text-center bg-gray-100  hover:bg-gray-200 text-gray-600 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">Cancel</a>
                                 </div>
                             </div>
                         </div>

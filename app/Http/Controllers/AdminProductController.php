@@ -115,4 +115,21 @@ class AdminProductController extends Controller
 
         return redirect()->route('admin_products')->with('success', 'Product added successfully.');
     }
+
+
+    public function edit_product(Request $request)
+    {
+        $product_id = $request->input('product_id');
+        $product = Product::find($request->input('product_id'));
+
+
+        $admin = Auth::guard('admin')->user();
+
+        $discounts = Discount::all();
+
+        if (!$admin) {
+            return redirect()->route('admin-login')->with('error', 'You must be logged in to view the cart.');
+        }
+        return view('admin.admin_products.edit-products', compact('admin', 'discounts', 'product', 'product_id'));
+    }
 }

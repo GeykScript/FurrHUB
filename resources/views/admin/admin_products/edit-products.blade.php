@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link rel="icon" href="{{ asset('logo/logo1.png') }}" type="image/png">
 
+    <link rel="stylesheet" href="//cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
+
     <link href="https://fonts.bunny.net/css?family=poppins:400,500,600&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/welcome-page.css', 'resources/js/carousel.jsx'])
 
@@ -28,37 +30,32 @@
                 <nav class="font-bold">
                     <ul>
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{ route('admin_dashboard') }}" class="block p-3 flex items-center text-lg text-white bg-[#F0A02C] rounded transition duration-200">
+                            <a href="{{ route('admin_dashboard') }}" class="block p-3 flex items-center text-lg text-black hover:bg-gray-300 rounded transition duration-200">
                                 <i data-lucide="house" class="w-10 h-10 pr-2 ml-2"></i>
                                 Dashboard
                             </a>
                         </li>
+
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('users')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-100 rounded transition duration-200">
-                                <i data-lucide="circle-user" class="w-10 h-10 pr-2 ml-2"></i>
-                                Users
-                            </a>
-                        </li>
-                        <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('messages')}}" class="block p-3 text-lg flex items-center text-black hover:bg-gray-300 rounded transition duration-200">
+                            <a href="{{route('admin_messages')}}" class="block p-3 text-lg flex items-center text-black hover:bg-gray-300 rounded transition duration-200">
                                 <i data-lucide="messages-square" class="w-10 h-10 pr-2 ml-2"></i>
                                 Messages
                             </a>
                         </li>
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('services')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
+                            <a href="{{route('admin_services')}}" class="block p-3 flex items-center text-lg  text-black hover:bg-gray-300rounded transition duration-200">
                                 <i data-lucide="heart" class="w-10 h-10 pr-2 ml-2"></i>
                                 Services
                             </a>
                         </li>
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('service_history')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
+                            <a href="{{route('admin_services_history')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
                                 <i data-lucide="notebook-text" class="w-10 h-10 pr-2 ml-2"></i>
                                 Service History
                             </a>
                         </li>
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('products')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
+                            <a href="{{route('admin_products')}}" class="block p-3 flex text-lg items-center text-white bg-[#F0A02C]   rounded transition duration-200">
                                 <i data-lucide="shopping-basket" class="w-10 h-10 pr-2 ml-2"></i>
                                 Manage Products
                             </a>
@@ -86,179 +83,237 @@
 
         <!-- Main Content -->
         <main class="flex-1 ml-72 w-full bg-gray-100">
-                <!-- Breadcrumb -->
-                <div class="flex items-center text-lg text-gray-600 mb-6">
-                    <a href="{{ route('products') }}" class="hover:text-[#F0A02C]">HOME</a>
-                    <svg class="h-4 w-4 mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                    <span class="text-[#F0A02C] text-lg">EDIT PRODUCT</span>
-                </div>
-
-                <!-- Add Product Form -->
-                <div class="bg-white rounded-md shadow-md p-6">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-yellow-100 rounded-md p-2 mr-3">
-                            <svg class="h-6 w-6 text-[#F0A02C]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                        <h1 class="text-2xl font-bold text-[#F0A02C]">EDIT PRODUCT</h1>
+            <div class="bg-[#F0A02C] shadow-sm h-26">
+                <div class="max-w-full mx-auto px-4 py-3 flex justify-between items-center">
+                    <div class="flex items-center">
+                        <i data-lucide="calendar-clock" class=" w-16 h-16 pr-2 ml-4 text-white"></i>
+                        <div id="datetime" class="text-2xl text-white font-bold mr-6 ml-4"></div>
                     </div>
+                    <div class="flex items-center ">
+                        <div class="flex items-center justify-between ">
+                            <span class="text-2xl text-black  font-semibold">{{$admin->fname}} {{$admin->lname}}</span>
+                            <i data-lucide="circle-user" class=" w-10 h-10 pr-2 ml-2"> </i>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                    <form>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Left Column -->
-                            <div>
+            <div>
+                <div class="flex flex-row items-center justify-start md:px-10 px-2 mt-5 h-20  ">
+                    <div class="flex flex-row items-center md:gap-2 gap-1 ">
+                        <div> <i data-lucide="shopping-basket" class="md:w-12 md:h-12 w-6 h-6 text-orange-500 mx-auto"></i></div>
+                        <h1 class="md:text-4xl text-md font-bold text-orange-500 ">Edit Products</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2 w-full">
+                <div class="md:px-[5rem] flex gap-5 items-center px-4  text-sm md:text-lg">
+                    <a href="{{route('admin_dashboard')}}" class="hover:underline hover:text-orange-400">Dashboard</a>
+                    <div> > </div>
+                    <a href="{{route('admin_products')}}" class="hover:underline hover:text-orange-500">Products</a>
+                    <div> > </div>
+                    <a href="{{route('admin_products.page')}}" class="hover:underline text-orange-500">Edit Product</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center justify-center mt-5 w-full px-8">
+
+                <div class="bg-white shadow-md rounded-lg p-6 w-full px-20 ">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div class="col-span-1">
+
                                 <div class="mb-4">
-                                    <label class="block text-gray-700 mb-2">Product Name</label>
-                                    <input type="text" placeholder="Lorem ipsum dolor" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                    <label for="product_psn" class="block text-gray-700 text-sm font-bold mb-2">Product Serial Number</label>
+                                    <input type="text" id="product_psn" name="product_psn" value="{{$product->serial_number}}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                                 </div>
 
                                 <div class="mb-4">
-                                    <label class="block text-gray-700 mb-2">Product Category</label>
-                                    <div class="relative">
-                                        <select class="w-full border border-gray-300 rounded-md px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-500 appearance-none">
-                                            <option>Select Product Category</option>
-                                        </select>
-                                        <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                                            <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                            </svg>
-                                        </div>
+                                    <label for="product_name" class="block text-gray-700 text-sm font-bold mb-2">Product Name</label>
+                                    <input type="text" id="product_name" name="product_name" value="{{$product->name}}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="product_category" class="block text-gray-700 text-sm font-bold mb-2">Product Category</label>
+                                    <select id="product_category" name="product_category" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                        <option value="{{$product->category_id}}" selected>{{ $product->category->name ?? 'Unknown' }}</option>
+                                        <option value="{{$product->category_id}}">Food</option>
+                                        <option value="{{$product->category_id}}">Treats</option>
+                                        <option value="{{$product->category_id}}">Toys</option>
+                                        <option value="{{$product->category_id}}">Grooming Supplies</option>
+                                        <option value="{{$product->category_id}}">Accessories</option>
+                                        <option value="{{$product->category_id}}">Health Needs</option>
+                                        <option value="{{$product->category_id}}">Essentials</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="product_description" class="block text-gray-700 text-sm font-bold mb-2">Product Description</label>
+                                    <textarea id="product_description" name="product_description" rows="4" class="shadow appearance-none border rounded w-full py-2  text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                    {{$product->description }}
+                                    </textarea>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-2 ">
+                                    <div class="mb-4">
+                                        <label for="product_quantity" class="block text-gray-700 text-sm font-bold mb-2">Product Quantity</label>
+                                        <input type="number" id="product_quantity" name="product_quantity" value="{{$product->stock_quantity}}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                                     </div>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label class="block text-gray-700 mb-2">Product Description</label>
-                                    <textarea rows="5" placeholder="Lorem ipsum dolor sit amet consectetur, adipiscing elit. Ipsa eligendi odit tempora suscipit delecti quod quaerat" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"></textarea>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label class="block text-gray-700 mb-2">Stock Quantity</label>
-                                    <input type="number" value="200" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                                </div>
-
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-gray-700 mb-2">Expiration Date</label>
-                                        <input type="text" placeholder="MM / DD / YY" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                    <div class="mb-4">
+                                        <label for="expiration_date" class="block text-gray-700 text-sm font-bold mb-2">Expiration Date</label>
+                                        <input type="date" id="expiration_date" name="expiration_date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                                     </div>
 
-                                    <div>
-                                        <label class="block text-gray-700 mb-2">Product Serial No.</label>
-                                        <input type="text" placeholder="XXXX XXXXX XXXX" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                                    </div>
                                 </div>
+
+
                             </div>
+                            <div class="col-span-1">
 
-                            <!-- Right Column -->
-                            <div>
-                                <div class="mb-4">
-                                    <label class="block text-gray-700 mb-2">Product Images</label>
-                                    <div class="border border-gray-300 border-dashed rounded-md p-6 text-center">
-                                        <p class="text-gray-500 mb-2">Drag your photo here or</p>
-                                        <button type="button" class="text-[#F0A02C] font-medium">Browse from device</button>
-                                        <div class="mt-4 flex justify-center">
-                                            <svg class="h-10 w-10 text-[#F0A02C]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                            </svg>
+                                <div class="mt-4">
+                                    <label for="uploadPhoto" class="block text-gray-700">Upload Photo</label>
+                                    <div class="border-dashed border-2 border-gray-300  text-center rounded-lg cursor-pointer mt-2 w-full h-20 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('uploadPhoto').click()">
+                                        <p id="text-uploadPhoto" class="text-gray-500">
+                                            Drag your photo here or <span class="text-orange-500 cursor-pointer">Browse from device</span>
+                                        </p>
+                                        <p id="fileName-uploadPhoto" class="mt-2 text-sm text-orange-600 px-3 py-1 rounded-md w-fit max-w-full truncate" hidden></p>
+                                        <input type="file" id="uploadPhoto" name="uploadPhoto" class="hidden" accept="image/*">
+                                    </div>
+                                </div>
+                                <div class="mt-4"><label class="block text-gray-700  text-xs">Upload Optional Photo</label></div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div class="col-span-1 ">
+                                        <div class="border-dashed border-2 border-gray-300  text-center rounded-lg cursor-pointer mt-2 w-full h-20 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('uploadPhoto2').click()">
+                                            <p id="text-uploadPhoto2" class="text-gray-500 text-xs">
+                                                Drag your photo here or <span class="text-orange-500 cursor-pointer">Browse from device</span>
+                                            </p>
+                                            <p id="fileName-uploadPhoto2" class="mt-2 text-sm text-orange-600 px-3 py-1 rounded-md w-fit max-w-full truncate" hidden></p>
+                                            <input type="file" id="uploadPhoto2" name="uploadPhoto2" class="hidden" accept="image/*">
+                                        </div>
+                                    </div>
+                                    <div class="col-span-1">
+                                        <div class="border-dashed border-2 border-gray-300 text-center rounded-lg cursor-pointer mt-2 w-full h-20 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('uploadPhoto3').click()">
+                                            <p id="text-uploadPhoto3" class="text-gray-500 text-xs">
+                                                Drag your photo here or <span class="text-orange-500 cursor-pointer">Browse from device</span>
+                                            </p>
+                                            <p id="fileName-uploadPhoto3" class="mt-2 text-sm text-orange-600 px-3 py-1 rounded-md w-fit max-w-full truncate" hidden></p>
+                                            <input type="file" id="uploadPhoto3" name="uploadPhoto3" class="hidden" accept="image/*">
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="mb-4">
-                                    <label class="block text-gray-700 mb-2">Uploaded Images</label>
-                                    <div class="flex space-x-2">
-                                        <div class="w-16 h-16 rounded-md overflow-hidden">
-                                            <img src="{{ asset('logo/logo1.png') }}" alt="Product thumbnail" class="w-full h-full object-cover">
-                                        </div>
-                                        <div class="w-16 h-16 rounded-md overflow-hidden">
-                                            <img src="{{ asset('logo/logo1.png') }}" class="w-full h-full object-cover">
-                                        </div>
-                                        <div class="w-16 h-16 rounded-md overflow-hidden">
-                                            <img src="{{ asset('logo/logo1.png') }}" class="w-full h-full object-cover">
-                                        </div>
+
+
+                                <div class="grid grid-cols-2 gap-2 mt-2">
+                                    <div class="mb-4">
+                                        <label for="product_price" class="block text-gray-700 text-sm font-bold mb-2">Product Price</label>
+                                        <input type="number" id="product_price" name="product_price" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="discount" class="block text-gray-700 text-sm font-bold mb-2">Discount</label>
+                                        <select id="discount" name="discount" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                            <option value="">Select Discount</option>
+                                            @foreach ($discounts as $discount)
+                                            <option value="{{ $discount->id }}">{{ $discount->discount_value*100 }}%</option>
+                                            @endforeach
+                                            <option value="">No Discount</option>
+                                        </select>
                                     </div>
                                 </div>
 
-                                <div class="mb-4">
-                                    <label class="block text-gray-700 mb-2">Price</label>
-                                    <div class="relative">
-                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <span class="text-gray-500">₱</span>
-                                        </div>
-                                        <input type="text" value="300.00" class="w-full border border-gray-300 rounded-md pl-8 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                                    </div>
-                                </div>
-
-                                <div class="grid grid-cols-2 gap-4 mb-4">
-                                    <div>
-                                        <label class="block text-gray-700 mb-2">Discount</label>
-                                        <input type="text" value="0.10" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                                    </div>
-
-                                    <div>
-                                        <label class="block text-gray-700 mb-2">Discount Valid Until</label>
-                                        <input type="text" placeholder="MM / DD / YY" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                                    </div>
-                                </div>
-
-                                <div class="mb-6">
-                                    <label class="block text-gray-700 mb-2">Discounted Price</label>
-                                    <div class="relative">
-                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <span class="text-gray-500">₱</span>
-                                        </div>
-                                        <input type="text" value="300.00" class="w-full border border-gray-300 rounded-md pl-8 py-2 bg-gray-100 focus:outline-none" readonly>
-                                    </div>
-                                </div>
-
-                                <div class="flex justify-end space-x-4">
-                                    <button type="button" class="px-6 py-2 border border-gray-300 rounded-md text-[#F0A02C] hover:bg-gray-50">
-                                        <a href="{{ route('products') }}">Cancel</a>
+                                <div class="flex flex-col gap-2">
+                                    <button type="submit" class="bg-[#F0A02C] hover:bg-orange-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+                                        submit
                                     </button>
-                                    <button type="submit" class="px-6 py-2 bg-[#F0A02C] text-white rounded-md hover:bg-yellow-600">
-                                        Submit
-                                    </button>
+                                    <a href="{{route('admin_products')}}    " class="text-center bg-gray-100  hover:bg-gray-200 text-gray-600 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">Cancel</a>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
-            </main>
-        </div>
+
+
+        </main>
     </div>
+    </div>
+    </div>
+
+    <script>
+        document.getElementById('uploadPhoto').addEventListener('change', function() {
+            const fileNameDisplay = document.getElementById('fileName-uploadPhoto');
+            const text = document.getElementById('text-uploadPhoto');
+
+            if (this.files.length > 0) {
+                fileNameDisplay.removeAttribute('hidden');
+                fileNameDisplay.textContent = `📁 Selected file: ${this.files[0].name}`;
+                text.textContent = '';
+            } else {
+                fileNameDisplay.textContent = '';
+                text.textContent = 'Drag your photo here or Browse from device';
+            }
+        });
+
+        document.getElementById('uploadPhoto2').addEventListener('change', function() {
+            const fileNameDisplay = document.getElementById('fileName-uploadPhoto2');
+            const text = document.getElementById('text-uploadPhoto2');
+
+            if (this.files.length > 0) {
+                fileNameDisplay.removeAttribute('hidden');
+                fileNameDisplay.textContent = `📁 Selected file: ${this.files[0].name}`;
+                text.textContent = '';
+            } else {
+                fileNameDisplay.textContent = '';
+                text.textContent = 'Drag your photo here or Browse from device';
+            }
+        });
+        document.getElementById('uploadPhoto3').addEventListener('change', function() {
+            const fileNameDisplay = document.getElementById('fileName-uploadPhoto3');
+            const text = document.getElementById('text-uploadPhoto3');
+
+            if (this.files.length > 0) {
+                fileNameDisplay.removeAttribute('hidden');
+                fileNameDisplay.textContent = `📁 Selected file: ${this.files[0].name}`;
+                text.textContent = '';
+            } else {
+                fileNameDisplay.textContent = '';
+                text.textContent = 'Drag your photo here or Browse from device';
+            }
+        });
+
+
+
+
+        function updateDateTime() {
+            const now = new Date();
+
+            // Format date
+            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const month = months[now.getMonth()];
+            const day = now.getDate();
+            const year = now.getFullYear();
+
+            // Format time
+            let hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+
+            hours = hours % 12;
+            hours = hours ? hours : 12; // Convert 0 to 12
+
+            // Create formatted strings
+            const dateString = `${month} ${day}, ${year}`;
+            const timeString = `${hours}:${minutes} ${ampm}`;
+
+            // Update DOM
+            document.getElementById('datetime').innerHTML = `${dateString} <br> ${timeString}`;
+        }
+
+        // Update immediately and then every second
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+    </script>
 </body>
-<script>
-    function updateDateTime() {
-        const now = new Date();
-
-        // Format date
-        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        const month = months[now.getMonth()];
-        const day = now.getDate();
-        const year = now.getFullYear();
-
-        // Format time
-        let hours = now.getHours();
-        const minutes = now.getMinutes().toString().padStart(2, '0');
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-
-        hours = hours % 12;
-        hours = hours ? hours : 12; // Convert 0 to 12
-
-        // Create formatted strings
-        const dateString = `${month} ${day}, ${year}`;
-        const timeString = `${hours}:${minutes} ${ampm}`;
-
-        // Update DOM
-        document.getElementById('datetime').innerHTML = `${dateString} <br> ${timeString}`;
-    }
-
-    // Update immediately and then every second
-    updateDateTime();
-    setInterval(updateDateTime, 1000);
-</script>
 
 </html>
