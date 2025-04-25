@@ -132,4 +132,60 @@ class AdminProductController extends Controller
         }
         return view('admin.admin_products.edit-products', compact('admin', 'discounts', 'product', 'product_id'));
     }
+
+    public function save_changes(Request $request)
+    {
+        $product = Product::find($request->input('product_id'));
+
+        if($product){
+
+            $image_url = $product->image_url;
+            $image_url2 = $product->image_url_2;
+            $image_url3 = $product->image_url_3;
+
+            if ($request->hasFile('uploadPhoto')) {
+                $filename = Str::random(20) . '.' . $request->file('uploadPhoto')->getClientOriginalExtension();
+                // Store the image in the public disk
+                // $path = $request->file('uploadPhoto')->storeAs('Products', $filename, 'public_direct');
+                $request->file('uploadPhoto')->storeAs('Products', $filename, 'public');
+
+                $image_url = $filename;
+            }
+            if ($request->hasFile('uploadPhoto2')) {
+                $filename2 = Str::random(20) . '.' . $request->file('uploadPhoto2')->getClientOriginalExtension();
+                // Store the image in the public disk
+                // $path = $request->file('uploadPhoto')->storeAs('Products', $filename, 'public_direct');
+
+                $request->file('uploadPhoto2')->storeAs('Products', $filename2, 'public');
+                $image_url2 = $filename2;
+            }
+            if ($request->hasFile('uploadPhoto3')) {
+                $filename3 = Str::random(20) . '.' . $request->file('uploadPhoto3')->getClientOriginalExtension();
+                // Store the image in the public disk
+                // $path = $request->file('uploadPhoto')->storeAs('Products', $filename, 'public_direct');
+
+                $request->file('uploadPhoto3')->storeAs('Products', $filename3, 'public');
+                $image_url3 = $filename3;
+            }
+            // Update the product with new data
+
+            $product->update([
+                'name' => $request->input('product_name'),
+                'description' => $request->input('product_description'),
+                'price' => $request->input('product_price'),
+                'category_id' => $request->input('product_category'),
+                'image_url' => $image_url,
+                'stock_quantity' => $request->input('product_quantity'),
+                'serial_number' => $request->input('product_psn'),
+                'expiry_date' => $request->input('expiration_date'),
+                'discount_id' => $request->input('discount') ?? null, // Use null if discount_id is not provided
+                'image_url_2' => $image_url2,
+                'image_url_3' => $image_url3,
+            ]);
+
+            return redirect()->route('admin_products')->with('success', 'Product updated successfully.');       
+        }
+      
+    }
+
 }

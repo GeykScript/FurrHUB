@@ -112,7 +112,7 @@
                     <div> > </div>
                     <a href="{{route('admin_services')}}" class="hover:underline hover:text-orange-400">Services</a>
                     <div> > </div>
-                    <a href="{{route('admin_services.edit')}}" class="hover:underline text-orange-400">Edit Services</a>
+                    <p class="hover:underline text-orange-400">Edit Services</p>
                 </div>
             </div>
 

@@ -21,9 +21,9 @@
 <body class="bg-gray-100">
     <div class="flex h-screen">
         <!-- Sidebar -->
-        <div class="fixed top-0 left-0 w-72 h-full bg-white border-l shadow-lg z-50">
-            <div class="p-4 ">
-                <div class="flex items-center mb-8">
+        <div class="hidden md:fixed md:top-0 md:left-0 md:w-72 w-full h-full bg-white border-l shadow-lg z-50 md:block overflow-y-auto">
+            <div class="p-4">
+                <div class="flex items-center mb-8 justify-center md:justify-start">
                     <img src="{{ asset('logo/logo1.png') }}" alt="FurrHub Logo" class="h-[70px] w-[150px] lg:h-[125px] lg:w-[300px]" />
                 </div>
 
@@ -42,44 +42,52 @@
                                 Messages
                             </a>
                         </li>
+
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('admin_services')}}" class="block p-3 flex items-center text-lg  text-black hover:bg-gray-300rounded transition duration-200">
+                            <a href="{{route('admin_services')}}" class="block p-3 flex items-center text-lg text-black hover:bg-gray-300 rounded transition duration-200">
                                 <i data-lucide="heart" class="w-10 h-10 pr-2 ml-2"></i>
                                 Services
                             </a>
                         </li>
+
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
                             <a href="{{route('admin_services_history')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
                                 <i data-lucide="notebook-text" class="w-10 h-10 pr-2 ml-2"></i>
                                 Service History
                             </a>
                         </li>
+
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('admin_products')}}" class="block p-3 flex text-lg items-center text-white bg-[#F0A02C]   rounded transition duration-200">
+                            <a href="{{route('admin_products')}}" class="block p-3 flex text-lg items-center text-white bg-[#F0A02C] rounded transition duration-200">
                                 <i data-lucide="shopping-basket" class="w-10 h-10 pr-2 ml-2"></i>
                                 Manage Products
                             </a>
                         </li>
+
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
                             <a href="orders" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
                                 <i data-lucide="shopping-cart" class="w-10 h-10 pr-2 ml-2"></i>
                                 Orders
                             </a>
                         </li>
+
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
                             <a href="appointments" class="block p-3 flex items-center text-lg text-black hover:bg-gray-300 rounded transition duration-200">
                                 <i data-lucide="notepad-text" class="w-10 h-10 pr-2 ml-2"></i>
                                 Appointments
                             </a>
                         </li>
-
                     </ul>
                 </nav>
             </div>
-            <div class="absolute bottom-0 w-full p-6 ">
-                <button class="w-full bg-[#4B4B4B] text-white font-bold py-2 rounded hover:bg-gray-300 transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400">Log Out</button>
+
+            <div class="absolute bottom-0 w-full p-6">
+                <button class="w-full bg-[#4B4B4B] text-white font-bold py-2 rounded hover:bg-gray-300 transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                    Log Out
+                </button>
             </div>
         </div>
+
 
         <!-- Main Content -->
         <main class="flex-1 ml-72 w-full bg-gray-100">
@@ -112,16 +120,16 @@
                     <div> > </div>
                     <a href="{{route('admin_products')}}" class="hover:underline hover:text-orange-500">Products</a>
                     <div> > </div>
-                    <a href="{{route('admin_products.page')}}" class="hover:underline text-orange-500">Edit Product</a>
+                    <p class="hover:underline text-orange-500">Edit Product</p>
                 </div>
             </div>
 
             <div class="flex flex-col items-center justify-center mt-5 w-full px-8">
 
                 <div class="bg-white shadow-md rounded-lg p-6 w-full px-20 ">
-                    <form action="" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('admin_products.save')}}" method="post" enctype="multipart/form-data">
                         @csrf
-
+                        <input type="hidden" name="product_id" value="{{$product->product_id}}">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                             <div class="col-span-1">
 
@@ -151,9 +159,8 @@
 
                                 <div class="mb-4">
                                     <label for="product_description" class="block text-gray-700 text-sm font-bold mb-2">Product Description</label>
-                                    <textarea id="product_description" name="product_description" rows="4" class="shadow appearance-none border rounded w-full py-2  text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                                    {{$product->description }}
-                                    </textarea>
+                                    <textarea id="product_description" name="product_description" rows="4" class="shadow appearance-none border rounded w-full py-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>{{$product->description}}</textarea>
+
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-2 ">
@@ -163,7 +170,7 @@
                                     </div>
                                     <div class="mb-4">
                                         <label for="expiration_date" class="block text-gray-700 text-sm font-bold mb-2">Expiration Date</label>
-                                        <input type="date" id="expiration_date" name="expiration_date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                        <input type="date" id="expiration_date" name="expiration_date" value="{{$product->expiry_date}}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                                     </div>
 
                                 </div>
@@ -171,35 +178,51 @@
 
                             </div>
                             <div class="col-span-1">
+                                <div class="grid grid-cols-3 gap-2">
+                                    <!-- Image Preview -->
+                                    <div class="col-span-3">
+                                        Product Images
+                                    </div>
+                                    @if($product->image_url != null)
+                                    <div>
+                                        <img src="{{ asset('storage/Products/' . $product->image_url) }}"
+                                            alt="Preview Image" class="w-20 h-20 object-cover rounded-lg border border-gray-300">
+                                    </div>
+                                    @endif
+                                    <!-- Image Preview -->
+                                    @if($product->image_url_2 != null)
+                                    <div id="">
+                                        <img src="{{ asset('storage/Products/' . $product->image_url_2) }}"
+                                            alt="Preview Image" class="w-20 h-20 object-cover rounded-lg border border-gray-300">
+                                    </div>
+                                    @endif
+                                    <!-- Image Preview -->
+                                    @if($product->image_url_3 != null)
+                                    <div>
+                                        <img src="{{ asset('storage/Products/' . $product->image_url_3) }}"
+                                            alt="Preview Image" class="w-20 h-20 object-cover rounded-lg border border-gray-300">
+                                    </div>
+                                    @endif
 
+                                </div>
                                 <div class="mt-4">
-                                    <label for="uploadPhoto" class="block text-gray-700">Upload Photo</label>
-                                    <div class="border-dashed border-2 border-gray-300  text-center rounded-lg cursor-pointer mt-2 w-full h-20 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('uploadPhoto').click()">
-                                        <p id="text-uploadPhoto" class="text-gray-500">
-                                            Drag your photo here or <span class="text-orange-500 cursor-pointer">Browse from device</span>
-                                        </p>
-                                        <p id="fileName-uploadPhoto" class="mt-2 text-sm text-orange-600 px-3 py-1 rounded-md w-fit max-w-full truncate" hidden></p>
-                                        <input type="file" id="uploadPhoto" name="uploadPhoto" class="hidden" accept="image/*">
+                                    <label for="uploadPhoto" class="block text-gray-700">Upload Images to Update</label>
+                                    <div class="col-span-1">
+                                        <div class="border-dashed border-2 border-gray-300 p-5 text-orange-500">
+                                            <input type="file" id="uploadPhoto" name="uploadPhoto" class="" accept="image/*">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="mt-4"><label class="block text-gray-700  text-xs">Upload Optional Photo</label></div>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <div class="col-span-1 ">
-                                        <div class="border-dashed border-2 border-gray-300  text-center rounded-lg cursor-pointer mt-2 w-full h-20 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('uploadPhoto2').click()">
-                                            <p id="text-uploadPhoto2" class="text-gray-500 text-xs">
-                                                Drag your photo here or <span class="text-orange-500 cursor-pointer">Browse from device</span>
-                                            </p>
-                                            <p id="fileName-uploadPhoto2" class="mt-2 text-sm text-orange-600 px-3 py-1 rounded-md w-fit max-w-full truncate" hidden></p>
-                                            <input type="file" id="uploadPhoto2" name="uploadPhoto2" class="hidden" accept="image/*">
+                                <div class="mt-4"><label class="block text-gray-700  text-sm">Upload Optional Photo</label></div>
+                                <div class="grid grid-cols-2 gap-2 mt-2">
+                                    <div class="col-span-1">
+                                        <div class="border-dashed border-2 border-gray-300 p-5 text-orange-500">
+                                            <input type="file" id="uploadPhoto2" name="uploadPhoto2" class="" accept="image/*">
                                         </div>
                                     </div>
                                     <div class="col-span-1">
-                                        <div class="border-dashed border-2 border-gray-300 text-center rounded-lg cursor-pointer mt-2 w-full h-20 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('uploadPhoto3').click()">
-                                            <p id="text-uploadPhoto3" class="text-gray-500 text-xs">
-                                                Drag your photo here or <span class="text-orange-500 cursor-pointer">Browse from device</span>
-                                            </p>
-                                            <p id="fileName-uploadPhoto3" class="mt-2 text-sm text-orange-600 px-3 py-1 rounded-md w-fit max-w-full truncate" hidden></p>
-                                            <input type="file" id="uploadPhoto3" name="uploadPhoto3" class="hidden" accept="image/*">
+                                        <div class="border-dashed border-2 border-gray-300 p-5 text-orange-500">
+                                            <input type="file" id="uploadPhoto3" name="uploadPhoto3" class="" accept="image/*">
                                         </div>
                                     </div>
                                 </div>
@@ -209,25 +232,27 @@
                                 <div class="grid grid-cols-2 gap-2 mt-2">
                                     <div class="mb-4">
                                         <label for="product_price" class="block text-gray-700 text-sm font-bold mb-2">Product Price</label>
-                                        <input type="number" id="product_price" name="product_price" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                        <input type="number" id="product_price" name="product_price" value="{{$product->price}}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                                     </div>
                                     <div class="mb-4">
                                         <label for="discount" class="block text-gray-700 text-sm font-bold mb-2">Discount</label>
-                                        <select id="discount" name="discount" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                                            <option value="">Select Discount</option>
+                                        <select id="discount" name="discount" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                            <option value="{{$product->discount_id}}">{{$product->discount->discount_value*100}}%</option>
                                             @foreach ($discounts as $discount)
-                                            <option value="{{ $discount->id }}">{{ $discount->discount_value*100 }}%</option>
+                                            <option value="{{ $discount->id }}" data-discount="{{ $discount->discount_value }}">{{ $discount->discount_value*100 }}%</option>
                                             @endforeach
-                                            <option value="">No Discount</option>
+                                            <option value="0">No Discount</option>
                                         </select>
                                     </div>
                                 </div>
-
-                                <div class="flex flex-col gap-2">
+                                <div>
+                                    <p id="final_price_result" class="text-sm text-orange-500 font-semibold mb-4"></p>
+                                </div>
+                                <div class="flex gap-2">
                                     <button type="submit" class="bg-[#F0A02C] hover:bg-orange-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
                                         submit
                                     </button>
-                                    <a href="{{route('admin_products')}}    " class="text-center bg-gray-100  hover:bg-gray-200 text-gray-600 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">Cancel</a>
+                                    <a href="{{route('admin_products')}}" class="text-center bg-gray-100  hover:bg-gray-200 text-gray-600 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">Cancel</a>
                                 </div>
                             </div>
                         </div>
@@ -241,46 +266,31 @@
     </div>
 
     <script>
-        document.getElementById('uploadPhoto').addEventListener('change', function() {
-            const fileNameDisplay = document.getElementById('fileName-uploadPhoto');
-            const text = document.getElementById('text-uploadPhoto');
+        const priceInput = document.getElementById('product_price');
+        const discountSelect = document.getElementById('discount');
+        const finalPriceResult = document.getElementById('final_price_result');
 
-            if (this.files.length > 0) {
-                fileNameDisplay.removeAttribute('hidden');
-                fileNameDisplay.textContent = `📁 Selected file: ${this.files[0].name}`;
-                text.textContent = '';
+        function calculateDiscount() {
+            const price = parseFloat(priceInput.value);
+            const selectedOption = discountSelect.options[discountSelect.selectedIndex];
+            const discount = parseFloat(selectedOption.getAttribute('data-discount')); // Get the actual discount value (e.g., 0.10)
+
+            if (!isNaN(price) && !isNaN(discount)) {
+                // Calculate the discount amount and final price
+                const discountValue = price * discount;
+                const finalPrice = price - discountValue;
+
+                // Display results
+                finalPriceResult.textContent = `Discounted Price: ₱${finalPrice.toFixed(2)}`;
             } else {
-                fileNameDisplay.textContent = '';
-                text.textContent = 'Drag your photo here or Browse from device';
+                finalPriceResult.textContent = '';
             }
-        });
+        }
 
-        document.getElementById('uploadPhoto2').addEventListener('change', function() {
-            const fileNameDisplay = document.getElementById('fileName-uploadPhoto2');
-            const text = document.getElementById('text-uploadPhoto2');
+        // Add event listeners to recalculate when price or discount changes
+        priceInput.addEventListener('input', calculateDiscount);
+        discountSelect.addEventListener('change', calculateDiscount);
 
-            if (this.files.length > 0) {
-                fileNameDisplay.removeAttribute('hidden');
-                fileNameDisplay.textContent = `📁 Selected file: ${this.files[0].name}`;
-                text.textContent = '';
-            } else {
-                fileNameDisplay.textContent = '';
-                text.textContent = 'Drag your photo here or Browse from device';
-            }
-        });
-        document.getElementById('uploadPhoto3').addEventListener('change', function() {
-            const fileNameDisplay = document.getElementById('fileName-uploadPhoto3');
-            const text = document.getElementById('text-uploadPhoto3');
-
-            if (this.files.length > 0) {
-                fileNameDisplay.removeAttribute('hidden');
-                fileNameDisplay.textContent = `📁 Selected file: ${this.files[0].name}`;
-                text.textContent = '';
-            } else {
-                fileNameDisplay.textContent = '';
-                text.textContent = 'Drag your photo here or Browse from device';
-            }
-        });
 
 
 

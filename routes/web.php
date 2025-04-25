@@ -158,7 +158,7 @@ Route::get('/admin/services/preview-pdf', [AdminServicesController::class, 'prev
 
 use App\Http\Controllers\AdminServicesHistoryController;
 Route::get('/admin_services_history', [AdminServicesHistoryController::class, 'index'])->name('admin_services_history');
-Route::get('/admin/services_history/export/excel', [AdminServicesHistoryController::class, 'exportExcel'])->name('admin_services_history.export_excel');
+Route::get('/admin/services_history/export/excel', [AdminServicesHistoryController::class, 'exportExcel'])->name('admin_services_history.export_excel') ;
 Route::get('/admin/services_history/export-pdf', [AdminServicesHistoryController::class, 'exportPDF'])->name('admin_services_history.export_pdf');
 Route::get('/admin/services_history/preview-pdf', [AdminServicesHistoryController::class, 'previewPDF'])->name('admin_services_history.preview_pdf');
 
@@ -167,6 +167,8 @@ Route::get('/admin_products', [AdminProductController::class, 'index'])->name('a
 Route::get('/admin_products.page', [AdminProductController::class, 'add_product_page'])->name('admin_products.page');
 Route::POST('/admin_products.add', [AdminProductController::class, 'add_product'])->name('admin_products.add');
 Route::post('/admin_products.edit', [AdminProductController::class, 'edit_product'])->name('admin_products.edit');
+Route::POST('/admin_products.save', [AdminProductController::class, 'save_changes'])->name('admin_products.save');
+
 
 Route::get('/admin/admin_products/export/excel', [AdminProductController::class, 'exportExcel'])->name('admin_products.export_excel');
 Route::get('/admin/admin_products/export-pdf', [AdminProductController::class, 'exportPDF'])->name('admin_products.export_pdf');
