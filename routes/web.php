@@ -166,6 +166,10 @@ use App\Http\Controllers\AdminProductController;
 Route::get('/admin_products', [AdminProductController::class, 'index'])->name('admin_products');
 Route::get('/admin_products.page', [AdminProductController::class, 'add_product_page'])->name('admin_products.page');
 Route::POST('/admin_products.add', [AdminProductController::class, 'add_product'])->name('admin_products.add');
+Route::get('/admin/admin_products/export/excel', [AdminProductController::class, 'exportExcel'])->name('admin_products.export_excel');
+Route::get('/admin/admin_products/export-pdf', [AdminProductController::class, 'exportPDF'])->name('admin_products.export_pdf');
+Route::get('/admin/admin_products/preview-pdf', [AdminProductController::class, 'previewPDF'])->name('admin_products.preview_pdf');
+
 
 
 

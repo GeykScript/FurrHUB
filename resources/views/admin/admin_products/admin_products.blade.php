@@ -123,11 +123,11 @@
                     @endif
                     <div class="flex justify-end items-end gap-1">
                         <p class="p-3">Generate Report: </p>
-                        <a href="{{ route('admin_services.preview_pdf') }}" target="_blank" class="bg-blue-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-blue-600 transition duration-200"><i data-lucide="eye"></i>Preview</a>
+                        <a href="{{ route('admin_products.preview_pdf') }}" target="_blank" class="bg-blue-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-blue-600 transition duration-200"><i data-lucide="eye"></i>Preview</a>
 
-                        <a href="{{ route('admin_services.export_pdf') }}" class="bg-red-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-red-600 transition duration-200">PDF<i data-lucide="file-text"></i></a>
+                        <a href="{{ route('admin_products.export_pdf') }}" class="bg-red-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-red-600 transition duration-200">PDF<i data-lucide="file-text"></i></a>
 
-                        <a href="{{ route('admin_services.export_excel') }}" class=" mr-2 bg-green-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg  hover:bg-green-600 transition duration-200">EXCEL<i data-lucide="sheet"></i></a>
+                        <a href="{{ route('admin_products.export_excel') }}" class=" mr-2 bg-green-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg  hover:bg-green-600 transition duration-200">EXCEL<i data-lucide="sheet"></i></a>
 
                         <a href="{{route('admin_products.page')}}" class="bg-orange-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg  hover:bg-orange-600 transition duration-200">
                             <i data-lucide="plus"></i>

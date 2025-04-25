@@ -1,12 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\Discount;
 use App\Models\Service;
+use App\Exports\ProductExport;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Models\ProductView;
+
+
 use Illuminate\Support\Str;
+
 class AdminProductController extends Controller
 {
 
@@ -21,6 +29,26 @@ class AdminProductController extends Controller
 
         return view('admin.admin_products.admin_products', compact('products', 'admin'));
     }
+
+    //fix web.php and link
+    public function exportExcel()
+    {
+        return Excel::download(new ProductExport, 'product_report.xlsx');
+    }
+
+    public function exportPDF()
+    {
+        $products = Product::all();
+
+        $pdf = Pdf::loadView('admin.pdf_exports.products_pdf', compact('products'));
+        return $pdf->download('products_report.pdf');
+    }
+    public function previewPDF()
+    {
+        $products = Product::all();
+        return view('admin.pdf_exports.products_pdf', compact('products'));
+    }
+
     public function add_product_page()
     {
         $products = Product::all();
