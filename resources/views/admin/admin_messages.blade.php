@@ -17,65 +17,68 @@
 </head>
 
 <body class="bg-gray-100">
-    <div class="flex h-screen">
+    <div class="flex ">
         <!-- Sidebar -->
         <div class="fixed top-0 left-0 w-72 h-full bg-white border-l shadow-lg z-50">
-            <div class="p-4 ">
-                <div class="flex items-center mb-8">
-                    <img src="{{ asset('logo/logo1.png') }}" alt="FurrHub Logo" class="h-[70px] w-[150px] lg:h-[125px] lg:w-[300px]" />
+            <div class="p-4">
+                <div class="flex items-center mb-6">
+                    <img src="{{ asset('logo/logo1.png') }}" alt="FurrHub Logo" class="h-[60px] w-[130px] lg:h-[110px] lg:w-[245px]" />
                 </div>
 
-                <nav class="font-bold">
+                <nav class="font-semibold">
                     <ul>
-                        <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{ route('admin_dashboard') }}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-100 rounded transition duration-200">
-                                <i data-lucide="house" class="w-10 h-10 pr-2 ml-2"></i>
+                        <li class="mb-2 border border-gray-300 shadow-sm rounded-lg">
+                            <a href="{{ route('admin_dashboard') }}" class="block p-3 flex items-center text-base text-black hover:bg-gray-300 rounded transition duration-200">
+                                <i data-lucide="house" class="w-7 h-7 pr-2 ml-2"></i>
                                 Dashboard
                             </a>
                         </li>
-
-                        <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('admin_messages')}}" class="block p-3 flex items-center text-lg text-white bg-[#F0A02C] rounded transition duration-200">
-                                <i data-lucide="messages-square" class="w-10 h-10 pr-2 ml-2"></i>
+                        <li class="mb-2 border border-gray-300 shadow-sm rounded-lg">
+                            <a href="{{ route('admin_messages') }}" class="block p-3 flex items-center text-base text-white bg-[#F0A02C] rounded transition duration-200">
+                                <i data-lucide="messages-square" class="w-7 h-7 pr-2 ml-2"></i>
                                 Messages
                             </a>
                         </li>
-                        <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('admin_services')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
-                                <i data-lucide="heart" class="w-10 h-10 pr-2 ml-2"></i>
+                        <li class="mb-2 border border-gray-300 shadow-sm rounded-lg">
+                            <a href="{{ route('admin_services') }}" class="block p-3 flex items-center text-base text-black hover:bg-gray-300 rounded transition duration-200">
+                                <i data-lucide="heart" class="w-7 h-7 pr-2 ml-2"></i>
                                 Services
                             </a>
                         </li>
-                        <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('admin_services_history')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
-                                <i data-lucide="notebook-text" class="w-10 h-10 pr-2 ml-2"></i>
+                        <li class="mb-2 border border-gray-300 shadow-sm rounded-lg">
+                            <a href="{{ route('admin_services_history') }}" class="block p-3 flex items-center text-base text-black hover:bg-gray-300 rounded transition duration-200">
+                                <i data-lucide="notebook-text" class="w-7 h-7 pr-2 ml-2"></i>
                                 Service History
                             </a>
                         </li>
-                        <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('admin_products')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
-                                <i data-lucide="shopping-basket" class="w-10 h-10 pr-2 ml-2"></i>
+                        <li class="mb-2 border border-gray-300 shadow-sm rounded-lg">
+                            <a href="{{ route('admin_products') }}" class="block p-3 flex items-center text-base text-black hover:bg-gray-300 rounded transition duration-200">
+                                <i data-lucide="shopping-basket" class="w-7 h-7 pr-2 ml-2"></i>
                                 Manage Products
                             </a>
                         </li>
-                        <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('admin_orders')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
-                                <i data-lucide="shopping-cart" class="w-10 h-10 pr-2 ml-2"></i>
+                        <li class="mb-2 border border-gray-300 shadow-sm rounded-lg">
+                            <a href="{{ route('admin_orders') }}" class="block p-3 flex items-center text-base text-black hover:bg-gray-300 rounded transition duration-200">
+                                <i data-lucide="shopping-cart" class="w-7 h-7 pr-2 ml-2"></i>
                                 Orders
                             </a>
                         </li>
-                        <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('admin-appointments')}}" class="block p-3 flex items-center text-lg text-black hover:bg-gray-300 rounded transition duration-200">
-                                <i data-lucide="notepad-text" class="w-10 h-10 pr-2 ml-2"></i>
+                        <li class="mb-2 border border-gray-300 shadow-sm rounded-lg">
+                            <a href="{{ route('admin_appointments') }}" class="block p-3 flex items-center text-base text-black hover:bg-gray-300 rounded transition duration-200">
+                                <i data-lucide="notepad-text" class="w-7 h-7 pr-2 ml-2"></i>
                                 Appointments
                             </a>
                         </li>
-
                     </ul>
                 </nav>
             </div>
-            <div class="absolute bottom-0 w-full p-6 ">
-                <button class="w-full bg-[#4B4B4B] text-white font-bold py-2 rounded hover:bg-gray-300 transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400">Log Out</button>
+            <div class="absolute bottom-0 w-full p-4">
+                <form action="{{ route('admin.logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="w-full bg-[#4B4B4B] text-white font-semibold py-2 rounded hover:bg-gray-400 transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                        Log Out
+                    </button>
+                </form>
             </div>
         </div>
 
@@ -120,7 +123,11 @@
                         <h1 class="px-2 text-lg  font-semibold">Users</h1>
                         @foreach ($users as $user)
                         <div class="flex p-2">
+                            @if($user->profile_img == null)
+                            <i data-lucide="circle-user" class="xl:w-10 w-6 h-6 xl:h-10 rounded-full object-cover text-orange-500"></i>
+                            @else
                             <img src="{{ asset('storage/profile_picture/' . $user->profile_img) }}" class="xl:w-10 w-6 h-6 xl:h-10 rounded-full object-cover">
+                            @endif
                             <a href="{{ route('admin_messages', ['user_id' => $user->id]) }}" class="flex-1 ml-4 text-lg text-gray-700 hover:text-orange-500 hover:underline">
                                 {{ $user->first_name }} {{ $user->last_name }}
                             </a>

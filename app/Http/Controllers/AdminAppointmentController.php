@@ -20,4 +20,19 @@ class AdminAppointmentController extends Controller
 
         return view('admin.Appointments.admin_appointments', compact('admin', 'appointments'));
     }
+
+    public function payment(Request $request){
+        $appointment = Appointment::find($request->appointment_id);
+        if ($appointment) {
+            $appointment->update([
+                'payment_status' => 9,
+                'Status' => 15,
+                'total_payment' => $request->total_payment,
+            ]);
+            return redirect()->back()->with('success', 'Payment successful and appointment status updated.');
+        } else {
+            return redirect()->back()->with('error', 'Appointment not found.');
+        }
+         
+    }
 }

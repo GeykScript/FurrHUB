@@ -188,6 +188,7 @@ Route::get('/admin/admin_orders/DO_export-pdf', [AdminOrderController::class, 'D
 
 use App\Http\Controllers\AdminAppointmentController;
 Route::get('/admin_appointments', [AdminAppointmentController::class, 'index'])->name('admin_appointments');
+Route::post('/admin_appointments/payment', [AdminAppointmentController::class, 'payment'])->name('admin_appointments.payment');
 
 
 
