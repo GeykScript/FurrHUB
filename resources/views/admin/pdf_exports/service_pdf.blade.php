@@ -80,7 +80,7 @@
                 @foreach($services as $service)
                 <tr>
                     <td>{{ $service->name }}</td>
-                    <td>{{ $service->Category }}</td>
+                    <td>{{ $service->Category->name }}</td>
                     <td>{{ $service->description }}</td>
                     <td>{{ $service->price }}</td>
                     <td>{{ $service->discount_value }}</td>

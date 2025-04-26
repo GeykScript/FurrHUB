@@ -35,14 +35,14 @@ class AdminServicesController extends Controller
 
     public function exportPDF()
     {
-        $services = ServiceView::all();
+        $services = Service::all();
 
         $pdf = Pdf::loadView('admin.pdf_exports.service_pdf', compact('services'));
         return $pdf->download('services_report.pdf');
     }
     public function previewPDF()
     {
-        $services = ServiceView::all();
+        $services = Service::all();
         return view('admin.pdf_exports.service_pdf', compact('services'));
     }
 

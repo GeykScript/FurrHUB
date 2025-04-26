@@ -178,12 +178,19 @@
                 <p class="text-sm font-normal text-gray-500 text-end">{{ $product->quantity_sold }} sold</p>
                 <h5 class="font-normal text-wrap text-orange-500 text-start text-sm">{{ $product->category->name ?? 'Unknown' }}</h5>
                 <h4 class="font-semibold text-wrap text-black text-md text-start">{{ $product->name }}</h4>
+                @if (!empty($product->discount) && $product->discount->status_id == 7)
                 <h6 class="font-bold text-wrap text-orange-400 text-xs text-start line-through">
                   <span class="text-xs">₱</span> {{ number_format($product->price, 2) }}
                 </h6>
                 <h4 class="font-bold text-wrap text-orange-500 text-lg text-start">
                   <span class="text-xl">₱</span> {{ number_format($product->discounted_price, 2) }}
                 </h4>
+                @else
+                <h4 class="font-bold text-wrap text-orange-500 text-lg text-start">
+                  <span class="text-xl">₱</span> {{ number_format($product->price, 2) }}
+                </h4>
+                @endif
+
               </div>
             </button>
           </form>
@@ -247,7 +254,7 @@
                 <p class="text-sm font-normal text-gray-500 text-end">{{ $product->quantity_sold }} sold</p>
                 <h5 class="font-normal text-wrap text-orange-500 text-start text-sm">{{ $product->category->name ?? 'Unknown' }}</h5>
                 <h4 class="font-semibold text-wrap text-black text-md text-start">{{ $product->name }}</h4>
-                @if (!empty($product->discount))
+                @if (!empty($product->discount) && $product->discount->status_id == 7)
                 <h6 class="font-bold text-wrap text-orange-400 text-xs text-start line-through">
                   <span class="text-xs">₱</span> {{ number_format($product->price, 2) }}
                 </h6>

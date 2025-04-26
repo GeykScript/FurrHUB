@@ -278,10 +278,11 @@
                         <details class="mt-3">
                             <summary class="cursor-pointer bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg text-sm inline-block">
                                 View Details
-                            </summary>  
+                            </summary>
                             <div class="mt-2 p-4 border rounded-lg bg-gray-100">
                                 <h1 class="text-lg text-gray-700 ml-2"><span class="text-gray-900 mr-2">Service:</span> {{ $appointment->service->name }}</h1>
                                 <h1 class="text-lg text-gray-700 ml-2"><span class="text-gray-900 mr-2">Initial Service Fee:</span> ₱{{ number_format(!empty($appointment->service->discounted_price) ? $appointment->service->discounted_price : $appointment->service->price, 2) }}</h1>
+                                <h1 class="text-lg text-gray-700 ml-2"><span class="text-gray-900 mr-2">Total Payment:</span>₱ {{ $appointment->total_payment }}</h1>
                                 <h1 class="text-lg text-gray-700 ml-2"><span class="text-gray-900 mr-2">Payment Method:</span> {{ $appointment->payment->payment_name }}</h1>
                                 <h1 class="text-lg text-gray-700 ml-2"><span class="text-gray-900 mr-2">Payment Status:</span> {{ $appointment->statuses->status_name }}</h1>
                                 @if ($appointment->status->status_name == 'Pending' )

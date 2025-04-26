@@ -43,9 +43,10 @@ class Product extends Model
     }
 
     //get the discounted price
+    // Get the discounted price
     public function getDiscountedPriceAttribute()
     {
-        if ($this->discount) {
+        if ($this->discount && $this->discount->status_id == 7) {
             if ($this->discount->discount_type === 'percentage') {
                 // Apply the percentage discount correctly as a decimal
                 return $this->price - ($this->price * $this->discount->discount_value);
@@ -54,18 +55,24 @@ class Product extends Model
                 return max(0, $this->price - $this->discount->discount_value);
             }
         }
+
         return $this->price;
     }
-    //convert discount value to percentage or fixed amount
+
+    // Get the formatted discount value
     public function getDiscountValueAttribute()
     {
-        if ($this->discount) {
+        if ($this->discount && $this->discount->status_id == 7) {
             return $this->discount->discount_type === 'percentage'
                 ? ($this->discount->discount_value * 100) . '%'  // Convert decimal to percentage
                 : '₱' . number_format($this->discount->discount_value, 2); // Format fixed amount
         }
+
         return 'No Discount';
     }
+
+
+
     //get the product category
     public function getProductCategoryAttribute(){
         if ($this->category) {
