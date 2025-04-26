@@ -354,7 +354,7 @@
                                         name="payment_method"
                                         id="cash_on_delivery"
                                         value="Cash on Delivery"
-                                        class="w-5 h-5 text-orange-600 focus:ring-orange-500">
+                                        class="w-5 h-5 text-orange-600 focus:ring-orange-500" checked>
                                     <label
                                         for="cash_on_delivery"
                                         class="text-base group-hover:text-orange-600 transition-colors">
@@ -454,11 +454,12 @@
     function updateAction() {
         if (onlineRadio.checked) {
             form.action = processRoute;
-            
+
         } else if (cashRadio.checked) {
             form.action = directRoute;
         }
     }
+    updateAction();
 </script>
 <!-- Footer -->
 <x-footer bgColor=" bg-gradient-to-r from-orange-600" />

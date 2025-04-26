@@ -128,6 +128,7 @@ Route::get('/admin-login', function () {
     return view('admin.admin_login');
 })->name('admin-login');
 
+
 Route::post('/admin/logout', function () {
     Auth::guard('admin')->logout();
     return redirect()->route('admin-login'); // Redirect to your admin login view
@@ -175,6 +176,18 @@ Route::get('/admin/admin_products/export-pdf', [AdminProductController::class, '
 Route::get('/admin/admin_products/preview-pdf', [AdminProductController::class, 'previewPDF'])->name('admin_products.preview_pdf');
 
 
+
+use App\Http\Controllers\AdminOrderController;
+Route::get('/admin_orders', [AdminOrderController::class, 'index'])->name('admin_orders');
+Route::post('/admin_orders/deliver_order', [AdminOrderController::class, 'deliver_order'])->name('admin_orders.deliver_order');
+Route::get('/admin/admin_orders/export/excel', [AdminOrderController::class, 'exportExcel'])->name('admin_orders.export_excel');
+Route::get('/admin/admin_orders/export-pdf', [AdminOrderController::class, 'exportPDF'])->name('admin_orders.export_pdf');
+Route::get('/admin/admin_orders/preview-pdf', [AdminOrderController::class, 'previewPDF'])->name('admin_orders.preview_pdf');
+Route::get('/admin/admin_orders/DO_export-pdf', [AdminOrderController::class, 'DO_exportPDF'])->name('admin_orders.DO_export_pdf');
+
+
+use App\Http\Controllers\AdminAppointmentController;
+Route::get('/admin_appointments', [AdminAppointmentController::class, 'index'])->name('admin_appointments');
 
 
 

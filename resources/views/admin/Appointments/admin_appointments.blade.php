@@ -43,7 +43,7 @@
                             </a>
                         </li>
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('admin_services')}}" class="block p-3 flex items-center text-lg text-white bg-[#F0A02C] rounded transition duration-200">
+                            <a href="{{route('admin_services')}}" class="block p-3 flex items-center text-lg  text-black hover:bg-gray-300rounded transition duration-200">
                                 <i data-lucide="heart" class="w-10 h-10 pr-2 ml-2"></i>
                                 Services
                             </a>
@@ -55,7 +55,7 @@
                             </a>
                         </li>
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="{{route('admin_products')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
+                            <a href="{{route('admin_products')}}" class="block p-3 flex text-lg items-center  text-black hover:bg-gray-300   rounded transition duration-200">
                                 <i data-lucide="shopping-basket" class="w-10 h-10 pr-2 ml-2"></i>
                                 Manage Products
                             </a>
@@ -67,7 +67,7 @@
                             </a>
                         </li>
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="appointments" class="block p-3 flex items-center text-lg text-black hover:bg-gray-300 rounded transition duration-200">
+                            <a href="{{route('admin_appointments')}}" class="block p-3 flex items-center text-lg  text-white bg-[#F0A02C]  rounded transition duration-200">
                                 <i data-lucide="notepad-text" class="w-10 h-10 pr-2 ml-2"></i>
                                 Appointments
                             </a>
@@ -101,94 +101,80 @@
             <div>
                 <div class="flex flex-row items-center justify-start md:px-10 px-2 mt-5 h-20  ">
                     <div class="flex flex-row items-center md:gap-2 gap-1 ">
-                        <div> <i data-lucide="heart" class="md:w-12 md:h-12 w-6 h-6 text-orange-500 mx-auto"></i></div>
-                        <h1 class="md:text-4xl text-md font-bold text-orange-500 ">Services</h1>
+                        <div> <i data-lucide="notepad-text" class="md:w-12 md:h-12 w-6 h-6 text-orange-500 mx-auto"></i></div>
+                        <h1 class="md:text-4xl text-md font-bold text-orange-500 ">Manage Appointments</h1>
                     </div>
                 </div>
             </div>
             <div class="mt-2 w-full">
                 <div class="md:px-[5rem] flex gap-5 items-center px-4  text-sm md:text-lg">
-                    <a href="{{route('admin_services')}}" class="hover:underline hover:text-orange-400">Dashboard</a>
+                    <a href="{{route('admin_dashboard')}}" class="hover:underline hover:text-orange-400">Dashboard</a>
                     <div> > </div>
-                    <a href="{{route('admin_services')}}" class="hover:underline hover:text-orange-400">Services</a>
-                    <div> > </div>
-                    <p class="hover:underline text-orange-400">Edit Services</p>
+                    <a href="{{route('admin_appointments')}}" class="hover:underline text-orange-500">Appointments</a>
                 </div>
             </div>
 
-            <div class="flex flex-col items-center justify-center mt-10 w-full px-12">
-                <div class="overflow-x-auto  shadow-lg bg-white rounded-lg p-20">
+            <div class="flex flex-col items-center justify-center mt-5 w-full px-2">
+                <div class="overflow-x-auto w-full shadow-lg rounded-lg p-6">
+                    @if (session()->has('success'))
+                    <div class="col-span-3 mt-1 text-white bg-green-400  border border-green-400 p-3 rounded relative mb-3">
+                        <span class="text-sm font-medium ">{{ session('success') }}</span>
+                    </div>
+                    @endif
+                    <div class="flex justify-end items-end gap-1">
+                        <p class="p-3">Generate Report: </p>
+                        <a href="{{ route('admin_products.preview_pdf') }}" target="_blank" class="bg-blue-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-blue-600 transition duration-200"><i data-lucide="eye"></i>Preview</a>
 
-                    <form action="{{ route('admin_services.save') }}" method="POST" class="flex flex-col gap-4">
-                        @csrf
-                        <input type="hidden" name="service_id" value="{{ $service_id }}">
-                        <div>
-                            <label for="service_name" class="block text-gray-700 text-sm font-semibold mb-2">Service Name:</label>
-                            <input type="text" id="service_name" name="service_name" required value="{{ $service->name }}"
-                                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm">
-                        </div>
+                        <a href="{{ route('admin_products.export_pdf') }}" class="bg-red-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-red-600 transition duration-200">PDF<i data-lucide="file-text"></i></a>
 
-                        <div>
-                            <label for="service_description" class="block text-gray-700 text-sm font-semibold mb-2">Service Description:</label>
-                            <textarea id="service_description" name="service_description" rows="4" required
-                                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm resize-none"> {{$service->description}}</textarea>
-                        </div>
-                        <div>
-                            <label for="service_category" class="block text-gray-700 text-sm font-semibold mb-2">Category:</label>
-                            <select name="service_category" id="service_category" required
-                                class="w-full border border-gray-300 rounded-lg px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm">
-                                <option value="8" {{ $service->category == 8 ? 'selected' : '' }}>Grooming</option>
-                                <option value="9" {{ $service->category == 9 ? 'selected' : '' }}>Veterinary</option>
-                                <option value="10" {{ $service->category == 10 ? 'selected' : '' }}>Wellness & Laboratory</option>
-                            </select>
-                        </div>
+                        <a href="{{ route('admin_products.export_excel') }}" class=" mr-2 bg-green-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg  hover:bg-green-600 transition duration-200">EXCEL<i data-lucide="sheet"></i></a>
+
+                     
+
+                    </div>
 
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label for="service_price" class="block text-gray-700 text-sm font-semibold mb-2">Service Price:</label>
-                                <input type="number" id="service_price" name="service_price" required value="{{number_format($service->price) }}"
-                                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm">
-                            </div>
+                    <table id="ProductTable" class="min-w-full divide-y divide-gray-200 text-sm text-left text-gray-700">
+                        <thead class="bg-orange-300 text-gray-700 uppercase text-xs">
+                            <tr>
+                                <th class="px-4 py-3">ID</th>
+                                <th class="px-4 py-3">Customer Name</th>
+                                <th class="px-4 py-3">Pet Name</th>
+                                <th class="px-4 py-3">Service Availed</th>
+                                <th class="px-4 py-3">Appointment Date</th>
+                                <th class="px-4 py-3">Time</th>
+                                <th class="px-4 py-3">Payment Method</th>
+                                <th class="px-4 py-3">Initial Fee</th>
+                                <th class="px-4 py-3">Total Payment</th>
+                                <th class="px-4 py-3">Payment Status</th>
+                                <th class="px-4 py-3">Status</th>
 
-                            <div>
-                                <label for="service_discount" class="block text-gray-700 text-sm font-semibold mb-2">Apply Discount:</label>
-                                <select name="service_discount" id="service_discount"
-                                    class="w-full border border-gray-300 rounded-lg px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm">
-                                    @foreach ($discounts as $discount)
-                                    <option value="{{ $discount->id }}">{{ $discount->code }} - {{ number_format($discount->discount_value * 100) }}%</option>
-                                    @endforeach
-                                    <option value="">No Discount</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 text-sm font-semibold mb-2">Availability:</label>
-                            <div class="flex items-center gap-4">
-                                <label class="flex items-center">
-                                    <input type="radio" name="service_status" value="7" {{ $service->status == 7 ? 'checked' : '' }}
-                                        class="text-orange-500 focus:ring-orange-400">
-                                    <span class="ml-2 text-sm text-gray-700">Available</span>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="radio" name="service_status" value="8" {{ $service->status == 8 ? 'checked' : '' }}
-                                        class="text-orange-500 focus:ring-orange-400">
-                                    <span class="ml-2 text-sm text-gray-700">Not Available</span>
-                                </label>
-                            </div>
-                        </div>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @foreach ($appointments as $appointment)
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-4 py-2">{{$appointment->appointment_id}}</td>
+                                <td class="px-4 py-2">{{$appointment->user->first_name}} {{$appointment->user->last_name}}</td>
+                                <td class="px-4 py-2"> {{$appointment->pet->pet_name}}</td>
+                                <td class="px-4 py-2">{{ $appointment->service->name }}</td>
+                                <td class="px-4 py-2">{{ $appointment->appointment_date }}</td>
+                                <td class="px-4 py-2">{{ $appointment->appointment_time }}</td>
+                                <td class="px-4 py-2">{{ $appointment->payment->payment_name }}</td>
+                                <td class="px-4 py-2">{{ $appointment->service->price }}</td>
+                                <td class="px-4 py-2">{{ $appointment->total_payment }}</td>
+                                <td class="px-4 py-2">{{ $appointment->statuses->status_name }}</td>
+                                <td class="px-4 py-2">{{ $appointment->status->status_name }}</td>
 
-                        <div class="pt-4 flex justify-end gap-3 items-end">
-                            <a href="{{route('admin_services')}}" class="py-2 px-4">Cancel</a>
-                            <button type="submit"
-                                class=" bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-orange-600 transition-colors shadow-md font-semibold">
-                                Submit
-                            </button>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
 
-                        </div>
-                    </form>
                 </div>
             </div>
+
+
         </main>
     </div>
     </div>

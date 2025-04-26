@@ -61,7 +61,7 @@
                             </a>
                         </li>
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="orders" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
+                            <a href="{{route('admin_orders')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
                                 <i data-lucide="shopping-cart" class="w-10 h-10 pr-2 ml-2"></i>
                                 Orders
                             </a>

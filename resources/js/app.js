@@ -108,6 +108,7 @@ createIcons({
         let table = new DataTable('#ServiceTable');
         let table2 = new DataTable('#ServiceHistoryTable');
         let table3 = new DataTable('#ProductTable');
+        let table4 = new DataTable('#OrderTable');
       
 
 

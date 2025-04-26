@@ -50,24 +50,24 @@ class ProfileController extends Controller
             $filename = $randomString . '.' . $extension;
 
             //THIS IS USED FOR STORING IN DEPLOYMENT STORAGE
-            // $path = $request->file('profile_img')->storeAs('profile_picture', $filename, 'public_direct');
+            // $request->file('profile_img')->storeAs('profile_picture', $filename, 'public_direct');
 
-            $path = $request->file('profile_img')->storeAs('profile_picture', $filename, 'public');
+             $request->file('profile_img')->storeAs('profile_picture', $filename, 'public');
 
             // Delete the old profile picture if it exists
             if ($user->profile_img) {
-                //THIS IS USED FOR DELETING IN DEPLOYMENT STORAGE
-                // if ($user->profile_img) {
-                //     $filePath = public_path('storage/profile_picture/' . $user->profile_img);
-                //     if (file_exists($filePath)) {
-                //         unlink($filePath);
-                //     }
-                // }
-
                 Storage::delete('public/profile_picture/' . $user->profile_img);
             }
 
-        
+            //THIS IS USED FOR DELETING IN DEPLOYMENT STORAGE
+            // if ($user->profile_img) {
+            //     $filePath = public_path('storage/profile_picture/' . $user->profile_img);
+            //     if (file_exists($filePath)) {
+            //         unlink($filePath);
+            //     }
+            // }
+
+
             $user->profile_img = $filename;
             $hasChanges = true;  
         }

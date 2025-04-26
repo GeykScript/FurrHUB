@@ -72,7 +72,7 @@ class AdminProductController extends Controller
             $filename = Str::random(20) . '.' . $request->file('uploadPhoto')->getClientOriginalExtension();
             //THIS IS USED FOR STORING IN DEPLOYMENT STORAGE
             // Store the image in the public disk
-            // $path = $request->file('uploadPhoto')->storeAs('Products', $filename, 'public_direct');
+            // $request->file('uploadPhoto')->storeAs('Products', $filename, 'public_direct');
             $request->file('uploadPhoto')->storeAs('Products', $filename, 'public');
 
             $image_url = $filename;
@@ -84,7 +84,7 @@ class AdminProductController extends Controller
         if ($request->hasFile('uploadPhoto2')) {
             $filename2 = Str::random(20) . '.' . $request->file('uploadPhoto2')->getClientOriginalExtension();
             // Store the image in the public disk
-            // $path = $request->file('uploadPhoto')->storeAs('Products', $filename, 'public_direct');
+            // $request->file('uploadPhoto2')->storeAs('Products', $filename, 'public_direct');
 
             $request->file('uploadPhoto2')->storeAs('Products', $filename2, 'public');
             $image_url2 = $filename2;
@@ -92,7 +92,7 @@ class AdminProductController extends Controller
         if ($request->hasFile('uploadPhoto3')) {
             $filename3 = Str::random(20) . '.' . $request->file('uploadPhoto3')->getClientOriginalExtension();
             // Store the image in the public disk
-            // $path = $request->file('uploadPhoto')->storeAs('Products', $filename, 'public_direct');
+            // $request->file('uploadPhoto3')->storeAs('Products', $filename, 'public_direct');
 
             $request->file('uploadPhoto3')->storeAs('Products', $filename3, 'public');
             $image_url3 = $filename3;
@@ -146,7 +146,7 @@ class AdminProductController extends Controller
             if ($request->hasFile('uploadPhoto')) {
                 $filename = Str::random(20) . '.' . $request->file('uploadPhoto')->getClientOriginalExtension();
                 // Store the image in the public disk
-                // $path = $request->file('uploadPhoto')->storeAs('Products', $filename, 'public_direct');
+                //  $request->file('uploadPhoto')->storeAs('Products', $filename, 'public_direct');
                 $request->file('uploadPhoto')->storeAs('Products', $filename, 'public');
 
                 $image_url = $filename;
@@ -154,7 +154,7 @@ class AdminProductController extends Controller
             if ($request->hasFile('uploadPhoto2')) {
                 $filename2 = Str::random(20) . '.' . $request->file('uploadPhoto2')->getClientOriginalExtension();
                 // Store the image in the public disk
-                // $path = $request->file('uploadPhoto')->storeAs('Products', $filename, 'public_direct');
+                //  $request->file('uploadPhoto2')->storeAs('Products', $filename, 'public_direct');
 
                 $request->file('uploadPhoto2')->storeAs('Products', $filename2, 'public');
                 $image_url2 = $filename2;
@@ -162,7 +162,7 @@ class AdminProductController extends Controller
             if ($request->hasFile('uploadPhoto3')) {
                 $filename3 = Str::random(20) . '.' . $request->file('uploadPhoto3')->getClientOriginalExtension();
                 // Store the image in the public disk
-                // $path = $request->file('uploadPhoto')->storeAs('Products', $filename, 'public_direct');
+                // $request->file('uploadPhoto3')->storeAs('Products', $filename, 'public_direct');
 
                 $request->file('uploadPhoto3')->storeAs('Products', $filename3, 'public');
                 $image_url3 = $filename3;

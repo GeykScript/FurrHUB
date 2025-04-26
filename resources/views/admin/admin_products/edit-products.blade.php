@@ -65,7 +65,7 @@
                         </li>
 
                         <li class="mb-2 border border-gray shadow-sm rounded-lg">
-                            <a href="orders" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
+                            <a href="{{route('admin_orders')}}" class="block p-3 flex text-lg items-center text-black hover:bg-gray-300 rounded transition duration-200">
                                 <i data-lucide="shopping-cart" class="w-10 h-10 pr-2 ml-2"></i>
                                 Orders
                             </a>
@@ -237,11 +237,14 @@
                                     <div class="mb-4">
                                         <label for="discount" class="block text-gray-700 text-sm font-bold mb-2">Discount</label>
                                         <select id="discount" name="discount" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                            <option value="">Select Discount</option>
+                                            @if($product->discount_id != null)
                                             <option value="{{$product->discount_id}}">{{$product->discount->discount_value*100}}%</option>
+                                            @endif
                                             @foreach ($discounts as $discount)
                                             <option value="{{ $discount->id }}" data-discount="{{ $discount->discount_value }}">{{ $discount->discount_value*100 }}%</option>
                                             @endforeach
-                                            <option value="0">No Discount</option>
+                                            <option value=" ">No Discount</option>
                                         </select>
                                     </div>
                                 </div>
