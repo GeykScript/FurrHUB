@@ -197,21 +197,17 @@ Route::get('/admin_discounts', [AdminDiscountController::class, 'index'])->name(
 Route::post('/admin_discounts/add', [AdminDiscountController::class, 'add_discount'])->name('admin_discounts.add');
 Route::post('/admin_discounts/edit', [AdminDiscountController::class, 'edit_discount'])->name('admin_discounts.edit');
 
-Route::get('/admin-products', function () {
-    return view('admin.products');
-})->name('admin-products');
+Route::get('/faqs', function () {
+    return view('footer.faqs');
+})->name('faqs');
+Route::get('/about-us', function () {
+    return view('footer.about_us');
+})->name('about_us');
+Route::get('/terms-and-conditions', function () {
+    return view('footer.terms_and_condition');
+})->name('terms_and_conditions');
 
-Route::get('/admin-orders', function () {
-    return view('admin.orders');
-})->name('admin-orders');
 
 
-Route::get('/admin-appointments', function () {
-    return view('admin.appointments');
-})->name('admin-appointments');
-
-Route::get('admin-messages', function () {
-    return view('admin.messages');
-})->name('admin-messages');
 
 

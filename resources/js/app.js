@@ -54,6 +54,7 @@ import {
         Eye,
         SquarePen,
         Ticket,
+        ChevronUp
 } from 'lucide';
 
 createIcons({
@@ -102,6 +103,7 @@ createIcons({
         Eye,
         SquarePen,
         Ticket,
+        ChevronUp
   },
 });
 
