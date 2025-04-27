@@ -53,6 +53,7 @@ import {
         FileText,
         Eye,
         SquarePen,
+        Ticket,
 } from 'lucide';
 
 createIcons({
@@ -100,6 +101,7 @@ createIcons({
         FileText,
         Eye,
         SquarePen,
+        Ticket,
   },
 });
 
@@ -109,6 +111,8 @@ createIcons({
         let table2 = new DataTable('#ServiceHistoryTable');
         let table3 = new DataTable('#ProductTable');
         let table4 = new DataTable('#OrderTable');
+        let table5 = new DataTable('#AppointmentTable');
+        let table6 = new DataTable('#DiscountTable');
       
 
 

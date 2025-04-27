@@ -64,6 +64,7 @@ class AdminProductController extends Controller
 
     public function add_product(Request $request)
     {
+        
 
         $image_url = null;
 

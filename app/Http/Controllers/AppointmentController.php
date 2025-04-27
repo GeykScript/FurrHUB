@@ -28,10 +28,25 @@ class AppointmentController extends Controller
         // category_id 9 - veterinary
         // category_id 10 - wellness
         // Fetch services based on status and category
-        $grooming_service = Service::where('status', 7)->where('category', 8)->get();
-        $veterinary_service = Service::where('status', 7)->where('category', 9)->get();
-        $wellness_service = Service::where('status', 7)->where('category', 10)->get();
-        $appointments = Appointment::where('user_id', $user->id)->get();
+        $grooming_service = Service::where('status', 7)
+            ->where('category', 8)
+            ->orderBy('created_at', 'desc')  // Order by the latest
+            ->get();
+
+        $veterinary_service = Service::where('status', 7)
+            ->where('category', 9)
+            ->orderBy('created_at', 'desc')  // Order by the latest
+            ->get();
+
+        $wellness_service = Service::where('status', 7)
+            ->where('category', 10)
+            ->orderBy('created_at', 'desc')  // Order by the latest
+            ->get();
+
+        $appointments = Appointment::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')  // Order by the latest
+            ->get();
+
 
         $pets = Pet::where('user_id', $user->id)
             ->orderBy('created_at', 'desc') 

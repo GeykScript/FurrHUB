@@ -71,6 +71,12 @@
                                 Appointments
                             </a>
                         </li>
+                        <li class="mb-2 border border-gray-300 shadow-sm rounded-lg">
+                            <a href="{{ route('admin_discounts') }}" class="block p-3 flex items-center text-base  text-black hover:bg-gray-300  rounded transition duration-200">
+                                <i data-lucide="ticket" class="w-7 h-7 pr-2 ml-2"></i>
+                                Discounts
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -118,16 +124,13 @@
             </div>
 
             <div class="flex flex-col items-center justify-center mt-5 w-full px-2">
-                <div class="overflow-x-auto w-full shadow-lg rounded-lg p-6">
+                <div class="overflow-x-auto w-full shadow-lg rounded-lg p-6 bg-white">
                     @if (session()->has('success'))
                     <div class="col-span-3 mt-1 text-white bg-green-400  border border-green-400 p-3 rounded relative mb-3">
                         <span class="text-sm font-medium ">{{ session('success') }}</span>
                     </div>
                     @endif
-
-
-
-                    <table id="ProductTable" class="min-w-full divide-y divide-gray-200 text-sm text-left text-gray-700">
+                    <table id="AppointmentTable" class="min-w-full divide-y divide-gray-200 text-sm text-left text-gray-700">
                         <thead class="bg-orange-300 text-gray-700 uppercase text-xs">
                             <tr>
                                 <th class="px-4 py-3">ID</th>

@@ -71,6 +71,12 @@
                                 Appointments
                             </a>
                         </li>
+                        <li class="mb-2 border border-gray-300 shadow-sm rounded-lg">
+                            <a href="{{ route('admin_discounts') }}" class="block p-3 flex items-center text-base  text-black hover:bg-gray-300  rounded transition duration-200">
+                                <i data-lucide="ticket" class="w-7 h-7 pr-2 ml-2"></i>
+                                Discounts
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -202,23 +208,35 @@
 
                                 </div>
                                 <div class="mt-4">
-                                    <label for="uploadPhoto" class="block text-gray-700">Upload Images to Update</label>
-                                    <div class="col-span-1">
-                                        <div class="border-dashed border-2 border-gray-300 p-5 text-orange-500">
-                                            <input type="file" id="uploadPhoto" name="uploadPhoto" class="" accept="image/*">
-                                        </div>
+                                    <label for="uploadPhoto" class="block text-gray-700">Upload Photo</label>
+                                    <div class="border-dashed border-2 border-gray-300  text-center rounded-lg cursor-pointer mt-2 w-full h-20 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('uploadPhoto').click()">
+                                        <p id="text-uploadPhoto" class="text-gray-500">
+                                            <span class="text-orange-500 cursor-pointer">Browse from device</span>
+                                        </p>
+                                        <p id="fileName-uploadPhoto" class="mt-2 text-sm text-orange-600 px-3 py-1 rounded-md w-fit max-w-full truncate" hidden></p>
+                                        <input type="file" id="uploadPhoto" name="uploadPhoto" class="hidden" accept="image/*">
                                     </div>
                                 </div>
-                                <div class="mt-4"><label class="block text-gray-700  text-sm">Upload Optional Photo</label></div>
-                                <div class="grid grid-cols-2 gap-2 mt-2">
-                                    <div class="col-span-1">
-                                        <div class="border-dashed border-2 border-gray-300 p-5 text-orange-500">
-                                            <input type="file" id="uploadPhoto2" name="uploadPhoto2" class="" accept="image/*">
+                                <div class="mt-4">
+                                    <label class="block text-gray-700  text-xs">Upload Optional Photo</label>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div class="col-span-1 ">
+                                        <div class="border-dashed border-2 border-gray-300  text-center rounded-lg cursor-pointer mt-2 w-full h-20 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('uploadPhoto2').click()">
+                                            <p id="text-uploadPhoto2" class="text-gray-500 text-xs">
+                                                <span class="text-orange-500 cursor-pointer">Browse from device</span>
+                                            </p>
+                                            <p id="fileName-uploadPhoto2" class="mt-2 text-sm text-orange-600 px-3 py-1 rounded-md w-fit max-w-full truncate" hidden></p>
+                                            <input type="file" id="uploadPhoto2" name="uploadPhoto2" class="hidden" accept="image/*">
                                         </div>
                                     </div>
                                     <div class="col-span-1">
-                                        <div class="border-dashed border-2 border-gray-300 p-5 text-orange-500">
-                                            <input type="file" id="uploadPhoto3" name="uploadPhoto3" class="" accept="image/*">
+                                        <div class="border-dashed border-2 border-gray-300 text-center rounded-lg cursor-pointer mt-2 w-full h-20 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('uploadPhoto3').click()">
+                                            <p id="text-uploadPhoto3" class="text-gray-500 text-xs">
+                                                <span class="text-orange-500 cursor-pointer">Browse from device</span>
+                                            </p>
+                                            <p id="fileName-uploadPhoto3" class="mt-2 text-sm text-orange-600 px-3 py-1 rounded-md w-fit max-w-full truncate" hidden></p>
+                                            <input type="file" id="uploadPhoto3" name="uploadPhoto3" class="hidden" accept="image/*">
                                         </div>
                                     </div>
                                 </div>
@@ -236,11 +254,11 @@
                                             <option value="">Select Discount</option>
                                             @foreach ($discounts as $discount)
                                             @if ($product->discount_id == $discount->discount_id)
-                                            <option value="{{ $discount->discount_id }}" selected data-discount="{{ $discount->discount_value }}">{{ $discount->discount_value * 100 }}%</option>
+                                            <option value="{{ $discount->discount_id }}" selected>{{ $discount->discount_value * 100 }}%</option>
                                             @else
                                             <!-- Check if the discount value is not already selected -->
                                             @if (!isset($selectedDiscounts) || !in_array($discount->discount_value, $selectedDiscounts))
-                                            <option value="{{ $discount->discount_id }}" data-discount="{{ $discount->discount_value }}">{{ $discount->discount_value * 100 }}%</option>
+                                            <option value="{{ $discount->discount_id }}">{{ $discount->discount_value * 100 }}%</option>
                                             @php
                                             // Store the selected discount value to avoid repeating it in the options
                                             $selectedDiscounts[] = $discount->discount_value;
@@ -248,14 +266,11 @@
                                             @endif
                                             @endif
                                             @endforeach
-                                            <option value=" ">No Discount</option>
+                                            <option value="">No Discount</option>
                                         </select>
-
                                     </div>
                                 </div>
-                                <div>
-                                    <p id="final_price_result" class="text-sm text-orange-500 font-semibold mb-4"></p>
-                                </div>
+                                <p id="discount_display" class="p-1 text-orange-500 font-semibold"></p>
                                 <div class="flex gap-2">
                                     <button type="submit" class="bg-[#F0A02C] hover:bg-orange-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
                                         submit
@@ -274,32 +289,81 @@
     </div>
 
     <script>
-        const priceInput = document.getElementById('product_price');
-        const discountSelect = document.getElementById('discount');
-        const finalPriceResult = document.getElementById('final_price_result');
+        document.addEventListener('DOMContentLoaded', function() {
+            const priceInput = document.getElementById('product_price');
+            const discountSelect = document.getElementById('discount');
+            const discountDisplay = document.getElementById('discount_display');
 
-        function calculateDiscount() {
-            const price = parseFloat(priceInput.value);
-            const selectedOption = discountSelect.options[discountSelect.selectedIndex];
-            const discount = parseFloat(selectedOption.getAttribute('data-discount')); // Get the actual discount value (e.g., 0.10)
+            // Function to calculate and display the price after discount
+            function calculateDiscount() {
+                const price = parseFloat(priceInput.value);
+                const selectedDiscountId = discountSelect.value;
+                let discountedPrice = price;
 
-            if (!isNaN(price) && !isNaN(discount)) {
-                // Calculate the discount amount and final price
-                const discountValue = price * discount;
-                const finalPrice = price - discountValue;
+                if (selectedDiscountId !== "") {
+                    const selectedOption = discountSelect.selectedOptions[0];
+                    const selectedDiscountText = selectedOption.textContent.trim();
+                    const discountPercentage = parseFloat(selectedDiscountText.replace('%', '')) / 100;
 
-                // Display results
-                finalPriceResult.textContent = `Discounted Price: ₱${finalPrice.toFixed(2)}`;
-            } else {
-                finalPriceResult.textContent = '';
+                    // Calculate the discounted price
+                    discountedPrice = price - (price * discountPercentage);
+                }
+                if (discountedPrice == price) {
+                    discountDisplay.textContent = `Discounted Price: ₱ 0.00`;
+                } else {
+                    discountDisplay.textContent = `Discounted Price: ₱${discountedPrice.toFixed(2)}`;
+                }
             }
-        }
 
-        // Add event listeners to recalculate when price or discount changes
-        priceInput.addEventListener('input', calculateDiscount);
-        discountSelect.addEventListener('change', calculateDiscount);
+            // Calculate the price after discount whenever the price or discount selection changes
+            priceInput.addEventListener('input', calculateDiscount);
+            discountSelect.addEventListener('change', calculateDiscount);
+
+            // Initial price calculation
+            calculateDiscount();
+        });
 
 
+        document.getElementById('uploadPhoto').addEventListener('change', function() {
+            const fileNameDisplay = document.getElementById('fileName-uploadPhoto');
+            const text = document.getElementById('text-uploadPhoto');
+
+            if (this.files.length > 0) {
+                fileNameDisplay.removeAttribute('hidden');
+                fileNameDisplay.textContent = `📁 Selected file: ${this.files[0].name}`;
+                text.textContent = '';
+            } else {
+                fileNameDisplay.textContent = '';
+                text.textContent = 'Drag your photo here or Browse from device';
+            }
+        });
+
+        document.getElementById('uploadPhoto2').addEventListener('change', function() {
+            const fileNameDisplay = document.getElementById('fileName-uploadPhoto2');
+            const text = document.getElementById('text-uploadPhoto2');
+
+            if (this.files.length > 0) {
+                fileNameDisplay.removeAttribute('hidden');
+                fileNameDisplay.textContent = `📁 Selected file: ${this.files[0].name}`;
+                text.textContent = '';
+            } else {
+                fileNameDisplay.textContent = '';
+                text.textContent = 'Drag your photo here or Browse from device';
+            }
+        });
+        document.getElementById('uploadPhoto3').addEventListener('change', function() {
+            const fileNameDisplay = document.getElementById('fileName-uploadPhoto3');
+            const text = document.getElementById('text-uploadPhoto3');
+
+            if (this.files.length > 0) {
+                fileNameDisplay.removeAttribute('hidden');
+                fileNameDisplay.textContent = `📁 Selected file: ${this.files[0].name}`;
+                text.textContent = '';
+            } else {
+                fileNameDisplay.textContent = '';
+                text.textContent = 'Drag your photo here or Browse from device';
+            }
+        });
 
 
 

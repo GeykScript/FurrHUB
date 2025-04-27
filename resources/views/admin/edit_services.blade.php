@@ -71,6 +71,12 @@
                                 Appointments
                             </a>
                         </li>
+                        <li class="mb-2 border border-gray-300 shadow-sm rounded-lg">
+                            <a href="{{ route('admin_discounts') }}" class="block p-3 flex items-center text-base  text-black hover:bg-gray-300  rounded transition duration-200">
+                                <i data-lucide="ticket" class="w-7 h-7 pr-2 ml-2"></i>
+                                Discounts
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>

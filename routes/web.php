@@ -192,6 +192,11 @@ Route::post('/admin_appointments/payment', [AdminAppointmentController::class, '
 
 
 
+use App\Http\Controllers\AdminDiscountController;
+Route::get('/admin_discounts', [AdminDiscountController::class, 'index'])->name('admin_discounts');
+Route::post('/admin_discounts/add', [AdminDiscountController::class, 'add_discount'])->name('admin_discounts.add');
+Route::post('/admin_discounts/edit', [AdminDiscountController::class, 'edit_discount'])->name('admin_discounts.edit');
+
 Route::get('/admin-products', function () {
     return view('admin.products');
 })->name('admin-products');

@@ -70,7 +70,7 @@
                 <p class="text-sm text-gray-500">Optional: Upload a photo related to your order.</p>
                 <div class="border-dashed border-2  text-center rounded-lg cursor-pointer mt-2 w-full h-20 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('uploadPhoto').click()">
                     <p id="text-uploadPhoto" class="text-gray-500">
-                        Drag your photo here or <span class="text-orange-500 cursor-pointer">Browse from device</span>
+                    <span class="text-orange-500 cursor-pointer">Browse from device </span>
                     </p>
                     <p id="fileName-uploadPhoto" class="mt-2 text-sm text-orange-600 px-3 py-1 rounded-md w-fit max-w-full truncate" hidden></p>
                     <input type="file" id="uploadPhoto" name="uploadPhoto" class="hidden" accept="image/*">

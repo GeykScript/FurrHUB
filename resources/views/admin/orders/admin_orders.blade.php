@@ -70,6 +70,12 @@
                                 Appointments
                             </a>
                         </li>
+                        <li class="mb-2 border border-gray-300 shadow-sm rounded-lg">
+                            <a href="{{ route('admin_discounts') }}" class="block p-3 flex items-center text-base  text-black hover:bg-gray-300  rounded transition duration-200">
+                                <i data-lucide="ticket" class="w-7 h-7 pr-2 ml-2"></i>
+                                Discounts
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -124,16 +130,18 @@
                     </div>
                     @endif
 
-                    <div class="flex justify-end items-end gap-1 py-3 px-4">
-                        <p class="p-3">Generate Report: </p>
-                        <a href="{{route('admin_orders.DO_export_pdf')}}" class="bg-orange-400 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-orange-500 transition duration-200">OFD Orders<i data-lucide="file-text"></i></a>
-                        <a href="{{route('admin_orders.preview_pdf')}}" target="_blank" class="bg-blue-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-blue-600 transition duration-200"><i data-lucide="eye"></i>Preview</a>
-                        <a href="{{route('admin_orders.export_pdf')}}" class="bg-red-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-red-600 transition duration-200">PDF<i data-lucide="file-text"></i></a>
-                        <a href="{{route('admin_orders.export_excel')}}" class="mr-2 bg-green-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-green-600 transition duration-200">EXCEL<i data-lucide="sheet"></i></a>
-                    </div>
 
-                    <div class="px-7">
-                        <div class="shadow-lg rounded-lg p-5">
+                    <div class="px-7 ">
+                        <div class="shadow-lg rounded-lg p-5 bg-white">
+                            <div class="flex justify-end items-end gap-1 py-3 px-4">
+                                <p class="p-3">Generate Report: </p>
+                                <a href="{{route('admin_orders.DO_export_pdf')}}" class="bg-orange-400 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-orange-500 transition duration-200">OFD Orders<i data-lucide="file-text"></i></a>
+                                <a href="{{route('admin_orders.preview_pdf')}}" target="_blank" class="bg-blue-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-blue-600 transition duration-200"><i data-lucide="eye"></i>Preview</a>
+                                <a href="{{route('admin_orders.export_pdf')}}" class="bg-red-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-red-600 transition duration-200">PDF<i data-lucide="file-text"></i></a>
+                                <a href="{{route('admin_orders.export_excel')}}" class="mr-2 bg-green-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-green-600 transition duration-200">EXCEL<i data-lucide="sheet"></i></a>
+                            </div>
+
+
                             <table id="OrderTable" class="text-sm text-left text-gray-700 mw-full p-12">
                                 <thead class="bg-orange-300 text-gray-700 uppercase text-xs">
                                     <tr>
@@ -177,6 +185,8 @@
                                         <td class="px-4 py-3">{{$order->payment_status_relation?->status_name}}</td>
                                         @if($order->statuses?->status_name == 'Delivered')
                                         <td class="px-4 py-3 text-green-500 font-semibold">{{$order->statuses?->status_name}}</td>
+                                        @elseif($order->statuses?->status_name == 'Cancelled')
+                                        <td class="px-4 py-3 text-red-500 font-semibold">{{$order->statuses?->status_name}}</td>
                                         @elseif($order->statuses?->status_name == 'To Ship')
                                         <td class="px-4 py-3 text-orange-500">
                                             <button class="border-b border-orange-500"
