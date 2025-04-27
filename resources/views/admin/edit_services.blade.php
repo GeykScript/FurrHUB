@@ -157,10 +157,22 @@
                                 <label for="service_discount" class="block text-gray-700 text-sm font-semibold mb-2">Apply Discount:</label>
                                 <select name="service_discount" id="service_discount"
                                     class="w-full border border-gray-300 rounded-lg px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm">
+                                    <option value="">Select Discount</option>
                                     @foreach ($discounts as $discount)
-                                    <option value="{{ $discount->id }}">{{ $discount->code }} - {{ number_format($discount->discount_value * 100) }}%</option>
+                                    @if ($service->discount_id == $discount->discount_id)
+                                    <option value="{{ $discount->discount_id }}" selected data-discount="{{ $discount->discount_value }}">{{ $discount->discount_value * 100 }}%</option>
+                                    @else
+                                    <!-- Check if the discount value is not already selected -->
+                                    @if (!isset($selectedDiscounts) || !in_array($discount->discount_value, $selectedDiscounts))
+                                    <option value="{{ $discount->discount_id }}" data-discount="{{ $discount->discount_value }}">{{ $discount->discount_value * 100 }}%</option>
+                                    @php
+                                    // Store the selected discount value to avoid repeating it in the options
+                                    $selectedDiscounts[] = $discount->discount_value;
+                                    @endphp
+                                    @endif
+                                    @endif
                                     @endforeach
-                                    <option value="">No Discount</option>
+                                    <option value=" ">No Discount</option>
                                 </select>
                             </div>
                         </div>

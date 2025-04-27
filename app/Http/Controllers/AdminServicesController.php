@@ -52,7 +52,8 @@ class AdminServicesController extends Controller
     {
         $admin = Auth::guard('admin')->user();
 
-        $discounts = Discount::all();
+        $discounts = Discount::where('status_id', 7)->get();
+
 
         if (!$admin) {
             return redirect()->route('admin-login')->with('error', 'You must be logged in to view the cart.');
@@ -86,7 +87,7 @@ class AdminServicesController extends Controller
 
         $admin = Auth::guard('admin')->user();
 
-        $discounts = Discount::all();
+        $discounts = Discount::where('status_id', 7)->get();
 
         if (!$admin) {
             return redirect()->route('admin-login')->with('error', 'You must be logged in to view the cart.');

@@ -234,14 +234,23 @@
                                         <label for="discount" class="block text-gray-700 text-sm font-bold mb-2">Discount</label>
                                         <select id="discount" name="discount" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                             <option value="">Select Discount</option>
-                                            @if($product->discount_id != null)
-                                            <option value="{{$product->discount_id}}">{{$product->discount->discount_value*100}}%</option>
-                                            @endif
                                             @foreach ($discounts as $discount)
-                                            <option value="{{ $discount->id }}" data-discount="{{ $discount->discount_value }}">{{ $discount->discount_value*100 }}%</option>
+                                            @if ($product->discount_id == $discount->discount_id)
+                                            <option value="{{ $discount->discount_id }}" selected data-discount="{{ $discount->discount_value }}">{{ $discount->discount_value * 100 }}%</option>
+                                            @else
+                                            <!-- Check if the discount value is not already selected -->
+                                            @if (!isset($selectedDiscounts) || !in_array($discount->discount_value, $selectedDiscounts))
+                                            <option value="{{ $discount->discount_id }}" data-discount="{{ $discount->discount_value }}">{{ $discount->discount_value * 100 }}%</option>
+                                            @php
+                                            // Store the selected discount value to avoid repeating it in the options
+                                            $selectedDiscounts[] = $discount->discount_value;
+                                            @endphp
+                                            @endif
+                                            @endif
                                             @endforeach
                                             <option value=" ">No Discount</option>
                                         </select>
+
                                     </div>
                                 </div>
                                 <div>

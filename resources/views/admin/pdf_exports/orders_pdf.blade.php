@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="{{ asset('logo/logo1.png') }}" type="image/png">
+
     <title>Delivered Orders Report</title>
     <style>
         @page {

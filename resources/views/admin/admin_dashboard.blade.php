@@ -84,7 +84,7 @@
 
 
         <!-- Main Content -->
-        <main class=" ml-72 w-full bg-gray-100">
+        <main class="ml-72 w-full bg-gray-100">
             <!-- Top Bar -->
             <div class="bg-[#F0A02C] shadow-sm h-26">
                 <div class="max-w-full mx-auto px-4 py-3 flex justify-between items-center">

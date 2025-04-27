@@ -168,8 +168,13 @@
                             @if (!empty($wishlist->product->discount))
                             <p class="text-gray-700">Discount: {{ $wishlist->product->discount_value }}</p>
                             @endif
+
+                            @if (!empty($wishlist->product->discount) && $wishlist->product->discount->status_id == 7)
                             <p class="text-gray-700">Retail Price: ₱ {{number_format($wishlist->product->price,2) }}</p>
                             <p class="text-gray-700">Discounted Price: ₱ {{number_format($wishlist->product->discounted_price,2) }}</p>
+                            @else
+                            <p class="text-gray-700">Price: ₱ {{number_format($wishlist->product->price,2) }}</p>
+                            @endif
 
 
                         </div>

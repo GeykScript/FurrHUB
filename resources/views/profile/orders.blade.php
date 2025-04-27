@@ -273,7 +273,7 @@
 
                     @if ($order->statuses->status_name == 'Delivered' && !in_array($order->order_id, $reviewed_orders) && $order->payment_status_relation?->status_name == 'Paid')
                     <div class="flex justify-end items-end text-sm mt-2 text-gray-600">
-                        <h1 class="italic">Please review your order. It will be automatically marked as reviewed after 3 days.</h1>
+                        <h1 class="italic">Please review your order.</h1>
                     </div>
                     @elseif ($order->statuses->status_name == 'Delivered' && in_array($order->order_id, $reviewed_orders) && $order->payment_status_relation?->status_name == 'Paid')
                     <div class="flex justify-end items-end text-sm mt-2 text-green-500">

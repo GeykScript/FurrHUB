@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="{{ asset('logo/logo1.png') }}" type="image/png">
+
     <title>Services History Report</title>
     <style>
         @page {
@@ -88,7 +90,7 @@
                     <td>{{ $service->Time }}</td>
                     <td>{{ number_format($service->Total_payment, 2) }}</td>
                 </tr>
-              
+
                 @endforeach
             </tbody>
         </table>

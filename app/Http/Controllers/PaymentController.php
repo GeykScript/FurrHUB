@@ -69,17 +69,17 @@ class PaymentController extends Controller
         ];
 
         $client = new Client();
-        $response = $client->request('POST', env('PAYMONGO_API_URL'), [
+        $response = $client->request('POST', config('services.paymongo.api_url'), [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'accept' => 'application/json',
-                'Authorization' => 'Basic ' . base64_encode(env('PAYMONGO_SECRET_KEY') . ':'),
+                'Authorization' => 'Basic ' . base64_encode(config('services.paymongo.secret_key') . ':'),
             ],
             'body' => json_encode($payload),
         ]);
 
-        $responseBody = json_decode($response->getBody(), true);
 
+        $responseBody = json_decode($response->getBody(), true);
         return redirect($responseBody['data']['attributes']['checkout_url']);
     }
 

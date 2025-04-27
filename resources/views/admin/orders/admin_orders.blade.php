@@ -9,7 +9,6 @@
     <link rel="icon" href="{{ asset('logo/logo1.png') }}" type="image/png">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link rel="icon" href="{{ asset('logo/logo1.png') }}" type="image/png">
 
     <link rel="stylesheet" href="//cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
 
@@ -85,128 +84,122 @@
         </div>
 
         <!-- Main Content -->
-        <main class="flex-1 ml-72 w-full bg-gray-100">
-            <div class="bg-[#F0A02C] shadow-sm h-26">
-                <div class="max-w-full mx-auto px-4 py-3 flex justify-between items-center">
+        <main class="ml-72 w-full bg-gray-100">
+            <div class="bg-[#F0A02C] shadow-sm ">
+                <div class="flex items-center justify-between py-3 px-4">
                     <div class="flex items-center">
-                        <i data-lucide="calendar-clock" class=" w-16 h-16 pr-2 ml-4 text-white"></i>
+                        <i data-lucide="calendar-clock" class="w-16 h-16 pr-2 ml-4 text-white"></i>
                         <div id="datetime" class="text-2xl text-white font-bold mr-6 ml-4"></div>
                     </div>
-                    <div class="flex items-center ">
-                        <div class="flex items-center justify-between ">
-                            <span class="text-2xl text-black  font-semibold">{{$admin->fname}} {{$admin->lname}}</span>
-                            <i data-lucide="circle-user" class=" w-10 h-10 pr-2 ml-2"> </i>
+                    <div class="flex items-center">
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl text-black font-semibold">{{$admin->fname}} {{$admin->lname}}</span>
+                            <i data-lucide="circle-user" class="w-10 h-10 pr-2 ml-2"> </i>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div>
-                <div class="flex flex-row items-center justify-start md:px-10 px-2 mt-5 h-20  ">
-                    <div class="flex flex-row items-center md:gap-2 gap-1 ">
+                <div class="mt-3 py-6 px-10">
+                    <div class="flex flex-row items-center md:gap-2 gap-1">
                         <div> <i data-lucide="shopping-cart" class="md:w-12 md:h-12 w-6 h-6 text-orange-500 mx-auto"></i></div>
-                        <h1 class="md:text-4xl text-md font-bold text-orange-500 ">Manage Orders</h1>
+                        <h1 class="md:text-4xl text-md font-bold text-orange-500">Manage Orders</h1>
+                    </div>
+                    <div class="mt-6 w-full">
+                        <div class="md:px-[4rem] flex gap-5 items-center text-sm md:text-lg">
+                            <a href="{{route('admin_dashboard')}}" class="hover:underline hover:text-orange-400">Dashboard</a>
+                            <div> > </div>
+                            <a href="{{route('admin_orders')}}" class="hover:underline text-orange-500">Orders</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="mt-2 w-full">
-                <div class="md:px-[5rem] flex gap-5 items-center px-4  text-sm md:text-lg">
-                    <a href="{{route('admin_dashboard')}}" class="hover:underline hover:text-orange-400">Dashboard</a>
-                    <div> > </div>
-                    <a href="{{route('admin_orders')}}" class="hover:underline text-orange-500">Orders</a>
-                </div>
-            </div>
 
-            <div class="flex flex-col items-center justify-center mt-5 w-full px-12">
-                <div class="overflow-x-auto w-full shadow-lg rounded-lg p-6">
+                <div>
                     @if (session()->has('success'))
-                    <div class="col-span-3 mt-1 text-white bg-green-400  border border-green-400 p-3 rounded relative mb-3">
-                        <span class="text-sm font-medium ">{{ session('success') }}</span>
+                    <div class="p-6 ">
+                        <div class="col-span-3 mt-1 text-gray-50 bg-green-400 border border-green-400 p-4 rounded">
+                            <span class="text-sm font-medium">{{ session('success') }}</span>
+                        </div>
                     </div>
                     @endif
-                    <div class="flex justify-end items-end gap-1">
+
+                    <div class="flex justify-end items-end gap-1 py-3 px-4">
                         <p class="p-3">Generate Report: </p>
                         <a href="{{route('admin_orders.DO_export_pdf')}}" class="bg-orange-400 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-orange-500 transition duration-200">OFD Orders<i data-lucide="file-text"></i></a>
                         <a href="{{route('admin_orders.preview_pdf')}}" target="_blank" class="bg-blue-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-blue-600 transition duration-200"><i data-lucide="eye"></i>Preview</a>
                         <a href="{{route('admin_orders.export_pdf')}}" class="bg-red-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-red-600 transition duration-200">PDF<i data-lucide="file-text"></i></a>
-                        <a href="{{route('admin_orders.export_excel')}}" class=" mr-2 bg-green-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg  hover:bg-green-600 transition duration-200">EXCEL<i data-lucide="sheet"></i></a>
-
+                        <a href="{{route('admin_orders.export_excel')}}" class="mr-2 bg-green-500 flex items-center justify-center gap-2 text-white font-bold p-3 rounded-lg hover:bg-green-600 transition duration-200">EXCEL<i data-lucide="sheet"></i></a>
                     </div>
 
-
-                    <table id="OrderTable" class="min-w-full divide-y divide-gray-200 text-sm text-left text-gray-700">
-                        <thead class="bg-orange-300 text-gray-700 uppercase text-xs">
-                            <tr>
-                                <th class="px-4 py-3">ID</th>
-                                <th class="px-4 py-3">Buyer</th>
-                                <th class="px-4 py-3">Ref No#</th>
-                                <th class="px-4 py-3">Products</th>
-                                <th class="px-4 py-3">Quantity</th>
-                                <th class="px-4 py-3">Total Amount</th>
-                                <th class="px-4 py-3">Payment Method</th>
-                                <th class="px-4 py-3">Address</th>
-                                <th class="px-4 py-3">Order Date</th>
-                                <th class="px-4 py-3">Payment Status</th>
-                                <th class="px-4 py-3">Status</th>
-                                <th class="px-4 py-3">Delivery Date</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @foreach ($orders as $order)
-
-                            @php
-                            $items = $order_items->where('order_id', $order->order_id);
-                            @endphp
-
-                            <tr class="hover:bg-gray-100 transition duration-200">
-                                <td class="px-4 py-3">{{$order->order_id}}</td>
-                                <td class="px-4 py-3">{{$order->user->first_name}} {{$order->user->last_name}}</td>
-                                <td class="px-4 py-3">{{$order->reference_number}}</td>
-
-                                <td class="px-4 py-3">
-                                    @foreach($items as $order_item)
-                                    <li>
-                                        {{$order_item->product->name}}
-                                    </li>
+                    <div class="px-7">
+                        <div class="shadow-lg rounded-lg p-5">
+                            <table id="OrderTable" class="text-sm text-left text-gray-700 mw-full p-12">
+                                <thead class="bg-orange-300 text-gray-700 uppercase text-xs">
+                                    <tr>
+                                        <th class="px-4 py-3">ID</th>
+                                        <th class="px-4 py-3">Buyer</th>
+                                        <th class="px-4 py-3">Ref No#</th>
+                                        <th class="px-4 py-3">Products</th>
+                                        <th class="px-4 py-3">Quantity</th>
+                                        <th class="px-4 py-3">Total Amount</th>
+                                        <th class="px-4 py-3">Payment Method</th>
+                                        <th class="px-4 py-3">Address</th>
+                                        <th class="px-4 py-3">Order Date</th>
+                                        <th class="px-4 py-3">Payment Status</th>
+                                        <th class="px-4 py-3">Status</th>
+                                        <th class="px-4 py-3">Delivery Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    @foreach ($orders as $order)
+                                    @php
+                                    $items = $order_items->where('order_id', $order->order_id);
+                                    @endphp
+                                    <tr class="hover:bg-gray-100 transition duration-200">
+                                        <td class="px-4 py-3">{{$order->order_id}}</td>
+                                        <td class="px-4 py-3">{{$order->user->first_name}} {{$order->user->last_name}}</td>
+                                        <td class="px-4 py-3">{{$order->reference_number}}</td>
+                                        <td class="px-4 py-3">
+                                            @foreach($items as $order_item)
+                                            <li>{{$order_item->product->name}}</li>
+                                            @endforeach
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            @foreach($items as $order_item)
+                                            <p class="flex flex-col">{{$order_item->quantity}}x</p>
+                                            @endforeach
+                                        </td>
+                                        <td class="px-4 py-3">₱ {{number_format($order->total_amount)}}</td>
+                                        <td class="px-4 py-3">{{$order->payment->payment_name}}</td>
+                                        <td class="px-4 py-3">{{$order->address->street}} {{$order->address->barangay}}, {{$order->address->city}}, {{$order->address->province}}, {{$order->address->postal_code}}</td>
+                                        <td class="px-4 py-3">{{$order->created_at}}</td>
+                                        <td class="px-4 py-3">{{$order->payment_status_relation?->status_name}}</td>
+                                        @if($order->statuses?->status_name == 'Delivered')
+                                        <td class="px-4 py-3 text-green-500 font-semibold">{{$order->statuses?->status_name}}</td>
+                                        @elseif($order->statuses?->status_name == 'To Ship')
+                                        <td class="px-4 py-3 text-orange-500">
+                                            <button class="border-b border-orange-500"
+                                                onclick="orderModal(this)"
+                                                data-id="{{$order->order_id}}"
+                                                data-name="{{$order->user->first_name}} {{$order->user->last_name}}"
+                                                data-address="{{$order->address->street}} {{$order->address->barangay}}, {{$order->address->city}}, {{$order->address->province}}, {{$order->address->postal_code}}"
+                                                data-payment-status="{{$order->payment->payment_name}}">
+                                                {{$order->statuses?->status_name}}
+                                            </button>
+                                        </td>
+                                        @endif
+                                        <td class="px-4 py-3">{{$order->Delivery_Date}}</td>
+                                    </tr>
                                     @endforeach
-                                </td>
-                                <td class="px-4 py-3">
-                                    @foreach($items as $order_item)
-                                    <p class="flex flex-col"> {{$order_item->quantity}}x </p>
-                                    @endforeach
-                                </td>
-
-                                <td class="px-4 py-3 ">₱ {{number_format($order->total_amount)}}</td>
-                                <td class="px-4 py-3 ">{{$order->payment->payment_name}}</td>
-                                <td class="px-4 py-3 ">{{$order->address->street}} {{$order->address->barangay}}, {{$order->address->city}}, {{$order->address->province}}, {{$order->address->postal_code}}</td>
-                                <td class="px-4 py-3 ">{{$order->created_at}}</td>
-                                <td class="px-4 py-3 ">{{$order->payment_status_relation?->status_name}}</td>
-                                @if($order->statuses?->status_name == 'Delivered')
-                                <td class="px-4 py-3 text-green-500 font-semibold">{{$order->statuses?->status_name}}</td>
-                                @elseif($order->statuses?->status_name == 'To Ship')
-                                <td class="px-4 py-3 text-orange-500">
-                                    <button class="border-b border-orange-500"
-                                        onclick="orderModal(this)"
-                                        data-id="{{$order->order_id}}"
-                                        data-name="{{$order->user->first_name}} {{$order->user->last_name}}"
-                                        data-address="{{$order->address->street}} {{$order->address->barangay}}, {{$order->address->city}}, {{$order->address->province}}, {{$order->address->postal_code}}"
-                                        data-payment-status="{{$order->payment->payment_name}}">
-                                        {{$order->statuses?->status_name}}
-                                    </button>
-                                </td>
-                                @endif
-                                <td class="px-4 py-3 ">{{$order->Delivery_Date}}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-
         </main>
-    </div>
+
     </div>
     </div>
     <dialog id="orderModal" class="p-6 rounded-lg shadow-lg w-full max-w-md backdrop:bg-black/30 border-none outline-none">

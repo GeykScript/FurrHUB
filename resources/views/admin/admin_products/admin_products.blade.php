@@ -117,7 +117,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-col items-center justify-center mt-5 w-full px-2">
+            <div class="flex flex-col items-center justify-center mt-5 w-full px-4">
                 <div class="overflow-x-auto w-full shadow-lg rounded-lg p-6">
                     @if (session()->has('success'))
                     <div class="col-span-3 mt-1 text-white bg-green-400  border border-green-400 p-3 rounded relative mb-3">
