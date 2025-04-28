@@ -106,17 +106,19 @@ Route::get('/orders-successfull', function () {
 
 
 //  notification routes
-Route::get('/notifications', function () {
-    return view('profile.notifications');
-})->name('notifications');
+use App\Http\Controllers\NotificationsController;
+Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications');
+Route::get('/notification/count', [NotificationsController::class, 'notification_count']);
+Route::get('/notification/count2', [NotificationsController::class, 'notification_count2']);
 
 
 
 //   my purchases routes
 use App\Http\Controllers\MessageController;
-Route::get('/messages', [MessageController::class, 'index'])->name('messages');
+Route::get('/messages/{admin_id?}', [MessageController::class, 'index'])->name('messages');
 Route::post('/messages/send', [MessageController::class, 'send_message'])->name('messages.send');
 Route::get('/message/count', [MessageController::class, 'message_count']);
+Route::get('/message/count2', [MessageController::class, 'message_count2']);
 
 
 

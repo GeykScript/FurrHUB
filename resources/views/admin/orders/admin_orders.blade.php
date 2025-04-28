@@ -169,9 +169,24 @@
                                         <td class="px-4 py-3">{{$order->user->first_name}} {{$order->user->last_name}}</td>
                                         <td class="px-4 py-3">{{$order->reference_number}}</td>
                                         <td class="px-4 py-3">
+
+                                            @php
+                                            $orderProducts = ''; // Initialize the variable to store product names
+                                            @endphp
+
                                             @foreach($items as $order_item)
+
+                                            @php
+                                            $orderProducts .= $order_item->product->name . ', ';
+                                            @endphp
+
                                             <li>{{$order_item->product->name}}</li>
                                             @endforeach
+
+                                            @php
+                                            // Remove the trailing comma and space
+                                            $orderProducts = rtrim($orderProducts, ', ');
+                                            @endphp
                                         </td>
                                         <td class="px-4 py-3">
                                             @foreach($items as $order_item)
@@ -194,7 +209,9 @@
                                                 data-id="{{$order->order_id}}"
                                                 data-name="{{$order->user->first_name}} {{$order->user->last_name}}"
                                                 data-address="{{$order->address->street}} {{$order->address->barangay}}, {{$order->address->city}}, {{$order->address->province}}, {{$order->address->postal_code}}"
-                                                data-payment-status="{{$order->payment->payment_name}}">
+                                                data-payment-status="{{$order->payment->payment_name}}"
+                                                data-users="{{$order->user_id}}"
+                                                data-products="{{$orderProducts}}">
                                                 {{$order->statuses?->status_name}}
                                             </button>
                                         </td>
@@ -238,6 +255,9 @@
                 <form id="orderform" method="POST" action="{{route('admin_orders.deliver_order')}}">
                     @csrf
                     <input type="hidden" name="order_id" id="order_id">
+                    <input type="hidden" name="user_id" id="user_id">
+                    <textarea  hidden name="order_products" id="order_products"></textarea>
+                    <textarea hidden name="order_addresses" id="order_addresses"></textarea>
 
                     <div class="mt-3 grid grid-cols-2 gap-1">
                         <p class="col-span-2 text-gray-700 text-start">Delivery Date:</p>
@@ -290,6 +310,11 @@
         function orderModal(button) {
             // Set the value of the hidden order_id input
             document.getElementById('order_id').value = button.getAttribute('data-id');
+            document.getElementById('order_products').value = button.getAttribute('data-orders');
+            document.getElementById('user_id').value = button.getAttribute('data-users');
+            document.getElementById('order_addresses').value = button.getAttribute('data-address');
+            document.getElementById('order_products').value = button.getAttribute('data-products');
+
 
             // Set the text content of the <p> elements
             document.getElementById('order_name_p').textContent = button.getAttribute('data-name');

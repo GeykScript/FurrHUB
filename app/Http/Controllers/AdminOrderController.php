@@ -10,6 +10,8 @@ use App\Exports\OrdersExport;
 use App\Models\DeliveredOrderView;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Notifcation;
+use App\Models\Notifications;
 use App\Models\OutForDeliveryOrdersView;
 class AdminOrderController extends Controller
 {
@@ -71,6 +73,14 @@ public function deliver_order(Request $request)
                 'status' => '1',
                 'payment_status' => '9',
                 'Delivery_Date' => $orderDateTime,
+            ]);
+
+            Notifications::create([
+                'user_id' => $request->input('user_id'),
+                'is_read' => 0,
+                'order_name' => $request->input('order_products'),
+                'delivered_date' => $orderDateTime,
+                'order_address' => $request->input('order_addresses'),
             ]);
 
             return redirect()->route('admin_orders')->with('success', 'Order updated successfully.');

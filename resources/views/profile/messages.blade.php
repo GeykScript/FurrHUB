@@ -48,10 +48,17 @@
         </div>
 
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-2 xl:gap-0  xl:px-[13rem] p-8">
-            <div class="col-span-1 hidden xl:flex flex-col justify-center items-center bg-orange-200 p-4 shadow-md xl:rounded-l-xl ">
-                <img src="{{ asset('logo/furrhub.png') }}" alt="logo" class="lg:w-[320px] lg:h-[260px] w-[170px] h-[100px] object-cover">
-                <div class="xl:px-20 p-2 text-center bg-orange-300 border-2 border-orange-400 rounded-lg mt-4">
-                    <h1>Ask a Question</h1>
+            <div class="flex flex-col h-[400px]">
+                <div class="col-span-1  bg-white shadow-md xl:rounded-l-xl p-5 flex-1 overflow-y-auto h-[calc(100vh-150px)] custom-scrollbar">
+                    <h1 class="px-2 text-lg  font-semibold">FurrHUB Staff</h1>
+                    @foreach ($admins as $admin)
+                    <div class="flex p-2">
+                        <img src="{{ asset('logo/furrhub.png') }}" class="xl:w-10 w-6 h-6 xl:h-10 rounded-full object-cover">
+                        <a href="{{ route('messages', ['admin_id' => $admin->admin_id]) }}" class="flex-1 ml-4 text-lg text-gray-700 hover:text-orange-500 hover:underline">
+                            {{ $admin->fname }} {{ $admin->lname }}
+                        </a>
+                    </div>
+                    @endforeach
                 </div>
             </div>
 
@@ -67,49 +74,35 @@
                     @foreach ($messages as $message)
 
                     @if ($message->user_msg != null)
-                    <div class="flex items-start mb-4">
+                    <div class="flex items-end justify-end mb-4">
                         <div class="flex items-center gap-3">
-                            <img src="{{ asset('storage/profile_picture/' . Auth::user()->profile_img) }}" class="xl:w-10 w-6 h-6 xl:h-10 rounded-full object-cover">
                             <div class="bg-white shadow-lg border border-gray-200 p-3 rounded-md max-w-xs md:text-lg text-xs">{{$message->user_msg}}</div>
+                            <img src="{{ asset('storage/profile_picture/' . Auth::user()->profile_img) }}" class="xl:w-10 w-6 h-6 xl:h-10 rounded-full object-cover">
+
                         </div>
                     </div>
                     @endif
-                    
+
                     @if ($message->admin_reply != null)
-                    <div class="flex items-start justify-end mb-4">
+                    <div class="flex items-start justify-start mb-4">
                         <div class="flex items-center gap-3">
-                            <div class="bg-white shadow-lg border border-gray-200 p-3 rounded-md max-w-xs md:text-lg text-xs">{{$message->admin_reply}}</div>
                             <img src="{{ asset('logo/furrhub.png') }}" class="xl:w-20 w-10 h-6 xl:h-16 rounded-full object-cover">
+                            <div class="bg-white shadow-lg border border-gray-200 p-3 rounded-md max-w-xs md:text-lg text-xs">{{$message->admin_reply}}</div>
+
                         </div>
                     </div>
                     @endif
                     @endforeach
                 </div>
 
-                <!-- REMOVE IMAGE SEND FEATURE-->
-                <!-- <div id="previewContainer" class="hidden flex items-center justify-between bg-white p-4 rounded-b-xl shadow-md border border-gray-200 mt-2">
-                    <div>
-                        <img id="preview"
-                            src="#"
-                            alt="message_photo"
-                            class="xl:w-12 w-10 h-10 xl:h-12 rounded-md object-cover">
-                    </div>
-                    <button type="button"
-                        onclick="removeImage()"
-                        class="ml-4 text-sm text-red-500 hover:underline"
-                        id="removeBtn">
-                        Remove
-                    </button>
-                </div> -->
 
                 <form action="{{route('messages.send')}}" id="messageForm" class="mt-2 flex items-center border border-gray-300 gap-2 rounded-lg p-2" method="POST" enctype="multipart/form-data">
                     @csrf
 
-                    <!-- REMOVE IMAGE SEND FEATURE-->
-                    <!-- <label for="upload" class="inline-flex items-center p-2 gap-2 border border-orange-500 text-orange-500 text-sm rounded-lg hover:bg-orange-100 cursor-pointer">
-                        <input type="file" id="upload" name="upload" class="hidden" onchange="previewImage(event)">
-                        <i data-lucide="image-up" class="h-4 w-4"></i>
-                    </label> -->
+                    @if ($selected_admin != null)
+                    <input type="hidden" name="selected_admin" id="selected_admin" value="{{ $selected_admin->admin_id }}">
+                    @endif
+
                     <x-text-input
                         type="text"
                         name="message"
@@ -123,40 +116,14 @@
                 </form>
             </div>
         </div>
-        
-        <!-- REMOVE IMAGE SEND FEATURE-->
-        <!-- <script>
-            function previewImage(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const preview = document.getElementById('preview');
-                        const container = document.getElementById('previewContainer');
 
-                        preview.src = e.target.result;
-                        container.classList.remove('hidden'); // Show the container
-                    };
-                    reader.readAsDataURL(file);
-                }
-            }
-
-            function removeImage() {
-                const preview = document.getElementById('preview');
-                const container = document.getElementById('previewContainer');
-                const uploadInput = document.getElementById('upload');
-
-                preview.src = '#';
-                uploadInput.value = '';
-                container.classList.add('hidden'); // Hide the container
-            }
-        </script> -->
     </div>
     <script>
         $('#messageForm').on('submit', function(e) {
             e.preventDefault();
 
             let message = $('#message').val();
+            let selectedAdmin = $('#selected_admin').val();
             if (!message.trim()) return;
 
             $.ajax({
@@ -164,7 +131,8 @@
                 method: "POST",
                 data: {
                     _token: '{{ csrf_token() }}',
-                    message: message
+                    message: message,
+                    selected_admin: selectedAdmin
                 },
                 success: function(response) {
                     $('#message').val('');
@@ -174,10 +142,10 @@
 
                     // Append the new message
                     $('#messagesContainer').append(`
-                <div class="flex items-start mb-4">
+                <div class="flex items-end justify-end mb-4">
                     <div class="flex items-center gap-3">
-                        <img src="{{ asset('storage/profile_picture/' . Auth::user()->profile_img) }}" class="xl:w-10 w-6 h-6 xl:h-10 rounded-full object-cover">
                         <div class="bg-white shadow-lg border border-gray-200 p-3 rounded-md max-w-xs md:text-lg text-xs">${message}</div>
+                        <img src="{{ asset('storage/profile_picture/' . Auth::user()->profile_img) }}" class="xl:w-10 w-6 h-6 xl:h-10 rounded-full object-cover">
                     </div>
                 </div>
             `);

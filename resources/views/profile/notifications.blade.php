@@ -46,39 +46,25 @@
                 <a href="{{route('notifications')}}" class="hover:underline text-orange-500">Notifications</a>
             </div>
         </div>
-        @php
-        $notifications = [
-        ['title' => 'Parcel Delivered', 'date' => '03/24/2025', 'message' => 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.'],
-        ['title' => 'Parcel Delivered', 'date' => '03/24/2025', 'message' => 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.'],
-        ['title' => 'Parcel Delivered', 'date' => '03/24/2025', 'message' => 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.'],
-        ];
-        @endphp
+
 
         <div class="flex flex-col items-center justify-center w-full px-4">
             @foreach($notifications as $notification)
             <div class="flex flex-col lg:flex-row items-center lg:items-start gap-6 p-6 md:px-12 mt-6 border pb-6 w-full max-w-5xl mx-auto rounded-lg shadow-md bg-white">
                 <!-- Image Section -->
                 <div class="flex-shrink-0">
-                    <img src="{{ asset('images/products/dog.jpg') }}"
+                    <img src="{{ asset('logo/furrhub.png') }}"
                         alt="Notification Image"
-                        class="w-32 h-32 rounded-lg object-cover bg-gray-500">
+                        class="w-40  h-40 rounded-lg object-contain ">
                 </div>
 
                 <!-- Notification Details -->
                 <div class="flex-1 text-center lg:text-left">
-                    <h1 class="font-bold text-xl lg:text-2xl text-gray-800">{{ $notification['title'] }}</h1>
-                    <h3 class="mt-2 text-gray-500 text-sm lg:text-base">{{ $notification['date'] }}</h3>
-                    <p class="mt-2 text-gray-700 text-sm lg:text-base">{{ $notification['message'] }}</p>
-
-                    <!-- Hidden Details -->
-                    <details class="mt-3">
-                        <summary class="cursor-pointer bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg text-sm inline-block">
-                            View Details
-                        </summary>
-                        <div class="mt-2 p-4 border rounded-lg bg-gray-100">
-                            <p class="text-gray-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores nulla dicta, cumque ipsam veritatis facere harum ducimus, eos delectus minus, tempore ipsa ex voluptatum aliquam distinctio laborum esse ab? Exercitationem?</p>
-                        </div>
-                    </details>
+                    <h1 class="font-bold text-xl lg:text-2xl text-gray-800">Order Delivered</h1>
+                    <h3 class="mt-2 text-gray-700 text-sm lg:text-base">{{ $notification->order_name }}</h3>
+                    <p class="ml-2 text-gray-500 text-sm lg:text-base">{{ $notification->order_address }}</p>
+                    <p class="ml-2 text-gray-500 text-sm lg:text-base">Delivered: {{ $notification->delivered_date }}</p>
+                    <a href="{{route('orders')}}" class="mt-2 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg text-sm inline-block">View Details</a>
                 </div>
             </div>
             @endforeach
