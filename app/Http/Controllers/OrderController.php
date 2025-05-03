@@ -74,7 +74,9 @@ class OrderController extends Controller
 
         if ($request->hasFile('uploadPhoto')) {
             $filename = Str::random(20) . '.' . $request->file('uploadPhoto')->getClientOriginalExtension();
-
+            //THIS IS USED FOR STORING IN DEPLOYMENT STORAGE
+            // Store the image in the public disk
+            // $path = $request->file('uploadPhoto')->storeAs('order_reviews', $filename, 'public_direct');
             $request->file('uploadPhoto')->storeAs('order_reviews', $filename, 'public');
 
             $review_image = $filename;

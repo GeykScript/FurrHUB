@@ -13,6 +13,7 @@
                 <a href="#pricelists" class="hover:text-white text-gray-900 flex"><i data-lucide="philippine-peso"></i><span class="md:block hidden">Price Lists</span></a>
             </div>
 
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
             <div class="flex flex-row gap-3 ml-auto xl:ml-0">
                 <div class="flex flex-row text-black text-[12px] xl:text-[20px] font-semibold px-3 lg:px-0">
@@ -74,10 +75,25 @@
                                             <i data-lucide="bell" class="text-black text-lg"></i>
 
                                             <!-- Notification Badge -->
-                                            <span class="absolute -top-1 -left-1 bg-red-500 text-white rounded-full h-[16px] w-[16px] text-[9px] font-semibold flex items-center justify-center">
-                                                10
+                                            <span id="unreadNotificationBadge2" class="absolute -top-1 -left-1 bg-red-500 text-white rounded-full h-[16px] w-[16px] text-[9px] font-semibold flex items-center justify-center">
+                                                0
                                             </span>
                                         </div>
+                                        <script>
+                                            $(document).ready(function() {
+                                                $.ajax({
+                                                    url: '/notification/count2', // <-- your new route
+                                                    type: 'GET',
+                                                    success: function(response) {
+                                                        if (response.unreadNotificationCount2 > 0) {
+                                                            $('#unreadNotificationBadge2')
+                                                                .text(response.unreadNotificationCount2)
+                                                                .removeClass('hidden');
+                                                        }
+                                                    }
+                                                });
+                                            });
+                                        </script>
 
                                         {{ __('Notifications') }}
                                     </div>
@@ -89,10 +105,27 @@
                                         <div class="relative">
                                             <i data-lucide="message-square-text" class=" text-black"></i>
                                             <!-- Notification Badge -->
-                                            <span class="absolute -top-1 -left-1 bg-red-500 text-white rounded-full h-[16px] w-[16px] text-[9px] font-semibold flex items-center justify-center">
-                                                22
+
+                                            <span id="unreadReplyBadge2" class="absolute -top-1 -left-1 bg-red-500 text-white rounded-full h-[16px] w-[16px] text-[9px] font-semibold flex items-center justify-center">
+                                                0
                                             </span>
                                         </div>
+
+                                        <script>
+                                            $(document).ready(function() {
+                                                $.ajax({
+                                                    url: '/message/count2',
+                                                    type: 'GET',
+                                                    success: function(response) {
+                                                        if (response.unreadReplyCount2 > 0) {
+                                                            $('#unreadReplyBadge2')
+                                                                .text(response.unreadReplyCount2)
+                                                                .removeClass('hidden');
+                                                        }
+                                                    }
+                                                });
+                                            });
+                                        </script>
                                         {{ __('Messages') }}
                                     </div>
 

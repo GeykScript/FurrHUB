@@ -28,10 +28,25 @@ class AppointmentController extends Controller
         // category_id 9 - veterinary
         // category_id 10 - wellness
         // Fetch services based on status and category
-        $grooming_service = Service::where('status', 7)->where('category', 8)->get();
-        $veterinary_service = Service::where('status', 7)->where('category', 9)->get();
-        $wellness_service = Service::where('status', 7)->where('category', 10)->get();
-        $appointments = Appointment::where('user_id', $user->id)->get();
+        $grooming_service = Service::where('status', 7)
+            ->where('category', 8)
+            ->orderBy('created_at', 'desc')  // Order by the latest
+            ->get();
+
+        $veterinary_service = Service::where('status', 7)
+            ->where('category', 9)
+            ->orderBy('created_at', 'desc')  // Order by the latest
+            ->get();
+
+        $wellness_service = Service::where('status', 7)
+            ->where('category', 10)
+            ->orderBy('created_at', 'desc')  // Order by the latest
+            ->get();
+
+        $appointments = Appointment::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')  // Order by the latest
+            ->get();
+
 
         $pets = Pet::where('user_id', $user->id)
             ->orderBy('created_at', 'desc') 
@@ -55,11 +70,21 @@ class AppointmentController extends Controller
 
                 // Store the new image
                 $request->file('pet_img')->storeAs('pet_picture', $filename, 'public');
+                //FOR DEPLOYMENT STORAGE
+                // $path = $request->file('pet_img')->storeAs('pet_picture', $filename, 'public_direct');
 
                 // Delete old pet image if it exists
                 if ($pet->pet_img) {
                     Storage::delete('public/pet_picture/' . $pet->pet_img);
                 }
+                //THIS IS USED FOR DELETING IN DEPLOYMENT STORAGE
+                // if ($pet->pet_img) {
+                //     $filePath = public_path('storage/pet_picture/' . $pet->pet_img);
+                //     if (file_exists($filePath)) {
+                //         unlink($filePath);
+                //     }
+                // }
+
 
                 // Set new filename
                 $pet->pet_img = $filename;
@@ -94,6 +119,10 @@ class AppointmentController extends Controller
                 $filename,
                 'public'
             );
+
+            //FOR DEPLOYMENT STORAGE
+            // $path = $request->file('uploadPhoto')->storeAs('pet_picture',$filename,'public_direct');
+
             $petImg = $filename;
         }
 

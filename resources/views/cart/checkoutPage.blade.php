@@ -13,7 +13,7 @@
 
     <link href="https://fonts.bunny.net/css?family=poppins:400,500,600&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/welcome-page.css', 'resources/js/carousel.jsx'])
-    @vite('resources/js/app.jsx')
+
 
 </head>
 
@@ -302,7 +302,7 @@
                             <p class="font-semibold text-lg">{{$cartItem->product->name}}</p>
                             <p class="mt-2">Retail Price: <span class="font-semibold">₱ {{number_format($cartItem->product->price,2)}}</span></p>
                             <p>Discount: <span class="font-bold">{{$cartItem->product->discount_value}}</span></p>
-                            <h1 class="mt-6">Shipping Fee: <span class="text-orange-500 font-bold">₱ 50 </span></h1>
+                            <h1 class="mt-6">Shipping Fee: <span class="text-orange-500 font-bold">₱ 15 </span></h1>
                         </div>
                         <div class="col-span-6 lg:col-span-1">
                             <div class="flex flex-col gap-2">
@@ -354,7 +354,7 @@
                                         name="payment_method"
                                         id="cash_on_delivery"
                                         value="Cash on Delivery"
-                                        class="w-5 h-5 text-orange-600 focus:ring-orange-500">
+                                        class="w-5 h-5 text-orange-600 focus:ring-orange-500" checked>
                                     <label
                                         for="cash_on_delivery"
                                         class="text-base group-hover:text-orange-600 transition-colors">
@@ -390,7 +390,7 @@
                                     <div class="flex gap-1 text-sm lg:text-lg">
                                         <h1 class="">Shipping Sub Total:</h1>
                                         @php
-                                        $shipping_fee = 50;
+                                        $shipping_fee = 15;
                                         $shipping_total = $shipping_fee * $count;
                                         @endphp
                                         <h1 class="font-bold">₱ {{number_format($shipping_total,2)}}</h1>
@@ -410,7 +410,15 @@
                                         <input type="hidden" name="product_prices[]" value="{{ $cartItem->product->discounted_price }}">
                                         <input type="hidden" name="quantities[]" value="{{ $cartItem->quantity }}">
                                         @endforeach
-                                        <input type="hidden" name="address_id" id="address_id" value="{{ $defaultAddress->address_id }}">
+
+                                        @php
+                                        if ($defaultAddress) {
+                                        $address_id = $defaultAddress->address_id;
+                                        } else {
+                                        $address_id = null;
+                                        }
+                                        @endphp
+                                        <input type="hidden" name="address_id" id="address_id" value="{{ $address_id  }}">
                                         <input type="hidden" name="total_payment" id="total_payment" value="{{ $total_amount + $shipping_total }}">
                                     </div>
                                 </div>
@@ -446,10 +454,12 @@
     function updateAction() {
         if (onlineRadio.checked) {
             form.action = processRoute;
+
         } else if (cashRadio.checked) {
             form.action = directRoute;
         }
     }
+    updateAction();
 </script>
 <!-- Footer -->
 <x-footer bgColor=" bg-gradient-to-r from-orange-600" />

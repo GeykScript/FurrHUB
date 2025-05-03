@@ -173,10 +173,26 @@
                                     <i data-lucide="bell" class="text-black text-lg"></i>
 
                                     <!-- Notification Badge -->
-                                    <span class="absolute -top-1 -left-1 bg-red-500 text-white rounded-full h-[16px] w-[16px] text-[9px] font-semibold flex items-center justify-center">
-                                        10
+                                    <span id="unreadNotificationBadge" class="absolute -top-1 -left-1 bg-red-500 text-white rounded-full h-[16px] w-[16px] text-[9px] font-semibold flex items-center justify-center">
+                                        0
                                     </span>
                                 </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $.ajax({
+                                            url: '/notification/count', // <-- your new route
+                                            type: 'GET',
+                                            success: function(response) {
+                                                if (response.unreadNotificationCount > 0) {
+                                                    $('#unreadNotificationBadge')
+                                                        .text(response.unreadNotificationCount)
+                                                        .removeClass('hidden');
+                                                }
+                                            }
+                                        });
+                                    });
+                                </script>
+
                                 {{ __('Notifications') }}
                             </div>
 

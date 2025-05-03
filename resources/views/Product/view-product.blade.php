@@ -146,7 +146,8 @@
                     </div>
                     @endif
                     <div class="flex flex-col lg:gap-2 gap-1 mt-5  text-orange-500 font-semibold bg-orange-200 p-4  rounded-lg">
-                        @if (!empty($product->discount))
+
+                        @if (!empty($product->discount) && $product->discount->status_id == 7)
                         <div class="flex flex-row items-center gap-2 ">
                             <h1>₱</h1>
                             <h1 class="line-through ">{{ number_format($product->price, 2) }}</h1>
@@ -347,7 +348,7 @@
                             <p class="text-sm font-normal text-gray-500 text-end">{{ $relatedProduct->quantity_sold }} sold</p>
                             <h5 class="font-normal text-wrap text-orange-500 text-start text-sm">{{ $relatedProduct->category->name ?? 'Unknown' }}</h5>
                             <h4 class="font-semibold text-wrap text-black text-md text-start">{{ $relatedProduct->name }}</h4>
-                            @if (!empty($relatedProduct->discount))
+                            @if (!empty($relatedproduct->discount) && $relatedproduct->discount->status_id == 7)
                             <h6 class="font-bold text-wrap text-orange-400 text-xs text-start line-through">
                                 <span class="text-xs">₱</span> {{ number_format($relatedProduct->price, 2) }}
                             </h6>

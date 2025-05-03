@@ -70,7 +70,7 @@
                 <p class="text-sm text-gray-500">Optional: Upload a photo related to your order.</p>
                 <div class="border-dashed border-2  text-center rounded-lg cursor-pointer mt-2 w-full h-20 flex items-center justify-center hover:bg-gray-100" onclick="document.getElementById('uploadPhoto').click()">
                     <p id="text-uploadPhoto" class="text-gray-500">
-                        Drag your photo here or <span class="text-orange-500 cursor-pointer">Browse from device</span>
+                    <span class="text-orange-500 cursor-pointer">Browse from device </span>
                     </p>
                     <p id="fileName-uploadPhoto" class="mt-2 text-sm text-orange-600 px-3 py-1 rounded-md w-fit max-w-full truncate" hidden></p>
                     <input type="file" id="uploadPhoto" name="uploadPhoto" class="hidden" accept="image/*">
@@ -273,7 +273,7 @@
 
                     @if ($order->statuses->status_name == 'Delivered' && !in_array($order->order_id, $reviewed_orders) && $order->payment_status_relation?->status_name == 'Paid')
                     <div class="flex justify-end items-end text-sm mt-2 text-gray-600">
-                        <h1 class="italic">Please review your order. It will be automatically marked as reviewed after 3 days.</h1>
+                        <h1 class="italic">Please review your order.</h1>
                     </div>
                     @elseif ($order->statuses->status_name == 'Delivered' && in_array($order->order_id, $reviewed_orders) && $order->payment_status_relation?->status_name == 'Paid')
                     <div class="flex justify-end items-end text-sm mt-2 text-green-500">
@@ -291,10 +291,14 @@
                             <div class="mt-2 p-4  border rounded-lg bg-gray-50">
 
                                 <div class="flex flex-col gap-2 px-10">
+                                    <h1>Shipping Fee: <span class="font-semibold"> ₱ {{$order->shipping_fee}}</span></h1>
                                     <h1>Total Amount: <span class="font-semibold"> ₱ {{$order->total_amount}}</span></h1>
                                     <h1>Total Items: <span class="font-semibold"> {{$total_item}} items</span></h1>
                                     <h1>Payment Method: <span class="font-semibold">{{$order->payment->payment_name}}</span></h1>
                                     <h1>Payment Status: <span class="font-semibold">{{$order->payment_status_relation?->status_name}}</span></h1>
+                                    @if($order->Delivery_Date != null)
+                                    <h1>Delivered: <span class="font-semibold">{{$order->Delivery_Date}}</span></h1>
+                                    @endif
                                 </div>
 
                                 @if ($order->payment_status_relation?->status_name == 'Not Paid' && $order->statuses->status_name == 'To Ship')

@@ -1,4 +1,4 @@
-<section class="space-y-6">
+<!-- <section class="space-y-6">
 
 
 
@@ -68,4 +68,4 @@
             </div>
         </form>
     </x-modal>
-</section>
+</section> -->

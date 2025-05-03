@@ -23,8 +23,7 @@
 <!-- nav part -->
 <x-nav-bar />
 
-<div class="pt-[100px]"></div>
-
+<div class="pt-[110px]  lg:pt-[100px]"></div>
 
 <!-- carousel part -->
 <div class="w-full relative mt-2 ">
@@ -32,46 +31,48 @@
     <div class="swiper-wrapper">
       <div class="swiper-slide">
         <a href="{{ route('login') }}" class="">
-          <div class="rounded-2xl h-[15rem] md:h-full ">
-            <img src="{{ asset('images/Furrhub-carousel/1.jpg') }}" alt="carousel-pet-services" class="w-[100%] h-[100%] object-cover " />
+          <div class="rounded-2xl h-[7rem] md:h-full ">
+            <img src="{{ asset('images/Furrhub-carousel/1.png') }}" alt="carousel-pet-services" class="w-full h-full object-cover" />
           </div>
         </a>
       </div>
       <div class="swiper-slide">
         <a href="{{ route('login') }}" class="">
-          <div class="rounded-2xl h-[15rem] md:h-full ">
-            <img src="{{ asset('images/Furrhub-carousel/2.jpg') }}" alt="carousel-pet-services" class="w-[100%] h-[100%] object-cover " />
+          <div class="rounded-2xl h-[7rem] md:h-full ">
+            <img src="{{ asset('images/Furrhub-carousel/2.png') }}" alt="carousel-pet-services" class="w-full h-full object-cover" />
           </div>
         </a>
       </div>
       <div class="swiper-slide">
         <a href="{{ route('login') }}" class="">
-          <div class="rounded-2xl h-[15rem] md:h-full ">
-            <img src="{{ asset('images/Furrhub-carousel/3.jpg') }}" alt="carousel-pet-services" class="w-[100%] h-[100%] object-cover " />
+          <div class="rounded-2xl h-[7rem] md:h-full ">
+            <img src="{{ asset('images/Furrhub-carousel/3.png') }}" alt="carousel-pet-services" class="w-full h-full object-cover" />
           </div>
         </a>
       </div>
       <div class="swiper-slide">
         <a href="{{ route('login') }}" class="">
-          <div class="rounded-2xl h-[15rem] md:h-full ">
-            <img src="{{ asset('images/Furrhub-carousel/4.jpg') }}" alt="carousel-pet-services" class="w-[100%] h-[100%] object-cover " />
+          <div class="rounded-2xl h-[7rem] md:h-full ">
+            <img src="{{ asset('images/Furrhub-carousel/4.png') }}" alt="carousel-pet-services" class="w-full h-full object-cover" />
           </div>
         </a>
       </div>
       <div class="swiper-slide">
         <a href="{{ route('login') }}" class="">
-          <div class="rounded-2xl h-[15rem] md:h-full ">
-            <img src="{{ asset('images/Furrhub-carousel/5.jpg') }}" alt="carousel-pet-services" class="w-[100%] h-[100%] object-cover " />
+          <div class="rounded-2xl h-[7rem] md:h-full ">
+            <img src="{{ asset('images/Furrhub-carousel/5.png') }}" alt="carousel-pet-services" class="w-full h-full object-cover" />
           </div>
         </a>
       </div>
       <div class="swiper-slide">
         <a href="{{ route('login') }}" class="">
-          <div class="rounded-2xl h-[15rem] md:h-full ">
-            <img src="{{ asset('images/Furrhub-carousel/6.jpg') }}" alt="carousel-pet-services" class="w-[100%] h-[100%] object-cover " />
+          <div class="rounded-2xl h-[7rem] md:h-full ">
+            <img src="{{ asset('images/Furrhub-carousel/6.png') }}" alt="carousel-pet-services" class="w-full h-full object-cover" />
           </div>
         </a>
       </div>
+
+
     </div>
     <div class="swiper-pagination"></div>
   </div>
@@ -177,12 +178,19 @@
                 <p class="text-sm font-normal text-gray-500 text-end">{{ $product->quantity_sold }} sold</p>
                 <h5 class="font-normal text-wrap text-orange-500 text-start text-sm">{{ $product->category->name ?? 'Unknown' }}</h5>
                 <h4 class="font-semibold text-wrap text-black text-md text-start">{{ $product->name }}</h4>
+                @if (!empty($product->discount) && $product->discount->status_id == 7)
                 <h6 class="font-bold text-wrap text-orange-400 text-xs text-start line-through">
                   <span class="text-xs">₱</span> {{ number_format($product->price, 2) }}
                 </h6>
                 <h4 class="font-bold text-wrap text-orange-500 text-lg text-start">
                   <span class="text-xl">₱</span> {{ number_format($product->discounted_price, 2) }}
                 </h4>
+                @else
+                <h4 class="font-bold text-wrap text-orange-500 text-lg text-start">
+                  <span class="text-xl">₱</span> {{ number_format($product->price, 2) }}
+                </h4>
+                @endif
+
               </div>
             </button>
           </form>
@@ -246,7 +254,7 @@
                 <p class="text-sm font-normal text-gray-500 text-end">{{ $product->quantity_sold }} sold</p>
                 <h5 class="font-normal text-wrap text-orange-500 text-start text-sm">{{ $product->category->name ?? 'Unknown' }}</h5>
                 <h4 class="font-semibold text-wrap text-black text-md text-start">{{ $product->name }}</h4>
-                @if (!empty($product->discount))
+                @if (!empty($product->discount) && $product->discount->status_id == 7)
                 <h6 class="font-bold text-wrap text-orange-400 text-xs text-start line-through">
                   <span class="text-xs">₱</span> {{ number_format($product->price, 2) }}
                 </h6>

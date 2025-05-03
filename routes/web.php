@@ -11,6 +11,7 @@ use App\Http\Controllers\checkoutPageController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\SearchController;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -105,16 +106,110 @@ Route::get('/orders-successfull', function () {
 
 
 //  notification routes
-Route::get('/notifications', function () {
-    return view('profile.notifications');
-})->name('notifications');
+use App\Http\Controllers\NotificationsController;
+Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications');
+Route::get('/notification/count', [NotificationsController::class, 'notification_count']);
+Route::get('/notification/count2', [NotificationsController::class, 'notification_count2']);
 
 
 
 //   my purchases routes
-
-
 use App\Http\Controllers\MessageController;
-Route::get('/messages', [MessageController::class, 'index'])->name('messages');
+Route::get('/messages/{admin_id?}', [MessageController::class, 'index'])->name('messages');
 Route::post('/messages/send', [MessageController::class, 'send_message'])->name('messages.send');
 Route::get('/message/count', [MessageController::class, 'message_count']);
+Route::get('/message/count2', [MessageController::class, 'message_count2']);
+
+
+
+
+use App\Http\Controllers\Auth\AdminLoginController;
+Route::post('admin/login', [AdminLoginController::class, 'login'])->name('admin.login');
+
+Route::get('/admin-login', function () {
+    return view('admin.admin_login');
+})->name('admin-login');
+
+
+Route::post('/admin/logout', function () {
+    Auth::guard('admin')->logout();
+    return redirect()->route('admin-login'); // Redirect to your admin login view
+})->name('admin.logout');
+
+
+use App\Http\Controllers\AdminDashboardController;
+Route::get('/admin_dashboard', [AdminDashboardController::class, 'index'])->name('admin_dashboard');
+
+use App\Http\Controllers\AdminMessageController;
+Route::get('/admin_messages/{user_id?}', [AdminMessageController::class, 'index'])->name('admin_messages');
+Route::Post('/admin_messages/send_message}', [AdminMessageController::class, 'send_message'])->name('send_message');
+Route::get('/fetch_new_messages', [MessageController::class, 'fetchNewMessages'])->name('fetch_new_messages');
+
+
+use App\Http\Controllers\AdminServicesController;
+Route::get('/admin_services', [AdminServicesController::class, 'index'])->name('admin_services');
+Route::get('/admin_services.page', [AdminServicesController::class, 'add_service_page'])->name('admin_services.page');
+Route::POST('/admin_services.add', [AdminServicesController::class, 'add_service'])->name('admin_services.add');
+Route::post('/admin_services.edit', [AdminServicesController::class, 'edit_service'])->name('admin_services.edit');
+Route::POST('/admin_services.save', [AdminServicesController::class, 'save_changes'])->name('admin_services.save');
+
+//generate report routes
+Route::get('/admin/services/export/excel', [AdminServicesController::class, 'exportExcel'])->name('admin_services.export_excel');
+Route::get('/admin/services/export-pdf', [AdminServicesController::class, 'exportPDF'])->name('admin_services.export_pdf');
+Route::get('/admin/services/preview-pdf', [AdminServicesController::class, 'previewPDF'])->name('admin_services.preview_pdf');
+
+
+use App\Http\Controllers\AdminServicesHistoryController;
+Route::get('/admin_services_history', [AdminServicesHistoryController::class, 'index'])->name('admin_services_history');
+Route::get('/admin/services_history/export/excel', [AdminServicesHistoryController::class, 'exportExcel'])->name('admin_services_history.export_excel') ;
+Route::get('/admin/services_history/export-pdf', [AdminServicesHistoryController::class, 'exportPDF'])->name('admin_services_history.export_pdf');
+Route::get('/admin/services_history/preview-pdf', [AdminServicesHistoryController::class, 'previewPDF'])->name('admin_services_history.preview_pdf');
+
+use App\Http\Controllers\AdminProductController;
+Route::get('/admin_products', [AdminProductController::class, 'index'])->name('admin_products');
+Route::get('/admin_products.page', [AdminProductController::class, 'add_product_page'])->name('admin_products.page');
+Route::POST('/admin_products.add', [AdminProductController::class, 'add_product'])->name('admin_products.add');
+Route::post('/admin_products.edit', [AdminProductController::class, 'edit_product'])->name('admin_products.edit');
+Route::POST('/admin_products.save', [AdminProductController::class, 'save_changes'])->name('admin_products.save');
+
+
+Route::get('/admin/admin_products/export/excel', [AdminProductController::class, 'exportExcel'])->name('admin_products.export_excel');
+Route::get('/admin/admin_products/export-pdf', [AdminProductController::class, 'exportPDF'])->name('admin_products.export_pdf');
+Route::get('/admin/admin_products/preview-pdf', [AdminProductController::class, 'previewPDF'])->name('admin_products.preview_pdf');
+
+
+
+use App\Http\Controllers\AdminOrderController;
+Route::get('/admin_orders', [AdminOrderController::class, 'index'])->name('admin_orders');
+Route::post('/admin_orders/deliver_order', [AdminOrderController::class, 'deliver_order'])->name('admin_orders.deliver_order');
+Route::get('/admin/admin_orders/export/excel', [AdminOrderController::class, 'exportExcel'])->name('admin_orders.export_excel');
+Route::get('/admin/admin_orders/export-pdf', [AdminOrderController::class, 'exportPDF'])->name('admin_orders.export_pdf');
+Route::get('/admin/admin_orders/preview-pdf', [AdminOrderController::class, 'previewPDF'])->name('admin_orders.preview_pdf');
+Route::get('/admin/admin_orders/DO_export-pdf', [AdminOrderController::class, 'DO_exportPDF'])->name('admin_orders.DO_export_pdf');
+
+
+use App\Http\Controllers\AdminAppointmentController;
+Route::get('/admin_appointments', [AdminAppointmentController::class, 'index'])->name('admin_appointments');
+Route::post('/admin_appointments/payment', [AdminAppointmentController::class, 'payment'])->name('admin_appointments.payment');
+
+
+
+use App\Http\Controllers\AdminDiscountController;
+Route::get('/admin_discounts', [AdminDiscountController::class, 'index'])->name('admin_discounts');
+Route::post('/admin_discounts/add', [AdminDiscountController::class, 'add_discount'])->name('admin_discounts.add');
+Route::post('/admin_discounts/edit', [AdminDiscountController::class, 'edit_discount'])->name('admin_discounts.edit');
+
+Route::get('/faqs', function () {
+    return view('footer.faqs');
+})->name('faqs');
+Route::get('/about-us', function () {
+    return view('footer.about_us');
+})->name('about_us');
+Route::get('/terms-and-conditions', function () {
+    return view('footer.terms_and_condition');
+})->name('terms_and_conditions');
+
+
+
+
+

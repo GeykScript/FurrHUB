@@ -22,7 +22,7 @@
     <form method="POST" action="{{ route('appointment.editpet') }}" enctype="multipart/form-data" class="relative bg-white p-6 rounded-lg">
         @csrf
         <input type="hidden" name="pet_id" id="pet_id">
-        
+
         <div class="mb-2">
             <h1 class="text-2xl font-bold text-center text-orange-500">Edit Pet</h1>
             <p class="text-sm text-gray-500 text-center">Edit your pet's information.</p>
@@ -142,7 +142,7 @@
 <body class="font-sans antialiased bg-white-400 dark:text-black/50 min-h-screen flex flex-col">
     <div class="bg-white flex-grow">
         <div class="rounded-2xl  md:h-full ">
-            <img src="{{asset('images/welcome-booking.jpg')}}" alt="" class="w-full lg:h-full h-[160px]  object-cover" />
+            <img src="{{asset('images/welcome-booking.png')}}" alt="" class="w-full lg:h-full h-[150px]  object-contain" />
         </div>
         <!-- welcome to furrhub services -->
         <div class="relative xl:p-6 p-2 items-start mt-2" id="pets">
@@ -282,6 +282,7 @@
                             <div class="mt-2 p-4 border rounded-lg bg-gray-100">
                                 <h1 class="text-lg text-gray-700 ml-2"><span class="text-gray-900 mr-2">Service:</span> {{ $appointment->service->name }}</h1>
                                 <h1 class="text-lg text-gray-700 ml-2"><span class="text-gray-900 mr-2">Initial Service Fee:</span> ₱{{ number_format(!empty($appointment->service->discounted_price) ? $appointment->service->discounted_price : $appointment->service->price, 2) }}</h1>
+                                <h1 class="text-lg text-gray-700 ml-2"><span class="text-gray-900 mr-2">Total Payment:</span>₱ {{ $appointment->total_payment }}</h1>
                                 <h1 class="text-lg text-gray-700 ml-2"><span class="text-gray-900 mr-2">Payment Method:</span> {{ $appointment->payment->payment_name }}</h1>
                                 <h1 class="text-lg text-gray-700 ml-2"><span class="text-gray-900 mr-2">Payment Status:</span> {{ $appointment->statuses->status_name }}</h1>
                                 @if ($appointment->status->status_name == 'Pending' )
@@ -424,12 +425,12 @@
                             <li class="{{ $isHidden }}">
                                 {{ $grooming->name }}
 
-                                @if (!empty($product->discount))
+                                @if ($grooming->discount_id != null)
                                 <div class="flex flex-row gap-2 mt-1">
                                     <p class="text-orange-500 line-through">₱ {{ number_format($grooming->price, 2) }}</p>
                                     <p class="text-orange-500">-</p>
                                     <p class="text-orange-500 font-bold">₱ {{ number_format($grooming->discounted_price, 2) }}</p>
-                                    <p class="text-orange-500 text-center">({{ $grooming->discount_value }}% Discount)</p>
+                                    <p class="text-orange-500 text-center">({{ $grooming->discount_value }} Discount)</p>
                                 </div>
                                 @else
                                 <div class="flex flex-row gap-2 mt-1">
@@ -460,12 +461,18 @@
 
                             <li class="{{ $isHidden }}">
                                 {{ $wellness->name }}
+                                @if ($wellness->discount_id != null)
                                 <div class="flex flex-row gap-2 mt-1">
                                     <p class="text-orange-500 line-through">₱ {{ number_format($wellness->price, 2) }}</p>
                                     <p class="text-orange-500">-</p>
                                     <p class="text-orange-500 font-bold">₱ {{ number_format($wellness->discounted_price, 2) }}</p>
-                                    <p class="text-orange-500 text-center">({{ $wellness->discount_value }}% Discount)</p>
+                                    <p class="text-orange-500 text-center">({{ $wellness->discount_value }} Discount)</p>
                                 </div>
+                                @else
+                                <div class="flex flex-row gap-2 mt-1">
+                                    <p class="text-orange-500 font-bold">₱ {{ number_format($wellness->price, 2) }}</p>
+                                </div>
+                                @endif
                             </li>
                             @endforeach
                         </ul>
@@ -490,12 +497,19 @@
 
                             <li class="{{ $isHidden }}">
                                 {{ $veterinary->name }}
+                                @if ($veterinary->discount_id != null)
+
                                 <div class="flex flex-row gap-2 mt-1">
                                     <p class="text-orange-500 line-through">₱ {{ number_format($veterinary->price, 2) }}</p>
                                     <p class="text-orange-500">-</p>
                                     <p class="text-orange-500 font-bold">₱ {{ number_format($veterinary->discounted_price, 2) }}</p>
-                                    <p class="text-orange-500 text-center">({{ $veterinary->discount_value }}% Discount)</p>
+                                    <p class="text-orange-500 text-center">({{ $veterinary->discount_value }} Discount)</p>
                                 </div>
+                                @else
+                                <div class="flex flex-row gap-2 mt-1">
+                                    <p class="text-orange-500 font-bold">₱ {{ number_format($veterinary->price, 2) }}</p>
+                                </div>
+                                @endif
                             </li>
                             @endforeach
                     </div>

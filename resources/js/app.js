@@ -44,6 +44,17 @@ import {
         User,
         UserPen,
         UserRoundPen,
+        CalendarClock,
+        NotepadText,
+        ShoppingCart,
+        NotebookText,
+        MessagesSquare,
+        Sheet,
+        FileText,
+        Eye,
+        SquarePen,
+        Ticket,
+        ChevronUp
 } from 'lucide';
 
 createIcons({
@@ -82,12 +93,29 @@ createIcons({
         User,
         UserPen,
         UserRoundPen,
+        CalendarClock,
+        NotepadText,
+        ShoppingCart,
+        NotebookText,
+        MessagesSquare,
+        Sheet,
+        FileText,
+        Eye,
+        SquarePen,
+        Ticket,
+        ChevronUp
   },
 });
 
 
-
-
+     import DataTable from 'datatables.net-dt';
+        let table = new DataTable('#ServiceTable');
+        let table2 = new DataTable('#ServiceHistoryTable');
+        let table3 = new DataTable('#ProductTable');
+        let table4 = new DataTable('#OrderTable');
+        let table5 = new DataTable('#AppointmentTable');
+        let table6 = new DataTable('#DiscountTable');
+      
 
 
 // js show more for product

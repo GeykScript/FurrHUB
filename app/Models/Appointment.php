@@ -19,7 +19,8 @@ class Appointment extends Model
         'appointment_time',
         'payment_status',
         'payment_method',
-        'Status'
+        'Status',
+        'total_payment',
     ];
 
     public function user()

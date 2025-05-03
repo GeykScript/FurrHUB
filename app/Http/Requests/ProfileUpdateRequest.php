@@ -18,7 +18,7 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:11', 'regex:/^(\+?\d{1,4}[\s-])?\d{10}$/'], // Allows +63 or 09xxxxxxxxx format
+            'phone' => ['required', 'string', 'regex:/^(09\d{9}|\+639\d{9})$/'],
             'profile_img' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'], // 2MB max
             'email' => [
                 'required',

@@ -15,7 +15,7 @@
 
     <link href="https://fonts.bunny.net/css?family=poppins:400,500,600&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/welcome-page.css', 'resources/js/carousel.jsx' ])
-    @vite('resources/js/app.jsx')
+
 
 </head>
 
@@ -119,7 +119,7 @@
                     @endif
 
                     @if($cartItems->isEmpty())
-                    <div class="flex bg-white p-40 border-gray-300 text-gray-900 text-xl items-center justify-center bg-[#FAFAFA]">
+                    <div class="flex bg-white py-40 border-gray-300 text-gray-900 lg:text-xl items-center justify-center bg-[#FAFAFA]">
                         <p>No items in your cart.</p>
                     </div>
                     @else

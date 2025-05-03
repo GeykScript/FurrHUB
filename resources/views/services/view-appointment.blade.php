@@ -55,7 +55,7 @@
                     <div class="flex justify-center items-start p-0 lg:col-span-1 col-span-2">
                         <img src="{{ asset('storage/pet_picture/' . $appointment->pet->pet_img) }}" class="w-[19rem] h-[18rem] object-cover rounded-lg " />
                     </div>
-                    <div class="gap-3 flex flex-col justify-start items-start">
+                    <div class="gap-3 flex flex-col justify-start items-start px-5">
                         <h1 class="text-xl text-orange-500 font-bold">Pet Details</h1>
                         <h1 class="text-5xl text-orange-600 font-bold">{{$appointment->pet->pet_name}}</h1>
                         <h1 class="text-lg text-gray-700 ml-2"><span class="text-gray-900 mr-2">Type:</span> {{$appointment->pet->animal_type}}</h1>
